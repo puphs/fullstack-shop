@@ -1,0 +1,77 @@
+@import '../../styles/global.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/fonts.scss';
+
+%headerBtnBase {
+	@extend %btnBase;
+	width: 32px;
+	height: 32px;
+	background: $color-text;
+}
+
+@mixin headerBtn($iconUrl) {
+	@extend %headerBtnBase;
+	mask: url($iconUrl);
+	mask-size: cover;
+}
+
+.header {
+	@extend %font-NotoSerif-400;
+	padding: 24px 0;
+	display: flex;
+}
+.logo {
+	font-size: 32px;
+	line-height: 44px;
+	letter-spacing: 5%;
+}
+
+.headerNav {
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+}
+.navItem {
+	margin-left: 64px;
+}
+
+.search {
+	flex-grow: 1;
+}
+
+.cart {
+	position: relative;
+}
+.cartItemsCount {
+	position: absolute;
+	bottom: -8px;
+	right: -8px;
+	padding: 4px;
+	background-color: $color-primary;
+	min-width: 24px;
+	height: 24px;
+	border-radius: 24px;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 16px;
+	line-height: 22px;
+}
+.cartBtn {
+	@include headerBtn('../../images/shopping-cart.svg');
+}
+
+.account {
+	display: flex;
+	align-items: center;
+}
+.accoutName {
+	font-size: 20px;
+	line-height: 27px;
+}
+.accountBtn {
+	margin-left: 10px;
+	@include headerBtn('../../images/account.svg');
+}
