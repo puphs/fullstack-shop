@@ -1,10 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
 
-$color-primary: #bb7a2c;
-$color-secondary: #ececec;
-$color-important: #e24742;
-$color-text: #1d1d1d;
-$color-text-inactive: #9c9c9c;
+* {
+	box-sizing: border-box;
+}
 
 body {
 	margin: 0;
