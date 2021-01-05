@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+@import '../../styles/global.scss';
+@import '../../styles/fonts.scss';
+
+%btn {
+	@extend %btnBase;
+	@extend %font-Baloo2-700;
+	padding: 0 64px;
+	height: 44px;
+	font-size: 18px;
+	line-height: 28px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.btnPrimary {
+	@extend %btn;
+	background-color: $color-primary;
+	color: #fff;
+}
+
+.btnSecondary {
+	@extend %btn;
+
+	background-color: $color-secondary;
+	color: $color-primary;
+}
+
+.fullWidth {
+	width: 100%;
+	padding: 0 32px;
+}

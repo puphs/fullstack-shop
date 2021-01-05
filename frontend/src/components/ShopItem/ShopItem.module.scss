@@ -7,33 +7,6 @@
 	cursor: pointer;
 }
 
-@mixin cartBtn($addToCart) {
-	@extend %btnBase;
-	@extend %font-Baloo2-700;
-	width: 100%;
-	height: 38px;
-	font-size: 18px;
-	line-height: 28px;
-	text-transform: uppercase;
-	text-align: center;
-
-	@if $addToCart {
-		background-color: $color-secondary;
-		color: $color-primary;
-	} @else {
-		background-color: $color-primary;
-		color: $color-secondary;
-	}
-}
-
-.addToCartBtn {
-	@include cartBtn(true);
-}
-
-.removeFromCartBtn {
-	@include cartBtn(false);
-}
-
 .content {
 	display: flex;
 	flex-direction: column;

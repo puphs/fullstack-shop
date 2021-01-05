@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './ShopItem.module.scss';
 import cn from 'classnames';
 import Prices from '../Prices/Prices';
+import Button from '../Button/Button';
 
 type Props = {};
 
 const ShopItem: React.FC<Props> = (props) => {
 	return (
 		<div className={styles.item}>
-			{/* <button className={cn(styles.addToCartBtn)}>Add to cart</button> */}
-			<button className={cn(styles.removeFromCartBtn)}>In the cart</button>
+			<Button text={'add to cart'} style={{ height: '38px' }} fullWidth type={'secondary'} />
 			<div className={styles.content}>
 				<div className={styles.moreInfoBlackout}>
 					<div className={styles.moreInfoText}>Click for more info</div>
