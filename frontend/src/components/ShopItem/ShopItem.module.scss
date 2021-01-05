@@ -81,21 +81,3 @@
 	font-size: 18px;
 	line-height: 28px;
 }
-
-.prices {
-	@extend %font-Baloo2-600;
-	font-size: 20px;
-	line-height: 21px;
-	padding: 8px 0;
-}
-.discountPrice {
-	color: $color-important;
-	margin-right: 8px;
-}
-.standardPrice {
-	text-decoration: line-through;
-	color: $color-text-inactive;
-}
-.priceWithoutDiscount {
-	color: $color-text;
-}
