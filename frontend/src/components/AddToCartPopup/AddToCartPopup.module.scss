@@ -1,0 +1,60 @@
+@import '../../styles/variables.scss';
+@import '../../styles/global.scss';
+@import '../../styles/fonts.scss';
+
+.background {
+	background-color: rgba(0, 0, 0, 0.4);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+	cursor: pointer;
+}
+.popup {
+	padding: 24px;
+	display: flex;
+	max-width: 600px;
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 6px;
+	cursor: default;
+}
+
+.product {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.imgContainer {
+	width: 220px;
+}
+.productImg {
+	width: 100%;
+	height: auto;
+}
+.productName {
+	@extend %font-NotoSerif-700;
+	font-size: 18px;
+	line-height: 28px;
+	margin: 8px 0 0 0;
+}
+
+.options {
+	margin-left: 32px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.priceAndAddToCartBtn {
+}
+
+.addToCartBtn {
+	margin-top: 4px;
+}
