@@ -1,0 +1,101 @@
+@import '../../styles/variables.scss';
+@import '../../styles/global.scss';
+@import '../../styles/fonts.scss';
+
+.item {
+	width: 220px;
+	cursor: pointer;
+}
+
+@mixin cartBtn($addToCart) {
+	@extend %btnBase;
+	@extend %font-Baloo2-700;
+	width: 100%;
+	height: 38px;
+	font-size: 18px;
+	line-height: 28px;
+	text-transform: uppercase;
+	text-align: center;
+
+	@if $addToCart {
+		background-color: $color-secondary;
+		color: $color-primary;
+	} @else {
+		background-color: $color-primary;
+		color: $color-secondary;
+	}
+}
+
+.addToCartBtn {
+	@include cartBtn(true);
+}
+
+.removeFromCartBtn {
+	@include cartBtn(false);
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	&:hover {
+		.moreInfoBlackout {
+			opacity: 1;
+		}
+	}
+}
+
+.moreInfoBlackout {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	transition: 0.5s;
+}
+.moreInfoText {
+	@extend %font-NotoSerif-400-italic;
+	text-align: center;
+	max-width: 150px;
+	font-size: 28px;
+	line-height: 38px;
+	color: #fff;
+}
+
+.productImg {
+	background: url('http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f')
+		no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 220px;
+}
+
+.productName {
+	@extend %font-NotoSerif-400;
+	margin: 8px 0 0 0;
+	padding: 0;
+	font-size: 18px;
+	line-height: 28px;
+}
+
+.prices {
+	@extend %font-Baloo2-600;
+	font-size: 20px;
+	line-height: 21px;
+	padding: 8px 0;
+}
+.discountPrice {
+	color: $color-important;
+	margin-right: 8px;
+}
+.standardPrice {
+	text-decoration: line-through;
+	color: $color-text-inactive;
+}
+.priceWithoutDiscount {
+	color: $color-text;
+}
