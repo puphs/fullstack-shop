@@ -8,7 +8,13 @@ const SizeSelection: React.FC<Props> = (props) => {
 
 	const sizeElements = sizes.map((size, index) => (
 		<label key={index}>
-			<input className={styles.sizeRadio} type={'radio'} name={'sizeRadio'} hidden />
+			<input
+				className={styles.sizeRadio}
+				type={'radio'}
+				name={'sizeRadio'}
+				defaultChecked={index === 0}
+				hidden
+			/>
 			<div className={styles.sizeItem}>
 				<div className={styles.sizeValue}>{size}</div>
 			</div>
