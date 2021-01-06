@@ -1,0 +1,51 @@
+@import '../../../styles/fonts.scss';
+@import '../../../styles/variables.scss';
+
+.container {
+	@extend %font-NotoSerif-400;
+	background-color: $color-secondary;
+	padding: 24px 32px;
+	width: 100%;
+	position: absolute;
+	z-index: 10;
+}
+
+.categoriesList {
+	width: 100%;
+	max-height: 600px;
+	display: flex;
+	flex-direction: column;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	text-transform: capitalize;
+	margin: -16px -32px;
+}
+
+.categoryItem {
+	margin: 16px 32px;
+}
+.categoryName {
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 27px;
+}
+
+.subcategoriesList {
+	margin-top: 6px;
+	padding-left: 16px;
+}
+.subcategoryItem {
+}
+
+.subcategoryItemLink {
+	display: block;
+	text-decoration: none;
+	font-size: 18px;
+	color: $color-text-primary;
+	line-height: 25px;
+	transition: 0.1s;
+	padding: 2px 0;
+	&:hover {
+		color: $color-primary;
+	}
+}
