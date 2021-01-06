@@ -1,0 +1,39 @@
+@import '../../styles/fonts.scss';
+@import '../../styles/variables.scss';
+
+.categoriesHeader {
+	@extend %font-NotoSerif-400;
+	font-size: 18px;
+	line-height: 28px;
+	color: $color-text-secondary;
+}
+.categoriesList {
+	list-style: none;
+	padding: 0;
+	margin: 4px 0 0 0;
+}
+
+.categoryItem {
+}
+.categoryItemLink {
+	@extend %font-NotoSerif-400;
+	display: block;
+	display: flex;
+	align-items: center;
+	padding-left: 12px;
+
+	color: $color-text-primary;
+	text-decoration: none;
+	font-size: 22px;
+	line-height: 30px;
+	height: 38px;
+	transition: 0.1s;
+	&:hover {
+		background-color: $color-secondary;
+		color: $color-primary;
+	}
+	&__active {
+		font-weight: 700;
+		color: $color-primary;
+	}
+}
