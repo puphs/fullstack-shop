@@ -8,7 +8,7 @@
 	@extend %font-NotoSerif-400;
 	font-size: 18px;
 	line-height: 28px;
-	color: $color-text;
+	color: $color-text-primary;
 }
 
 .sizeElements {
@@ -37,7 +37,7 @@
 }
 
 .sizeValue {
-	color: $color-text;
+	color: $color-text-primary;
 	@extend %font-NotoSerif-400;
 	font-size: 18px;
 	line-height: 28px;

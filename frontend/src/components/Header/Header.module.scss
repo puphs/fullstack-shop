@@ -6,7 +6,7 @@
 	@extend %btnBase;
 	width: 32px;
 	height: 32px;
-	background: $color-text;
+	background: $color-text-primary;
 }
 
 @mixin headerBtn($iconUrl) {
@@ -78,5 +78,6 @@
 
 .line {
 	height: 1px;
-	background-color: $color-text-inactive;
+	background-color: $color-text-secondary;
+	opacity: 0.5;
 }
