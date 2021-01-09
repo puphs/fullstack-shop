@@ -1,9 +1,89 @@
 import { Category } from '../../types/types';
 import { InferActionsTypes } from '../store';
 
+const categories: Array<Category> = [
+	{
+		name: 'men',
+		subcategories: [
+			{
+				name: 'Shoes',
+				subcategories: [
+					{ name: 'Sneakers' },
+					{ name: 'Boots' },
+					{ name: 'Slippers' },
+					{ name: 'Sandals' },
+				],
+			},
+			{
+				name: 'Clothing',
+				subcategories: [
+					{ name: 'Shirts' },
+					{ name: 'Pants' },
+					{ name: 'Hoodies' },
+					{ name: 'T-shirts' },
+					{ name: 'Swimwear' },
+				],
+			},
+		],
+	},
+	{
+		name: 'women',
+		subcategories: [
+			{
+				name: 'shoes',
+				subcategories: [
+					{ name: 'sneakers' },
+					{ name: 'boots' },
+					{ name: 'slippers' },
+					{ name: 'sandals' },
+					{ name: 'Low shoes' },
+				],
+			},
+		],
+	},
+	{
+		name: 'boys',
+		subcategories: [
+			{
+				name: 'shoes',
+				subcategories: [
+					{ name: 'sneakers' },
+					{ name: 'boots' },
+					{ name: 'slippers' },
+					{ name: 'sandals' },
+					{ name: 'Low shoes' },
+				],
+			},
+			{
+				name: 'Clothing',
+				subcategories: [
+					{ name: 'Shirts' },
+					{ name: 'Pants' },
+					{ name: 'Hoodies' },
+					{ name: 'T-shirts' },
+					{ name: 'Swimwear' },
+				],
+			},
+		],
+	},
+	{
+		name: 'girls',
+		subcategories: [
+			{
+				name: 'shoes',
+				subcategories: [
+					{ name: 'sneakers' },
+					{ name: 'boots' },
+					{ name: 'slippers' },
+					{ name: 'sandals' },
+					{ name: 'Low shoes' },
+				],
+			},
+		],
+	},
+];
 const initialState = {
-	shownCategories: [] as Array<Category>,
-	isCategoriesListShown: false,
+	categories: categories as Array<Category>,
 };
 
 type State = typeof initialState;
@@ -11,19 +91,11 @@ type Action = InferActionsTypes<typeof actions>;
 
 const sidebarReducer = (state = initialState, action: Action): State => {
 	switch (action.type) {
-		case 'SHOW_CATEGORY_LIST':
-			return { ...state, shownCategories: action.categories, isCategoriesListShown: true };
-		case 'HIDE_CATEGORY_LIST':
-			return { ...state, isCategoriesListShown: false };
 		default:
 			return state;
 	}
 };
 
-export const actions = {
-	showCategoriesList: (categories: Array<Category>) =>
-		({ type: 'SHOW_CATEGORY_LIST', categories } as const),
-	hideCategoriesList: () => ({ type: 'HIDE_CATEGORY_LIST' } as const),
-};
+export const actions = {};
 
 export default sidebarReducer;

@@ -5,6 +5,7 @@ import sidebarReducer from './reducers/sidebarReducer';
 const reducers = combineReducers({
 	sidebar: sidebarReducer,
 });
+export type AppState = ReturnType<typeof reducers>;
 
 const store = createStore(reducers, devToolsEnhancer({}));
 
