@@ -1,5 +1,16 @@
 @import '../../styles/fonts.scss';
 @import '../../styles/variables.scss';
+@import '../../styles/global.scss';
+
+.categories {
+	position: relative;
+}
+
+.categoriesNav {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
 
 .categoriesHeader {
 	@extend %font-NotoSerif-400;
@@ -7,18 +18,17 @@
 	line-height: 28px;
 	color: $color-text-secondary;
 }
-.categoriesList {
-	list-style: none;
-	padding: 0;
-	margin: 4px 0 0 0;
+.categoriesNavList {
+	margin-top: 4px;
 }
 
 .categoryItem {
 }
-.categoryItemLink {
+.categoryButton {
+	@extend %btnBase;
 	@extend %font-NotoSerif-400;
-	display: block;
 	display: flex;
+	width: 100%;
 	align-items: center;
 	padding-left: 12px;
 
@@ -27,8 +37,10 @@
 	font-size: 22px;
 	line-height: 30px;
 	height: 38px;
-	transition: 0.1s;
-	&:hover {
+	transition: 0.2s;
+	background-color: #ffffff;
+	&:hover,
+	&__clicked {
 		background-color: $color-secondary;
 		color: $color-primary;
 	}
@@ -36,4 +48,10 @@
 		font-weight: 700;
 		color: $color-primary;
 	}
+}
+
+.categoriesList {
+	transition: 0.3s ease-in-out;
+	height: 0;
+	overflow: hidden;
 }

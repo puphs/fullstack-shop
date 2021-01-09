@@ -1,38 +1,39 @@
 @import '../../../styles/fonts.scss';
 @import '../../../styles/variables.scss';
 
-.container {
-	@extend %font-NotoSerif-400;
-	background-color: $color-secondary;
-	padding: 24px 32px;
-	width: 100%;
-	position: absolute;
-	z-index: 10;
-}
+// .container {
+// 	padding: 24px 32px;
+// 	transition: 0.5s;
+// }
 
 .categoriesList {
+	@extend %font-NotoSerif-400;
+	background-color: rgba($color-secondary, 0.3);
 	width: 100%;
 	max-height: 600px;
+	padding: 8px 16px 16px;
 	display: flex;
 	flex-direction: column;
 	align-content: flex-start;
 	flex-wrap: wrap;
+
 	text-transform: capitalize;
-	margin: -16px -32px;
 }
 
 .categoryItem {
-	margin: 16px 32px;
+	font-size: 18px;
+	line-height: 22px;
+	& + & {
+		margin-top: 16px;
+	}
 }
 .categoryName {
 	font-weight: 700;
-	font-size: 20px;
-	line-height: 27px;
 }
 
 .subcategoriesList {
-	margin-top: 6px;
-	padding-left: 16px;
+	margin-top: 4px;
+	padding-left: 8px;
 }
 .subcategoryItem {
 }
@@ -40,12 +41,13 @@
 .subcategoryItemLink {
 	display: block;
 	text-decoration: none;
-	font-size: 18px;
 	color: $color-text-primary;
-	line-height: 25px;
 	transition: 0.1s;
 	padding: 2px 0;
 	&:hover {
 		color: $color-primary;
 	}
+}
+.subcategoryItemLink:hover {
+	color: $color-primary;
 }

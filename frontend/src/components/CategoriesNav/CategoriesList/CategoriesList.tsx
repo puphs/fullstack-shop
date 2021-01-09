@@ -1,53 +1,21 @@
 import { NavLink } from 'react-router-dom';
+import { Category } from '../../../types/types';
 import styles from './CategoriesList.module.scss';
 
-type Props = {};
+type Props = {
+	categoriesList: Array<Category>;
+};
 
-const CategoriesList: React.FC<Props> = (props) => {
-	const categories = [
-		{
-			category: 'Shoes',
-			subcategories: [
-				{ category: 'sneakers' },
-				{ category: 'boots' },
-				{ category: 'slippers' },
-				{ category: 'sandals' },
-				{ category: 'Low shoes' },
-			],
-		},
-		{
-			category: 'Clothing',
-			subcategories: [
-				{ category: 'sneakers' },
-				{ category: 'boots' },
-				{ category: 'slippers' },
-				{ category: 'sandals' },
-				{ category: 'Low shoes' },
-				{ category: 'Low shoes' },
-				{ category: 'Low shoes' },
-			],
-		},
-		{
-			category: 'Accessories',
-			subcategories: [
-				{ category: 'sneakers' },
-				{ category: 'boots' },
-				{ category: 'boots' },
-				{ category: 'slippers' },
-				{ category: 'sandals' },
-				{ category: 'Low shoes' },
-			],
-		},
-	];
-
-	const categoriesElements = categories.map((item) => (
+const CategoriesList: React.FC<Props> = ({ categoriesList }) => {
+	const categoriesElements = categoriesList.map((category) => (
 		<li className={styles.categoryItem}>
-			<div className={styles.categoryName}>{item.category}</div>
+			<div className={styles.categoryName}>{category.name}</div>
+
 			<ul className={styles.subcategoriesList}>
-				{item.subcategories.map((subcategory) => (
+				{category.subcategories?.map((subcategory) => (
 					<li className={styles.subcategoryItem}>
 						<NavLink to={'/'} className={styles.subcategoryItemLink}>
-							{subcategory.category}
+							{subcategory.name}
 						</NavLink>
 					</li>
 				))}
@@ -55,11 +23,7 @@ const CategoriesList: React.FC<Props> = (props) => {
 		</li>
 	));
 
-	return (
-		<div className={styles.container}>
-			<ul className={styles.categoriesList}>{categoriesElements}</ul>
-		</div>
-	);
+	return <ul className={styles.categoriesList}>{categoriesElements}</ul>;
 };
 
 export default CategoriesList;

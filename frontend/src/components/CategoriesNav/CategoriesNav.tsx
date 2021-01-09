@@ -1,102 +1,57 @@
-import { NavLink } from 'react-router-dom';
 import styles from './CategoriesNav.module.scss';
+import { Category } from '../../types/types';
+import { MouseEvent, useRef, useState } from 'react';
+import cn from 'classnames';
+import CategoriesList from './CategoriesList/CategoriesList';
 
-type Props = {};
+type Props = {
+	categories: Array<Category>;
+};
 
-const CategoriesNav: React.FC<Props> = (props) => {
-	type Category = {
-		category: string;
-		subcategories?: Array<Category>;
+const CategoriesNav: React.FC<Props> = ({ categories }) => {
+	const [selectedCategoryIndex, selectCategory] = useState<number | null>(null);
+	const selectedCategoryRef = useRef<HTMLButtonElement>(null);
+
+	const onCategoryClick = (e: MouseEvent, categoryIndex: number | null) => {
+		if (categoryIndex === selectedCategoryIndex) categoryIndex = null;
+
+		// show subcategories of clicked category
+		const currentSubcategories = e.currentTarget.nextElementSibling as HTMLDivElement | null;
+		currentSubcategories?.setAttribute('style', `height: ${currentSubcategories.scrollHeight}px`);
+
+		// hide previous clicked subcategories
+		const previousSubcategories = selectedCategoryRef.current
+			?.nextElementSibling as HTMLDivElement | null;
+		previousSubcategories?.removeAttribute('style');
+
+		selectCategory(categoryIndex);
 	};
-	const categories: Array<Category> = [
-		{
-			category: 'men',
-			subcategories: [
-				{
-					category: 'Shoes',
-					subcategories: [
-						{ category: 'Sneakers' },
-						{ category: 'Boots' },
-						{ category: 'Slippers' },
-						{ category: 'Sandals' },
-					],
-				},
-				{
-					category: 'Clothing',
-					subcategories: [
-						{ category: 'Shirts' },
-						{ category: 'Pants' },
-						{ category: 'Hoodies' },
-						{ category: 'T-shirts' },
-						{ category: 'Swimwear' },
-					],
-				},
-			],
-		},
-		{
-			category: 'women',
-			subcategories: [
-				{
-					category: 'shoes',
-					subcategories: [
-						{ category: 'sneakers' },
-						{ category: 'boots' },
-						{ category: 'slippers' },
-						{ category: 'sandals' },
-						{ category: 'Low shoes' },
-					],
-				},
-			],
-		},
-		{
-			category: 'boys',
-			subcategories: [
-				{
-					category: 'shoes',
-					subcategories: [
-						{ category: 'sneakers' },
-						{ category: 'boots' },
-						{ category: 'slippers' },
-						{ category: 'sandals' },
-						{ category: 'Low shoes' },
-					],
-				},
-			],
-		},
-		{
-			category: 'girls',
-			subcategories: [
-				{
-					category: 'shoes',
-					subcategories: [
-						{ category: 'sneakers' },
-						{ category: 'boots' },
-						{ category: 'slippers' },
-						{ category: 'sandals' },
-						{ category: 'Low shoes' },
-					],
-				},
-			],
-		},
-	];
 
-	const categoryElements = categories.map((item, index) => (
-		<li className={styles.categoryItem}>
-			<NavLink
-				className={styles.categoryItemLink}
-				activeClassName={styles.categoryItemLink__active}
-				to={`/category/${item.category}`}
+	const categoryElements = categories.map((category, index) => (
+		<li className={styles.categoryItem} key={index}>
+			<button
+				className={cn(
+					styles.categoryButton,
+					selectedCategoryIndex === index && styles.categoryButton__clicked
+				)}
+				ref={selectedCategoryIndex === index ? selectedCategoryRef : null}
+				onClick={(e: MouseEvent) => onCategoryClick(e, index)}
 			>
-				{item.category}
-			</NavLink>
+				{category.name}
+			</button>
+			<div className={styles.categoriesList}>
+				<CategoriesList categoriesList={category.subcategories || []} />
+			</div>
 		</li>
 	));
 
 	return (
-		<>
-			<div className={styles.categoriesHeader}>Category:</div>
-			<ul className={styles.categoriesList}>{categoryElements}</ul>
-		</>
+		<div className={styles.categories}>
+			<div className={styles.categoriesNav}>
+				<div className={styles.categoriesHeader}>Category:</div>
+				<ul className={styles.categoriesNavList}>{categoryElements}</ul>
+			</div>
+		</div>
 	);
 };
 
