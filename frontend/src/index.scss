@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
 
 * {
 	box-sizing: border-box;
@@ -9,4 +9,10 @@ body {
 	font-family: 'Noto-Serif', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
