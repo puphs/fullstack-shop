@@ -3,6 +3,7 @@ import styles from './ShopItem.module.scss';
 import Prices from '../Prices/Prices';
 import Button from '../Button/Button';
 import { TShopItem } from '../../types/types';
+import Img from '../Img/Img';
 
 type Props = {
 	shopItem: TShopItem;
@@ -16,9 +17,7 @@ const ShopItem: React.FC<Props> = ({ shopItem }) => {
 				<div className={styles.moreInfoBlackout}>
 					<div className={styles.moreInfoText}>Click for more info</div>
 				</div>
-				<div className={styles.imgContainer}>
-					<img className={styles.productImg} src={shopItem.imgLink} alt={shopItem.name} />
-				</div>
+				<Img src={shopItem.imgLink} alt={shopItem.name} fixedHeight={220} />
 				<h6 className={styles.productName}>{shopItem.name}</h6>
 				<Prices prices={shopItem.prices} />
 			</div>

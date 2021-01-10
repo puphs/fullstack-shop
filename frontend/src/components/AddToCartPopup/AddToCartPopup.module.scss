@@ -31,13 +31,6 @@
 	justify-content: space-between;
 }
 
-.imgContainer {
-	width: 220px;
-}
-.productImg {
-	width: 100%;
-	height: auto;
-}
 .productName {
 	@extend %font-NotoSerif-700;
 	font-size: 18px;
