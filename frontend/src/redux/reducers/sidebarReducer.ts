@@ -1,7 +1,7 @@
-import { Category } from '../../types/types';
+import { TCategory } from '../../types/types';
 import { InferActionsTypes } from '../store';
 
-const categories: Array<Category> = [
+const categories: Array<TCategory> = [
 	{
 		name: 'men',
 		subcategories: [
@@ -83,7 +83,7 @@ const categories: Array<Category> = [
 	},
 ];
 const initialState = {
-	categories: categories as Array<Category>,
+	categories: categories as Array<TCategory>,
 };
 
 type State = typeof initialState;

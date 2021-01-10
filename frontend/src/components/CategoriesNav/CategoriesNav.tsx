@@ -1,11 +1,11 @@
 import styles from './CategoriesNav.module.scss';
-import { Category } from '../../types/types';
+import { TCategory } from '../../types/types';
 import { MouseEvent, useRef, useState } from 'react';
 import cn from 'classnames';
 import CategoriesList from './CategoriesList/CategoriesList';
 
 type Props = {
-	categories: Array<Category>;
+	categories: Array<TCategory>;
 };
 
 const CategoriesNav: React.FC<Props> = ({ categories }) => {

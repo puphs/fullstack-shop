@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { Category } from '../../../types/types';
+import { TCategory } from '../../../types/types';
 import styles from './CategoriesList.module.scss';
 
 type Props = {
-	categoriesList: Array<Category>;
+	categoriesList: Array<TCategory>;
 };
 
 const CategoriesList: React.FC<Props> = ({ categoriesList }) => {

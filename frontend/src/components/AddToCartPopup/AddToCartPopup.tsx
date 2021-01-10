@@ -24,7 +24,7 @@ const AddToCartPopup: React.FC<Props> = (props) => {
 					<SizeSelection />
 
 					<div className={styles.priceAndAddToCartBtn}>
-						<Prices discountPrice={200.99} standardPrice={250.99} />
+						<Prices prices={{ discountPrice: 200.99, standardPrice: 250.99 }} />
 						<div className={styles.addToCartBtn}>
 							<Button text={'Add to cart'} fullWidth />
 						</div>
