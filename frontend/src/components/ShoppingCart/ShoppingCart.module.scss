@@ -1,0 +1,69 @@
+@import '../../styles/variables.scss';
+@import '../../styles/global.scss';
+@import '../../styles/fonts.scss';
+
+.cart {
+	display: flex;
+	width: 100%;
+}
+
+.cartInfoAndItems {
+	flex-grow: 1;
+}
+
+.cartInfo {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 24px;
+}
+.cartItemsCount {
+	@extend %font-NotoSerif-700;
+	font-size: 20px;
+	line-height: 27px;
+}
+
+.cartItemsList {
+}
+.cartItem {
+	& + & {
+		margin-top: 16px;
+	}
+}
+
+.cartCalculatorOuter {
+	padding-left: 12px;
+	width: 290px;
+}
+.cartCalculator {
+	position: relative;
+	width: 290px;
+	padding: 12px;
+	background-color: rgba($color-secondary, 0.5);
+	display: flex;
+	flex-direction: column;
+}
+.prices {
+}
+.price {
+	@extend %font-Baloo2-400;
+	display: flex;
+	justify-content: space-between;
+	font-size: 18px;
+	line-height: 28px;
+}
+
+.priceName {
+}
+
+.priceValue {
+}
+
+.discountValue {
+	color: $color-important;
+}
+
+.total {
+	@extend %font-Baloo2-700;
+	padding: 16px 0 12px;
+}

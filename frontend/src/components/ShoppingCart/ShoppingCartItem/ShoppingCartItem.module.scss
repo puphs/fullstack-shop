@@ -1,0 +1,32 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/fonts.scss';
+
+.cartItem {
+	background-color: rgba($color-secondary, 0.3);
+	display: flex;
+	padding: 12px;
+}
+
+.cartItemInfo {
+	@extend %font-NotoSerif-400;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-left: 16px;
+}
+.cartItemMainInfo {
+}
+.cartItemName {
+	font-size: 22px;
+	line-height: 30px;
+	margin: 0;
+	font-weight: 400;
+}
+.cartItemSizeContainer {
+	margin-top: 16px;
+	font-size: 18px;
+	line-height: 25px;
+}
+.cartItemSize {
+	color: $color-primary;
+}
