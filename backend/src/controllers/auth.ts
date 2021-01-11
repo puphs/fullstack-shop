@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
-import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import User from '../models/User';
 import { Middleware } from 'express-validator/src/base';
+import User from '../models/User';
+import jwt from 'jsonwebtoken';
+import config from '../config/config';
 
 const register: Middleware = async (req, res, next) => {
 	try {
@@ -29,7 +29,22 @@ const register: Middleware = async (req, res, next) => {
 
 const login: Middleware = async (req, res, next) => {
 	try {
-	} catch (err) {}
+		const { email, pass } = req.body;
+		const user = await User.findOne({ email });
+		if (user) {
+			const isMatch = await bcrypt.compare(pass, user.passHash);
+			if (isMatch) {
+				const token = await jwt.sign({ userId: user.id }, config.server.jwtSecret, {
+					expiresIn: '1h',
+				});
+				res.status(200).json({ message: 'Loggined in', token, userId: user.id });
+				return;
+			}
+		}
+		res.status(400).json({ message: 'Incorrect password or email' });
+	} catch (err) {
+		res.status(500).json({ message: 'Server error. Please try again later.' });
+	}
 };
 
 export default { login, register };

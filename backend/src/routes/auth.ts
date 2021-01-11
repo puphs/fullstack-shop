@@ -8,6 +8,6 @@ const router = Router();
 router.post('/register', authValidators.register, authControllers.register);
 
 // api/auth/login
-router.post('/login', authControllers.login);
+router.post('/login', authValidators.login, authControllers.login);
 
 export default router;

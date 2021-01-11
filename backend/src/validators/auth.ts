@@ -13,9 +13,9 @@ const register: Array<Middleware> = [
 ];
 
 const login: Array<Middleware> = [
-	check('email').not().isEmpty().withMessage('Email is empty'),
+	check('email').exists().withMessage('Email is empty'),
 
-	check('pass').not().isEmpty().withMessage('Password is empty'),
+	check('pass').exists().withMessage('Password is empty'),
 
 	handleValidationErrors,
 ];
