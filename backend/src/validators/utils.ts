@@ -8,9 +8,9 @@ export const getErrorMessages = (req: Request): Array<string> => {
 };
 
 export const handleValidationErrors: Middleware = (req, res, next) => {
-	const firstError = getErrorMessages(req)[0];
-
-	if (firstError.length) {
+	const errors = getErrorMessages(req);
+	const firstError = errors[0];
+	if (firstError) {
 		res.status(400).json({
 			message: firstError,
 		});
