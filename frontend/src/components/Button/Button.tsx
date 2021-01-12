@@ -1,26 +1,24 @@
-import { CSSProperties } from 'react';
+import { ButtonHTMLAttributes, CSSProperties } from 'react';
 import cn from 'classnames';
 import styles from './Button.module.scss';
 
 type Props = {
-	text: string;
 	fullWidth?: boolean;
-	type?: 'primary' | 'secondary';
+	styleType?: 'primary' | 'secondary';
 	style?: CSSProperties;
-};
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<Props> = (props) => {
-	const type = props.type ?? 'primary';
-
+const Button: React.FC<Props> = ({ fullWidth, styleType, style, children, ...buttonAttr }) => {
 	return (
 		<button
 			className={cn(
-				type === 'primary' ? styles.btnPrimary : styles.btnSecondary,
-				props.fullWidth && styles.fullWidth
+				styleType === 'secondary' ? styles.btnSecondary : styles.btnPrimary,
+				fullWidth && styles.fullWidth
 			)}
-			style={props.style}
+			style={style}
+			{...buttonAttr}
 		>
-			{props.text}
+			{children}
 		</button>
 	);
 };

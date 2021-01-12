@@ -126,11 +126,12 @@ const ShoppingCart: React.FC<Props> = (props) => {
 		<div className={styles.cart}>
 			<div className={styles.cartInfoAndItems}>
 				<div className={styles.cartInfo}>
-					<Button text={'clear cart'} />
+					<Button>{'clear cart'}</Button>
 					<span className={styles.cartItemsCount}>2 items</span>
 				</div>
 				<ul className={styles.cartItemsList}>{cartItemsElements}</ul>
 			</div>
+
 			<div className={styles.cartCalculatorOuter} ref={cartCalculatorOuterRef}>
 				<section className={styles.cartCalculator} ref={cartCalculatorRef}>
 					<div className={styles.prices}>
@@ -151,7 +152,7 @@ const ShoppingCart: React.FC<Props> = (props) => {
 						</div>
 					</div>
 
-					<Button text={`buy ${cartItems.length} item(s)`} fullWidth />
+					<Button fullWidth>{`buy ${cartItems.length} item(s)`}</Button>
 				</section>
 			</div>
 		</div>

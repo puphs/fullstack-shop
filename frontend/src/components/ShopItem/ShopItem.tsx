@@ -12,7 +12,9 @@ type Props = {
 const ShopItem: React.FC<Props> = ({ shopItem }) => {
 	return (
 		<div className={styles.item}>
-			<Button text={'add to cart'} style={{ height: '38px' }} fullWidth type={'secondary'} />
+			<Button style={{ height: '38px' }} fullWidth styleType={'secondary'}>
+				{'Add to cart'}
+			</Button>
 			<div className={styles.content}>
 				<div className={styles.moreInfoBlackout}>
 					<div className={styles.moreInfoText}>Click for more info</div>

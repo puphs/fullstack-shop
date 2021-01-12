@@ -1,11 +1,11 @@
-@import '../../styles/variables.scss';
-@import '../../styles/global.scss';
-@import '../../styles/fonts.scss';
+@import '~/styles/variables.scss';
+@import '~/styles/global.scss';
+@import '~/styles/fonts.scss';
 
 %btn {
 	@extend %btnBase;
 	@extend %font-Baloo2-700;
-	padding: 0 64px;
+	padding: 2px 64px 0;
 	height: 44px;
 	font-size: 18px;
 	line-height: 28px;
@@ -28,5 +28,5 @@
 
 .fullWidth {
 	width: 100%;
-	padding: 0 32px;
+	padding: 2px 32px 0;
 }
