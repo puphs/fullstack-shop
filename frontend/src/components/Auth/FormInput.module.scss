@@ -42,10 +42,11 @@
 }
 
 .container__error {
-	height: 64px;
 	.inputText {
+		color: $color-important;
 	}
 	.input {
+		border-color: $color-important;
 	}
 }
 
