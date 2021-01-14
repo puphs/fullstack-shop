@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import { Middleware } from 'express-validator/src/base';
+import { Middleware } from '../types/types';
 import { handleValidationErrors } from './utils';
 
 const register: Array<Middleware> = [

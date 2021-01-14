@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
-import { Middleware, Request } from 'express-validator/src/base';
+import { Request } from 'express-validator/src/base';
+import { Middleware } from '../types/types';
 
 export const getErrorMessages = (req: Request): Array<string> => {
 	return validationResult(req)

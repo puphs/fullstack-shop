@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { Middleware } from 'express-validator/src/base';
 import User from '../models/User';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
+import { Middleware } from 'express-validator/src/base';
 
 const register: Middleware = async (req, res, next) => {
 	try {
@@ -14,13 +14,11 @@ const register: Middleware = async (req, res, next) => {
 			res.status(400).json({ message: 'User with such email is already exists' });
 			return;
 		}
-		const passHash = await bcrypt.hash(pass, 2);
 
+		const passHash = await bcrypt.hash(pass, 4);
 		const user = new User({ email, passHash });
 
 		await user.save();
-		console.log('user saved');
-
 		res.status(201).json({ message: 'Successful registration' });
 	} catch (err) {
 		res.status(500).json({ message: 'Server error. Please try again later.' });
