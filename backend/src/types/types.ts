@@ -1,3 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
-export type Middleware = (req: Request, res: Response, next: NextFunction) => void;
+export type DecodedTokenType = { userId: number };
+
+type ImprovedRequest = {
+	token?: DecodedTokenType;
+} & Request;
+
+export type Middleware = (req: ImprovedRequest, res: Response, next: NextFunction) => void;
