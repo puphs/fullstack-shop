@@ -5,11 +5,13 @@ dotenv.config();
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
 const SERVER_PORT = process.env.SERVER_PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || '';
+const JWT_EXPIRES_IN_HOURS = process.env.JWT_EXPIRES_IN_HOURS || 12 * 60 * 60 * 1000; // 12 HOURS
 
 const SERVER = {
 	hostname: SERVER_HOSTNAME,
 	port: SERVER_PORT,
 	jwtSecret: JWT_SECRET,
+	jwtExpiresInHours: JWT_EXPIRES_IN_HOURS,
 };
 
 const MONGO_OPTIONS = {
