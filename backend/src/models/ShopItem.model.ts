@@ -1,7 +1,7 @@
 import { Schema, model, Document, Model } from 'mongoose';
 
 export interface IShopItem {
-	user: string;
+	name: string;
 	description: string;
 	standardPrice: number;
 	discountPrice?: number;
@@ -10,7 +10,7 @@ export interface IShopItem {
 
 export interface IShopItemModel extends IShopItem, Document {}
 
-const ShopItem = new Schema({
+const schema = new Schema({
 	name: { type: String, required: true },
 	description: { type: String, required: true },
 	standardPrice: { type: Number, required: true },
@@ -18,4 +18,6 @@ const ShopItem = new Schema({
 	sizes: [{ type: String }],
 });
 
-export default model('ShopItem', ShopItem) as Model<IShopItemModel>;
+const ShopItem = model('ShopItem', schema) as Model<IShopItemModel>;
+
+export default ShopItem;
