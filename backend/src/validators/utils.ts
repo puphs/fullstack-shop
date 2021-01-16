@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import { Request } from 'express-validator/src/base';
+import ApiError from '../error/ApiError';
 import { Middleware } from '../types/types';
 
 export const getErrorMessages = (req: Request): Array<string> => {
@@ -12,9 +13,7 @@ export const handleValidationErrors: Middleware = (req, res, next) => {
 	const errors = getErrorMessages(req);
 	const firstError = errors[0];
 	if (firstError) {
-		res.status(400).json({
-			message: firstError,
-		});
+		next(ApiError.badRequest(firstError));
 	} else {
 		next();
 	}

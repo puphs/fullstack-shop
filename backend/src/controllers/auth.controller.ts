@@ -1,19 +1,19 @@
 import bcrypt from 'bcryptjs';
 import UserCredentials, { IUserCredentials } from '../models/UserCredentials.model';
-import User, { IUser, createUser } from '../models/User.model';
+import { createUser } from '../models/User.model';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
-import { Middleware } from 'express-validator/src/base';
+import { Middleware } from '../types/types';
+import ApiError from '../error/ApiError';
 
-const register: Middleware = async (req, res) => {
+const register: Middleware = async (req, res, next) => {
 	try {
 		const { email, password, name }: { email: string; password: string; name: string } = req.body;
 
-		const userCredentialsWithSuchEmail: IUserCredentials = await User.findOne({ email });
+		const userCredentialsWithSuchEmail: IUserCredentials = await UserCredentials.findOne({ email });
 
 		if (userCredentialsWithSuchEmail) {
-			res.status(400).json({ message: 'User with such email is already exists' });
-			return;
+			return next(ApiError.badRequest('User with such email is already exists'));
 		}
 
 		const passwordHash = await bcrypt.hash(password, 4);
@@ -21,15 +21,15 @@ const register: Middleware = async (req, res) => {
 		await createUser({ name, email, passwordHash });
 		res.status(201).json({ message: 'Successful registration' });
 	} catch (err) {
-		console.error(err);
-		res.status(500).json({ message: 'Server error. Please try again later.' });
+		next(ApiError.internal());
 	}
 };
 
-const login: Middleware = async (req, res) => {
+const login: Middleware = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
 		const userCredentials: IUserCredentials = await UserCredentials.findOne({ email });
+
 		if (userCredentials) {
 			const isMatch = await bcrypt.compare(password, userCredentials.passwordHash);
 			if (isMatch) {
@@ -37,12 +37,12 @@ const login: Middleware = async (req, res) => {
 				const token = await jwt.sign({ userId }, config.server.jwtSecret, {
 					expiresIn: config.server.jwtExpiresInHours,
 				});
-				return res.status(200).json({ message: 'Successful log in', token, userId });
+				return res.status(200).json({ message: 'Successful login', token, userId });
 			}
 		}
-		res.status(400).json({ message: 'Incorrect password or email' });
+		next(ApiError.badRequest('Incorrect password or email'));
 	} catch (err) {
-		res.status(500).json({ message: 'Server error. Please try again later.' });
+		next(ApiError.internal());
 	}
 };
 
