@@ -1,4 +1,11 @@
+import { ValidationErrors } from 'final-form';
 import { Form, Field } from 'react-final-form';
+import {
+	composeValidators,
+	createEmailValidator,
+	createMaxLengthValidator,
+	createRequireValidator,
+} from '../../../validators/validators';
 import Button from '../../Button/Button';
 import LoginFormInput from '../FormInput';
 
@@ -8,7 +15,7 @@ type RegisterFormValues = {
 	email: string;
 	name: string;
 	password: string;
-	repeatPassword: string;
+	confirmPassword: string;
 };
 
 const RegisterForm: React.FC<Props> = () => {
@@ -16,25 +23,52 @@ const RegisterForm: React.FC<Props> = () => {
 		console.log(values);
 	};
 	return (
-		<Form onSubmit={onSubmit}>
+		<Form
+			onSubmit={onSubmit}
+			validate={(values) => {
+				const errors: ValidationErrors = {};
+				if (values.confirmPassword !== values.password)
+					errors.confirmPassword = 'Passwords do not match';
+				return errors;
+			}}
+		>
 			{({ handleSubmit, invalid }) => (
 				<form onSubmit={handleSubmit}>
 					<Field
 						name={'email'}
 						render={(renderProps) => <LoginFormInput {...renderProps} fieldName={'Email'} />}
+						validate={composeValidators(
+							createRequireValidator('Email is required'),
+							createEmailValidator('Email has incorrect format')
+						)}
 					/>
 					<Field
 						name={'name'}
-						render={(renderProps) => <LoginFormInput {...renderProps} fieldName={'Name'} />}
+						render={(renderProps) => (
+							<LoginFormInput
+								{...renderProps}
+								fieldName={'Name'}
+								validate={composeValidators(
+									createRequireValidator('Name is required'),
+									createMaxLengthValidator('Max Name length is 12', 12)
+								)}
+							/>
+						)}
 					/>
 					<Field
 						name={'password'}
-						render={(renderProps) => <LoginFormInput {...renderProps} fieldName={'Password'} />}
+						render={(renderProps) => (
+							<LoginFormInput {...renderProps} fieldName={'Password'} inputType={'password'} />
+						)}
 					/>
 					<Field
-						name={'repeatPassword'}
+						name={'confirmPassword'}
 						render={(renderProps) => (
-							<LoginFormInput {...renderProps} fieldName={'Repeat password'} />
+							<LoginFormInput
+								{...renderProps}
+								fieldName={'Confirm password'}
+								inputType={'password'}
+							/>
 						)}
 					/>
 					<div>
