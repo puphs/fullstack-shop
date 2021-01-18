@@ -1,5 +1,5 @@
 import { TShopItem } from '../../types/types';
-import { InferActionsTypes } from '../store';
+import { InferActionsTypes } from './reducerUtils';
 
 const initialState = {
 	shopItems: [] as Array<TShopItem>,

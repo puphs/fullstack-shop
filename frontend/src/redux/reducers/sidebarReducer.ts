@@ -1,5 +1,5 @@
 import { TCategory } from '../../types/types';
-import { InferActionsTypes } from '../store';
+import { InferActionsTypes } from './reducerUtils';
 
 const categories: Array<TCategory> = [
 	{
