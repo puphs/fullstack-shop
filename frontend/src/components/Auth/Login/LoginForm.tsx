@@ -1,24 +1,19 @@
 import { Form, Field } from 'react-final-form';
+import { TFormProps } from '../../../types/types';
 import {
 	composeValidators,
 	createEmailValidator,
-	createMinLengthValidator,
 	createRequireValidator,
 } from '../../../validators/validators';
 import Button from '../../Button/Button';
 import LoginFormInput from '../FormInput';
 
-type Props = {};
-
-type LoginFormValues = {
+export type LoginFormValues = {
 	email: string;
 	password: string;
 };
 
-const LoginForm: React.FC<Props> = () => {
-	const onSubmit = (values: LoginFormValues) => {
-		console.log(values);
-	};
+const LoginForm: React.FC<TFormProps<LoginFormValues>> = ({ onSubmit }) => {
 	return (
 		<Form onSubmit={onSubmit}>
 			{({ handleSubmit, invalid }) => (
