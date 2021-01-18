@@ -8,10 +8,19 @@ export type TPrices = {
 	standardPrice: number;
 };
 export type TShopItem = {
-	id: number;
 	name: string;
 	description: string;
 	imgLink: string;
-	prices: TPrices;
-	sizes?: Array<string>;
+	standardPrice: TPrices['standardPrice'];
+	discountPrice: TPrices['discountPrice'];
+	sizes: Array<string>;
+};
+
+export type TCartItem = {
+	shopItem: TShopItem;
+	size: string;
+};
+
+export type TFormProps<FormValues> = {
+	onSubmit: (values: FormValues) => void;
 };
