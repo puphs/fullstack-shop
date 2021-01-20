@@ -17,9 +17,10 @@ const register: Middleware = async (req, res, next) => {
 		}
 
 		const passwordHash = await bcrypt.hash(password, 4);
+		const user = await createUser({ name, email, passwordHash });
+		const token = await createToken(user._id);
 
-		await createUser({ name, email, passwordHash });
-		res.status(201).json({ message: 'Successful registration' });
+		res.status(201).json({ message: 'Successful registration', token, userId: user._id });
 	} catch (err) {
 		next(ApiError.internal());
 	}
@@ -34,9 +35,7 @@ const login: Middleware = async (req, res, next) => {
 			const isMatch = await bcrypt.compare(password, userCredentials.passwordHash);
 			if (isMatch) {
 				const userId = userCredentials.user;
-				const token = await jwt.sign({ userId }, config.server.jwtSecret, {
-					expiresIn: config.server.jwtExpiresInHours,
-				});
+				const token = await createToken(userId);
 				return res.status(200).json({ message: 'Successful login', token, userId });
 			}
 		}
@@ -44,6 +43,12 @@ const login: Middleware = async (req, res, next) => {
 	} catch (err) {
 		next(ApiError.internal());
 	}
+};
+
+const createToken = async (userId: string) => {
+	return await jwt.sign({ userId }, config.server.jwtSecret, {
+		expiresIn: config.server.jwtExpiresInHours,
+	});
 };
 
 export default { register, login };
