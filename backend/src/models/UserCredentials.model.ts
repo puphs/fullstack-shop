@@ -15,4 +15,6 @@ const schema = new Schema({
 	user: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
-export default model('UserCredentials', schema) as Model<IUserCredentialsModel>;
+const UserCredentials = model('UserCredentials', schema) as Model<IUserCredentialsModel>;
+
+export default UserCredentials;

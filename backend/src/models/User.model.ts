@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model, DocumentQuery } from 'mongoose';
+import { Document, model, Model, Schema } from 'mongoose';
 import ShoppingCart, { IShoppingCartModel } from './ShoppingCart.model';
 import UserCredentials, { IUserCredentials, IUserCredentialsModel } from './UserCredentials.model';
 
@@ -30,7 +30,7 @@ export const createUser = async (data: IUser & IUserCredentials) => {
 	await credentials.save();
 	await shoppingCart.save();
 	await user.save();
-	// Model.insertMany([user, credentials, shoppingCart]);
+	return user;
 };
 
 export default User;
