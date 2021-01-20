@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import ErrorBase from '../error/ErrorBase';
 
-export type DecodedTokenType = { userId: string };
+export type DecodedToken = { userId: string };
 
 type ImprovedRequest = {
-	token?: DecodedTokenType;
+	token?: DecodedToken;
 } & Request;
 
 export type Middleware = (req: ImprovedRequest, res: Response, next: NextFunction) => void;
