@@ -1,13 +1,17 @@
+import path from 'path';
 import express from 'express';
+import cors from 'cors';
 import config from './config/config';
 import mongoose from 'mongoose';
-import authRoutes from './routes/auth.routes';
 import routes from './routes/routes';
-import shoppingCartRoutes from './routes/shopping-cart.routes';
 import errorHandler from './middleware/error-handler.middleware';
 import errorLogger from './middleware/error-logger.middleware';
 
 const app = express();
+
+app.use(cors());
+
+app.use(express.static(path.resolve(config.server.clientDir)));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
