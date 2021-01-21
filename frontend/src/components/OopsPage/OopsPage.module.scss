@@ -1,0 +1,40 @@
+@import '~/styles/fonts.scss';
+@import '~/styles/variables.scss';
+
+.oopsContainer {
+	margin: 0 auto;
+	text-align: center;
+	width: 450px;
+}
+
+.oops,
+.reason {
+	@extend %font-NotoSerif-400;
+}
+
+.oops {
+	margin: 0;
+	font-size: 116px;
+	line-height: 158px;
+	margin-bottom: 24px;
+}
+
+.reason {
+	font-size: 22px;
+	line-height: 30px;
+	color: $color-text-primary;
+}
+
+.reasonLink {
+	color: $color-primary;
+}
+
+.notLoggedIn {
+}
+
+.p {
+	margin: 0;
+	& + & {
+		margin-top: 8px;
+	}
+}
