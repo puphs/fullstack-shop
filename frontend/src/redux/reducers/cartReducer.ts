@@ -2,7 +2,7 @@ import { TCartItem } from '../../types/types';
 import { InferActionsTypes } from './reducerUtils';
 
 const initialState = {
-	cartItems: [] as Array<TCartItem>,
+	cartItems: null as Array<TCartItem> | null,
 };
 
 type State = typeof initialState;
@@ -46,8 +46,8 @@ export const actions = {
 	addItemToCart: (token: string, shopItemId: string) =>
 		({ type: ADD_ITEM_TO_CART, token, shopItemId } as const),
 
-	removeItemFromCart: (token: string, itemIndex: number) =>
-		({ type: REMOVE_ITEM_FROM_CART, token, itemIndex } as const),
+	removeItemFromCart: (token: string, itemId: string) =>
+		({ type: REMOVE_ITEM_FROM_CART, token, itemId } as const),
 
 	removeAllItemsFromCart: (token: string) => ({ type: REMOVE_ALL_ITEMS_FROM_CART, token } as const),
 };

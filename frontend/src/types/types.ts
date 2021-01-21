@@ -8,6 +8,7 @@ export type TPrices = {
 	standardPrice: number;
 };
 export type TShopItem = {
+	_id: string;
 	name: string;
 	description: string;
 	imgLink: string;
@@ -17,6 +18,7 @@ export type TShopItem = {
 };
 
 export type TCartItem = {
+	_id: string;
 	shopItem: TShopItem;
 	size: string;
 };

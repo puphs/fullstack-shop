@@ -16,7 +16,7 @@ import { getErrorMessage } from './sagaUtils';
 function* loadCartItems({ token }: LoadCartItemsAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.loadCartItems, token);
-		yield put(actions.setCartItems(data.items));
+		yield put(actions.setCartItems(data.shoppingCartItems));
 	} catch (err) {
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
@@ -25,16 +25,16 @@ function* loadCartItems({ token }: LoadCartItemsAction) {
 function* addItemToCart({ token, shopItemId }: AddItemToCartAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.addItemToCart, token, shopItemId);
-		yield put(actions.setCartItems(data.items));
+		yield put(actions.setCartItems(data.shoppingCartItems));
 	} catch (err) {
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
 }
 
-function* removeItemFromCart({ token, itemIndex }: RemoveItemFromCartAction) {
+function* removeItemFromCart({ token, itemId }: RemoveItemFromCartAction) {
 	try {
-		const data: CartItemsResponse = yield call(cartApi.removeItemFromCart, token, itemIndex);
-		yield put(actions.setCartItems(data.items));
+		const data: CartItemsResponse = yield call(cartApi.removeItemFromCart, token, itemId);
+		yield put(actions.setCartItems(data.shoppingCartItems));
 	} catch (err) {
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
@@ -42,7 +42,7 @@ function* removeItemFromCart({ token, itemIndex }: RemoveItemFromCartAction) {
 function* removeAllItemsFromCart({ token }: RemoveAllItemsFromCart) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.removeAllItemsFromCart, token);
-		yield put(actions.setCartItems(data.items));
+		yield put(actions.setCartItems(data.shoppingCartItems));
 	} catch (err) {
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}

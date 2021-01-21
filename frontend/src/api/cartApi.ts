@@ -2,14 +2,14 @@ import { TCartItem } from '../types/types';
 import { authHeader, axiosInstance, getData, Response } from './apiUtils';
 
 export type CartItemsResponse = {
-	user: string;
-	items: Array<TCartItem>;
+	shoppingCartItems: Array<TCartItem>;
 } & Response;
 
 const loadCartItems = async (token: string) => {
 	const data = await getData<CartItemsResponse>(
 		axiosInstance.get('shopping-cart', { headers: authHeader(token) })
 	);
+	console.log(data);
 	return data;
 };
 
@@ -20,9 +20,9 @@ const addItemToCart = async (token: string, shopItemId: string) => {
 	return data;
 };
 
-const removeItemFromCart = async (token: string, itemIndex: number) => {
+const removeItemFromCart = async (token: string, itemId: string) => {
 	const data = await getData<CartItemsResponse>(
-		axiosInstance.delete('shopping-cart', { data: { itemIndex }, headers: authHeader(token) })
+		axiosInstance.delete(`shopping-cart/${itemId}`, { headers: authHeader(token) })
 	);
 	return data;
 };
