@@ -6,15 +6,25 @@ type Props = {
 	fullWidth?: boolean;
 	styleType?: 'primary' | 'secondary';
 	style?: CSSProperties;
+	loading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<Props> = ({ fullWidth, styleType, style, children, ...buttonAttr }) => {
+const Button: React.FC<Props> = ({
+	fullWidth,
+	styleType,
+	style,
+	loading,
+	children,
+	...buttonAttr
+}) => {
 	return (
 		<button
 			className={cn(
 				styleType === 'secondary' ? styles.btnSecondary : styles.btnPrimary,
-				fullWidth && styles.fullWidth
+				fullWidth && styles.fullWidth,
+				loading && styles.loading
 			)}
+			disabled={loading}
 			style={style}
 			{...buttonAttr}
 		>
