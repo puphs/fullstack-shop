@@ -1,19 +1,20 @@
 import React from 'react';
-import { TPrices } from '../../types/types';
+import { formatPrice } from '../../helpers/pricesHelper';
 import styles from './Prices.module.scss';
 
 type Props = {
-	prices: TPrices;
+	standardPrice: number;
+	discountPrice: number | null;
 };
 
-const Prices: React.FC<Props> = ({ prices }) => {
-	const formatPrice = (price: number) => `$${price.toFixed(2)}`;
-	const { discountPrice, standardPrice } = prices;
+const Prices: React.FC<Props> = ({ standardPrice, discountPrice }) => {
 	return (
 		<div className={styles.prices}>
 			{discountPrice ? (
 				<>
-					<span className={styles.discountPrice}>{formatPrice(discountPrice)}</span>
+					{discountPrice && (
+						<span className={styles.discountPrice}>{formatPrice(discountPrice)}</span>
+					)}
 					<span className={styles.standardPrice}>{formatPrice(standardPrice)}</span>
 				</>
 			) : (

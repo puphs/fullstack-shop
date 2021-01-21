@@ -21,7 +21,7 @@ const ShopItem: React.FC<Props> = ({ shopItem }) => {
 				</div>
 				<Img src={shopItem.imgLink} alt={shopItem.name} fixedHeight={220} />
 				<h6 className={styles.productName}>{shopItem.name}</h6>
-				<Prices prices={shopItem.prices} />
+				<Prices standardPrice={shopItem.standardPrice} discountPrice={shopItem.discountPrice} />
 			</div>
 		</div>
 	);
