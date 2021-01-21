@@ -2,15 +2,18 @@
 @import '~/styles/variables.scss';
 @import '~/styles/fonts.scss';
 
-%headerBtnBase {
-	@extend %btnBase;
+%headerNavImgBase {
 	width: 32px;
 	height: 32px;
-	background: $color-text-primary;
+	background-color: $color-text-primary;
+	transition: background-color 0.3s;
+	&:hover {
+		background-color: $color-primary;
+	}
 }
 
-@mixin headerBtn($iconUrl) {
-	@extend %headerBtnBase;
+@mixin headerNavImg($iconUrl) {
+	@extend %headerNavImgBase;
 	mask: url($iconUrl);
 	mask-size: cover;
 }
@@ -21,6 +24,8 @@
 	display: flex;
 }
 .logo {
+	color: $color-text-primary;
+	text-decoration: none;
 	font-size: 32px;
 	line-height: 44px;
 	letter-spacing: 5%;
@@ -32,15 +37,24 @@
 	align-items: center;
 }
 .navItem {
-	margin-left: 64px;
+	position: relative;
+
+	&__active .navItemImg {
+		background-color: $color-primary;
+	}
+}
+
+.navItemImg {
+	position: relative;
 }
 
 .search {
 	flex-grow: 1;
+	margin-left: 64px;
 }
 
 .cart {
-	position: relative;
+	margin-left: 64px;
 }
 .cartItemsCount {
 	position: absolute;
@@ -59,21 +73,23 @@
 	font-size: 16px;
 	line-height: 22px;
 }
-.cartBtn {
-	@include headerBtn('../../images/shopping-cart.svg');
+.cartImg {
+	@include headerNavImg('~/assets/icons/shopping-cart.svg');
 }
 
 .account {
+	margin-left: 64px;
+
 	display: flex;
 	align-items: center;
 }
 .accoutName {
 	font-size: 20px;
 	line-height: 27px;
+	margin-right: 10px;
 }
-.accountBtn {
-	margin-left: 10px;
-	@include headerBtn('../../images/account.svg');
+.accountImg {
+	@include headerNavImg('~/assets/icons/account.svg');
 }
 
 .line {
