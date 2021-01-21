@@ -2,9 +2,22 @@
 @import '~/styles/global.scss';
 @import '~/styles/fonts.scss';
 
+@keyframes appear {
+	0% {
+		transform: translateX(-30px);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
 .cart {
 	display: flex;
 	width: 100%;
+	animation: appear 0.5s;
 }
 
 .cartInfoAndItems {
@@ -15,7 +28,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding-bottom: 24px;
 }
 .cartItemsCount {
 	@extend %font-NotoSerif-700;
@@ -23,12 +35,8 @@
 	line-height: 27px;
 }
 
-.cartItemsList {
-}
-.cartItem {
-	& + & {
-		margin-top: 16px;
-	}
+.cartItems {
+	margin-top: 16px;
 }
 
 .cartCalculatorOuter {
@@ -66,4 +74,19 @@
 .total {
 	@extend %font-Baloo2-700;
 	padding: 16px 0 12px;
+}
+
+.transitionEnter {
+	opacity: 0;
+}
+.transitionEnterActive {
+	opacity: 1;
+	transition: opacity 0.2s linear;
+}
+.transitionExit {
+	opacity: 1;
+}
+.transitionExitActive {
+	opacity: 0;
+	transition: opacity 0.2s linear;
 }

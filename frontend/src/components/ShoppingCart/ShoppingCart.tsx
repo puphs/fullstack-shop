@@ -1,117 +1,68 @@
-import { TShopItem } from '../../types/types';
-import Button from '../Button/Button';
-import Prices from '../Prices/Prices';
-import styles from './ShoppingCart.module.scss';
 import cn from 'classnames';
-import Img from '../Img/Img';
-import ShopItem from '../ShopItem/ShopItem';
-import ShoppingCartItem from './ShoppingCartItem/ShoppingCartItem';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
+import { formatPrice } from '../../helpers/pricesHelper';
+import { actions } from '../../redux/reducers/cartReducer';
+import { AppState } from '../../redux/store';
+import { TCartItem } from '../../types/types';
+import Button from '../Button/Button';
+import styles from './ShoppingCart.module.scss';
+import ShoppingCartItems from './ShoppingCartItems/ShoppingCartItems';
 
-type Props = {};
+const ShoppingCart: React.FC = () => {
+	const dispatch = useDispatch();
+	const cartItems = useSelector((state: AppState) => state.cart.cartItems);
 
-const ShoppingCart: React.FC<Props> = (props) => {
-	const cartItems: Array<TShopItem> = [
-		{
-			id: 0,
-			name: 'name',
-			description: 'descr',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: 330.2,
-				standardPrice: 390,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-		{
-			id: 1,
-			name: 'name 2',
-			description: 'descr 2',
-			imgLink:
-				'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-			prices: {
-				discountPrice: null,
-				standardPrice: 900,
-			},
-		},
-	];
+	const token = useSelector((state: AppState) => state.auth.token);
 
-	const cartItemsElements = cartItems.map((item, index) => (
-		<li key={index} className={styles.cartItem}>
-			<ShoppingCartItem shopItem={item} />
-		</li>
-	));
+	useEffect(() => {
+		if (token) {
+			dispatch(actions.loadCartItems(token));
+		}
+	}, [token, dispatch]);
 
+	if (!token) {
+		return <Redirect to={'/oops/not-logged-in'} />;
+	}
+
+	const onRemoveAllItemsBtnClick = () => {
+		if (token) dispatch(actions.removeAllItemsFromCart(token));
+	};
+
+	if (!cartItems) {
+		return <></>;
+	}
+
+	return (
+		<div className={styles.cart}>
+			<div className={styles.cartInfoAndItems}>
+				<div className={styles.cartInfo}>
+					<Button disabled={cartItems.length === 0 || !token} onClick={onRemoveAllItemsBtnClick}>
+						{'clear cart'}
+					</Button>
+					<span className={styles.cartItemsCount}>{cartItems.length} item(s)</span>
+				</div>
+
+				<div className={styles.cartItems}>
+					<ShoppingCartItems />
+				</div>
+			</div>
+			<CartCalculator cartItems={cartItems} />
+		</div>
+	);
+};
+
+type CartCalculatorProps = {
+	cartItems: Array<TCartItem>;
+};
+
+const CartCalculator: React.FC<CartCalculatorProps> = ({ cartItems }) => {
 	const cartCalculatorRef = useRef<HTMLDivElement>(null);
 	const cartCalculatorOuterRef = useRef<HTMLDivElement>(null);
 
-	document.addEventListener('scroll', (e) => {
+	const onScroll = () => {
 		if (!cartCalculatorOuterRef.current) return;
 		const calculatorOffsetTop = cartCalculatorOuterRef.current.offsetTop;
 
@@ -120,41 +71,53 @@ const ShoppingCart: React.FC<Props> = (props) => {
 		} else {
 			cartCalculatorRef.current?.removeAttribute('style');
 		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('scroll', onScroll);
+		return () => {
+			document.removeEventListener('scroll', onScroll);
+		};
 	});
+	const sumStandardPrices = cartItems.reduce<number>(
+		(price, item) => price + item.shopItem.standardPrice,
+		0
+	);
+	const sumDiscountPrices = cartItems.reduce<number>(
+		(price, item) => price + (item.shopItem.discountPrice ?? item.shopItem.standardPrice),
+		0
+	);
+	const standardPrice = sumStandardPrices;
+	const discount = sumStandardPrices - sumDiscountPrices;
+	const total = standardPrice - discount;
 
 	return (
-		<div className={styles.cart}>
-			<div className={styles.cartInfoAndItems}>
-				<div className={styles.cartInfo}>
-					<Button>{'clear cart'}</Button>
-					<span className={styles.cartItemsCount}>2 items</span>
-				</div>
-				<ul className={styles.cartItemsList}>{cartItemsElements}</ul>
-			</div>
-
-			<div className={styles.cartCalculatorOuter} ref={cartCalculatorOuterRef}>
-				<section className={styles.cartCalculator} ref={cartCalculatorRef}>
-					<div className={styles.prices}>
-						<div className={styles.price}>
-							<span className={styles.priceName}>Standard price</span>
-							<span onScroll={(e) => {}} className={styles.priceValue}>
-								$90.00
-							</span>
-						</div>
-						<div className={styles.price}>
-							<span className={styles.priceName}>Discount</span>
-							<span className={cn(styles.priceValue, styles.discountValue)}>$0.00</span>
-						</div>
-
-						<div className={cn(styles.price, styles.total)}>
-							<span className={cn(styles.priceName, styles.totalPriceName)}>Total</span>
-							<span className={cn(styles.priceValue, styles.totalPriceValue)}>$90.00</span>
-						</div>
+		<div className={styles.cartCalculatorOuter} ref={cartCalculatorOuterRef}>
+			<section className={styles.cartCalculator} ref={cartCalculatorRef}>
+				<div className={styles.prices}>
+					<div className={styles.price}>
+						<span className={styles.priceName}>Standard price</span>
+						<span onScroll={(e) => {}} className={styles.priceValue}>
+							{formatPrice(standardPrice)}
+						</span>
+					</div>
+					<div className={styles.price}>
+						<span className={styles.priceName}>Discount</span>
+						<span className={cn(styles.priceValue, styles.discountValue)}>
+							{formatPrice(discount)}
+						</span>
 					</div>
 
-					<Button fullWidth>{`buy ${cartItems.length} item(s)`}</Button>
-				</section>
-			</div>
+					<div className={cn(styles.price, styles.total)}>
+						<span className={cn(styles.priceName, styles.totalPriceName)}>Total</span>
+						<span className={cn(styles.priceValue, styles.totalPriceValue)}>
+							{formatPrice(total)}
+						</span>
+					</div>
+				</div>
+
+				<Button fullWidth>{`buy ${cartItems.length} item(s)`}</Button>
+			</section>
 		</div>
 	);
 };

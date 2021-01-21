@@ -1,13 +1,25 @@
 @import '~/styles/variables.scss';
 @import '~/styles/fonts.scss';
+@import '~/styles/global.scss';
 
 .cartItem {
 	background-color: rgba($color-secondary, 0.3);
 	display: flex;
 	padding: 12px;
+	overflow: hidden;
+	cursor: pointer;
+	transition: 0.3s;
+	&:hover {
+		background-color: rgba($color-secondary, 0.7);
+	}
+
+	& + & {
+		margin: 12px 0 0 0;
+	}
 }
 
 .cartItemInfo {
+	flex-grow: 1;
 	@extend %font-NotoSerif-400;
 	display: flex;
 	flex-direction: column;
@@ -29,4 +41,42 @@
 }
 .cartItemSize {
 	color: $color-primary;
+	margin-left: 4px;
+}
+
+.removeCartItemBtn {
+	@extend %btnBase;
+	width: 32px;
+	height: 32px;
+	mask-image: url('~/assets/icons/close.svg');
+	mask-size: cover;
+	mask-repeat: no-repeat;
+	background-color: rgba($color-text-secondary, 0.3);
+	transition: 0.2s;
+	&:hover {
+		background-color: $color-primary;
+	}
+}
+
+// .transitionEnter {
+// 	// opacity: 0;
+// 	height: 0;
+// 	overflow: hidden;
+// }
+// for priority
+.cartItem {
+	&.transitionEnterActive {
+		height: 154px;
+	}
+	&.transitionExit {
+		padding: 12px;
+		height: 154px;
+		margin: 12px 0 0 0;
+	}
+	&.transitionExitActive {
+		margin: 0px;
+		padding: 0 12px;
+		height: 0;
+		transition: margin padding height 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+	}
 }
