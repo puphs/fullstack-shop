@@ -7,13 +7,13 @@ type Props = {
 };
 
 const CategoriesList: React.FC<Props> = ({ categoriesList }) => {
-	const categoriesElements = categoriesList.map((category) => (
-		<li className={styles.categoryItem}>
+	const categoriesElements = categoriesList.map((category, categoryIndex) => (
+		<li className={styles.categoryItem} key={categoryIndex}>
 			<div className={styles.categoryName}>{category.name}</div>
 
 			<ul className={styles.subcategoriesList}>
-				{category.subcategories?.map((subcategory) => (
-					<li className={styles.subcategoryItem}>
+				{category.subcategories?.map((subcategory, subcategoryIndex) => (
+					<li className={styles.subcategoryItem} key={subcategoryIndex}>
 						<NavLink to={'/'} className={styles.subcategoryItemLink}>
 							{subcategory.name}
 						</NavLink>
