@@ -40,7 +40,7 @@ const addItem: Middleware = async (req, res, next) => {
 
 		const shoppingCart = await getCart(req.token!);
 
-		shoppingCart.items?.push(cartItem);
+		shoppingCart.items?.unshift(cartItem);
 		await shoppingCart.save();
 
 		await populateCartItems(shoppingCart);

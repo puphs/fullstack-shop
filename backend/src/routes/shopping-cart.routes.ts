@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import shoppingCart from '../controllers/shopping-cart.controller';
-import auth from '../middleware/auth.middleware';
+import shoppingCartController from '../controllers/shopping-cart.controller';
+import authMiddleware from '../middleware/auth.middleware';
 import shoppingCartValidators from '../validators/shopping-cart.validators';
 
 const router = Router();
 
 // api/shopping-cart
-router.get('/', auth, shoppingCart.getItems);
-router.post('/', auth, shoppingCartValidators.addItem, shoppingCart.addItem);
-router.delete('/:itemId', auth, shoppingCart.removeItem);
-router.delete('/', auth, shoppingCart.removeAllItems);
+router.get('/', authMiddleware, shoppingCartController.getItems);
+router.post('/', authMiddleware, shoppingCartValidators.addItem, shoppingCartController.addItem);
+router.delete('/:itemId', authMiddleware, shoppingCartController.removeItem);
+router.delete('/', authMiddleware, shoppingCartController.removeAllItems);
 
 export default router;

@@ -3,11 +3,13 @@ import path from 'path';
 import config from '../config/config';
 import authRoutes from './auth.routes';
 import shoppingCartRoutes from './shopping-cart.routes';
+import shopRoutes from './shop.routes';
 
 const router = Router();
 
 router.use('/api/auth', authRoutes);
 router.use('/api/shopping-cart', shoppingCartRoutes);
+router.use('/api/shop', shopRoutes);
 
 router.get('*', (req, res) => {
 	res
