@@ -34,7 +34,7 @@ const LoginForm: React.FC<TFormProps<LoginFormValues>> = ({ onSubmit }) => {
 						validate={composeValidators(createRequireValidator('Password is required'))}
 					/>
 					<div>
-						<Button type="submit" fullWidth style={{ marginTop: 16 }}>
+						<Button type="submit" disabled={invalid} fullWidth style={{ marginTop: 16 }}>
 							login
 						</Button>
 					</div>

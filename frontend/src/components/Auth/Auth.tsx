@@ -1,16 +1,32 @@
-import { Route, Switch } from 'react-router-dom';
 import styles from './Auth.module.scss';
-import Login from './Login/Login';
-import Register from './Register/Register';
+import { Link } from 'react-router-dom';
 
-const Auth: React.FC = () => {
+type Props = {
+	renderForm: () => React.ReactElement;
+	header?: string;
+	formProps?: {};
+	formMessage?: {
+		message: string;
+		messageLinkText: string;
+		messageLinkPath: string;
+	};
+};
+
+const Auth: React.FC<Props> = ({ renderForm, header, formMessage }) => {
 	return (
-		<div className={styles.container}>
-			<Switch>
-				<Route path={'/auth/login'} render={() => <Login />} />
-				<Route path={'/auth/register'} render={() => <Register />} />
-				{/* <Route path={'/auth/login'} render={() => <Login />} /> */}
-			</Switch>
+		<div>
+			<h4 className={styles.formHeader}>{header}</h4>
+			<div className={styles.form}>{renderForm()}</div>
+			<h6 className={styles.formMessage}>
+				{formMessage && (
+					<>
+						{formMessage.message}
+						<Link className={styles.formMessageLink} to={formMessage.messageLinkPath}>
+							{formMessage.messageLinkText}
+						</Link>
+					</>
+				)}
+			</h6>
 		</div>
 	);
 };

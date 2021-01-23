@@ -1,32 +1,16 @@
+import { Route, Switch } from 'react-router-dom';
 import styles from './AuthPage.module.scss';
-import { Link } from 'react-router-dom';
+import LoginPage from './LoginPage/LoginPage';
+import RegisterPage from './RegisterPage/RegisterPage';
 
-type Props = {
-	renderForm: () => React.ReactElement;
-	header?: string;
-	formProps?: {};
-	formMessage?: {
-		message: string;
-		messageLinkText: string;
-		messageLinkPath: string;
-	};
-};
-
-const AuthPage: React.FC<Props> = ({ renderForm, header, formMessage }) => {
+const AuthPage: React.FC = () => {
 	return (
 		<div className={styles.container}>
-			<h4 className={styles.formHeader}>{header}</h4>
-			<div className={styles.form}>{renderForm()}</div>
-			<h6 className={styles.formMessage}>
-				{formMessage && (
-					<>
-						{formMessage.message}
-						<Link className={styles.formMessageLink} to={formMessage.messageLinkPath}>
-							{formMessage.messageLinkText}
-						</Link>
-					</>
-				)}
-			</h6>
+			<Switch>
+				<Route path={'/auth/login'} render={() => <LoginPage />} />
+				<Route path={'/auth/register'} render={() => <RegisterPage />} />
+				{/* <Route path={'/auth/login'} render={() => <Login />} /> */}
+			</Switch>
 		</div>
 	);
 };

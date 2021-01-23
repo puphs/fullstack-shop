@@ -81,12 +81,7 @@ const RegisterForm: React.FC<TFormProps<RegisterFormValues>> = ({ onSubmit }) =>
 						)}
 					/>
 					<div>
-						<Button
-							type="submit"
-							styleType={invalid ? 'secondary' : 'primary'}
-							fullWidth
-							style={{ marginTop: 16 }}
-						>
+						<Button type="submit" disabled={invalid} fullWidth style={{ marginTop: 16 }}>
 							register
 						</Button>
 					</div>

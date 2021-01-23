@@ -1,5 +1,28 @@
-.container {
-	display: flex;
-	justify-content: center;
-	width: 100%;
+@import '~/styles/variables.scss';
+@import '~/styles/fonts.scss';
+
+.formHeader,
+.formMessage {
+	@extend %font-NotoSerif-400;
+	text-align: center;
+}
+
+.formHeader {
+	font-size: 24px;
+	line-height: 33px;
+	margin: 0;
+}
+
+.form {
+	margin-top: 16px;
+}
+
+.formMessage {
+	margin: 12px 0 0 0;
+	font-size: 14px;
+	line-height: 19px;
+	color: $color-text-secondary;
+}
+.formMessageLink {
+	color: $color-primary;
 }
