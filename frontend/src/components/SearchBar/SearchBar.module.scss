@@ -1,24 +1,41 @@
 @import '../Header/Header.module.scss';
 
-.search {
+@import '~/styles/fonts.scss';
+@import '~/styles/variables.scss';
+@import '~/styles/global.scss';
+
+.searchBar {
 	position: relative;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 }
-.search__collapsed {
+
+.search {
+}
+
+.searchBar__collapsed {
 	.searchInput {
 		opacity: 0;
 		width: 0%;
 		padding: 0;
 	}
 	.searchBtn {
-		background-color: $color-text-primary;
 		left: calc(100% - 32px);
-		transform: rotate(0deg);
 	}
+
+	& .searchImg {
+		background-color: $color-text-primary;
+	}
+
 	.clearBtn {
 		opacity: 0;
+		z-index: -1;
+	}
+	.searchImg {
+		&:hover {
+			background-color: $color-primary;
+		}
 	}
 }
 .searchInput {
@@ -36,18 +53,33 @@
 }
 
 .searchBtn {
+	background-color: transparent;
 	position: absolute;
 	left: 6px;
-	@include headerBtn('../../images/search.svg');
-	background-color: #fff;
-	transform: rotate(90deg);
+	@extend %btnBase;
 	transition: 0.3s ease-in-out;
+}
+
+.searchImg {
+	background-color: #fff;
+	@include headerNavImg('~/assets/icons/search.svg');
 }
 
 .clearBtn {
 	position: absolute;
 	right: 6px;
-	@include headerBtn('../../images/close.svg');
-	background-color: #fff;
+	@extend %btnBase;
+	background-color: transparent;
 	transition: 0.2s;
+}
+
+.clearImg {
+	background-color: #fff;
+	@include headerNavImg('~/assets/icons/close.svg');
+}
+.searchImg,
+.clearImg {
+	&:hover {
+		background-color: rgba(#fff, 0.6);
+	}
 }
