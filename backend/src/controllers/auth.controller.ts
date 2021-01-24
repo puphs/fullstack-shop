@@ -6,6 +6,12 @@ import config from '../config/config';
 import { Middleware } from '../types/types';
 import ApiError from '../error/ApiError';
 
+const createToken = async (userId: string) => {
+	return await jwt.sign({ userId }, config.server.jwtSecret, {
+		expiresIn: config.server.jwtExpiresIn,
+	});
+};
+
 const register: Middleware = async (req, res, next) => {
 	try {
 		const { email, password, name }: { email: string; password: string; name: string } = req.body;
@@ -43,12 +49,6 @@ const login: Middleware = async (req, res, next) => {
 	} catch (err) {
 		next(ApiError.internal());
 	}
-};
-
-const createToken = async (userId: string) => {
-	return await jwt.sign({ userId }, config.server.jwtSecret, {
-		expiresIn: config.server.jwtExpiresInHours,
-	});
 };
 
 export default { register, login };

@@ -41,7 +41,7 @@ const NotLoggedIn = () => {
 		<div className={styles.notLoggedIn}>
 			<p className={styles.p}>
 				You are not logged in!{' '}
-				<Link className={styles.reasonLink} to={'/auth/register'}>
+				<Link className={styles.reasonLink} to={'/auth/login'}>
 					Login!
 				</Link>
 			</p>
