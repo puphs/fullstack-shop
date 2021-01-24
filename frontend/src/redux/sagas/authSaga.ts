@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
+import { CODE, Response } from '../../api/apiUtils';
 import { authApi, AuthResponse } from '../../api/authApi';
 import { removeAuthData, saveAuthData } from '../../helpers/authHelper';
 import {
@@ -10,6 +12,15 @@ import {
 	RegisterAction,
 } from '../reducers/authReducer';
 import { getErrorMessage } from './sagaUtils';
+
+export function* handleTokenExpired(err: any) {
+	if (axios.isAxiosError(err) && err.response) {
+		const res = err.response.data as Response;
+		if (res.code === CODE.TOKEN_EXPIRED) {
+			yield logout();
+		}
+	}
+}
 
 function* login({ email, password }: LoginAction) {
 	try {
