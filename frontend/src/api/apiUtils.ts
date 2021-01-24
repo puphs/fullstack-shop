@@ -10,4 +10,10 @@ export const getData = <T>(promise: Promise<AxiosResponse<T>>) =>
 
 export const authHeader = (token: string) => ({ Authorization: `Bearer ${token}` });
 
-export type Response = { message: string };
+export const CODE = {
+	OK: 0,
+	ERROR: 1,
+	TOKEN_EXPIRED: 2,
+};
+
+export type Response = { message: string; code: 0 | 1 | 2 };
