@@ -12,7 +12,7 @@ import { getErrorMessage } from './sagaUtils';
 function* loadShopItems({ params }: LoadShopItemsAction) {
 	try {
 		const data: LoadShopItemsResponse = yield call(shopApi.loadShopItems, params);
-		yield put(actions.setShopItems(data.shopItems));
+		yield put(actions.setShopItems(data.data.shopItems));
 	} catch (err) {
 		yield put(actions.loadShopItemsFailure(getErrorMessage(err)));
 	}
@@ -21,7 +21,7 @@ function* loadShopItems({ params }: LoadShopItemsAction) {
 function* loadShopItem({ itemId }: LoadShopItemAction) {
 	try {
 		const data: LoadShopItemResponse = yield call(shopApi.loadShopItem, itemId);
-		yield put(actions.setShopItem(data.shopItem));
+		yield put(actions.setShopItem(data.data.shopItem));
 	} catch (err) {
 		yield put(actions.loadShopItemFailure(getErrorMessage(err)));
 	}

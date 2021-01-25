@@ -12,12 +12,15 @@ import {
 } from '../reducers/cartReducer';
 import { cartApi, CartItemsResponse } from '../../api/cartApi';
 import { getErrorMessage } from './sagaUtils';
+import { handleTokenExpired } from './authSaga';
 
-function* loadCartItems({ token }: LoadCartItemsAction) {
+export function* loadCartItems({ token }: LoadCartItemsAction) {
 	try {
+		console.log('before req');
 		const data: CartItemsResponse = yield call(cartApi.loadCartItems, token);
-		yield put(actions.setCartItems(data.shoppingCartItems));
+		yield put(actions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
+		yield handleTokenExpired(err);
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
 }
@@ -25,8 +28,9 @@ function* loadCartItems({ token }: LoadCartItemsAction) {
 function* addItemToCart({ token, shopItemId }: AddItemToCartAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.addItemToCart, token, shopItemId);
-		yield put(actions.setCartItems(data.shoppingCartItems));
+		yield put(actions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
+		yield handleTokenExpired(err);
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
 }
@@ -34,16 +38,18 @@ function* addItemToCart({ token, shopItemId }: AddItemToCartAction) {
 function* removeItemFromCart({ token, itemId }: RemoveItemFromCartAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.removeItemFromCart, token, itemId);
-		yield put(actions.setCartItems(data.shoppingCartItems));
+		yield put(actions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
+		yield handleTokenExpired(err);
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
 }
 function* removeAllItemsFromCart({ token }: RemoveAllItemsFromCart) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.removeAllItemsFromCart, token);
-		yield put(actions.setCartItems(data.shoppingCartItems));
+		yield put(actions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
+		yield handleTokenExpired(err);
 		yield put(actions.cartActionFailure(getErrorMessage(err)));
 	}
 }

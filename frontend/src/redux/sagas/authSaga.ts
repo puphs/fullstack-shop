@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { CODE, Response } from '../../api/apiUtils';
+import { Code, Response } from '../../api/apiUtils';
 import { authApi, AuthResponse } from '../../api/authApi';
 import { removeAuthData, saveAuthData } from '../../helpers/authHelper';
 import {
@@ -16,8 +16,9 @@ import { getErrorMessage } from './sagaUtils';
 export function* handleTokenExpired(err: any) {
 	if (axios.isAxiosError(err) && err.response) {
 		const res = err.response.data as Response;
-		if (res.code === CODE.TOKEN_EXPIRED) {
+		if (res.code === Code.TOKEN_EXPIRED) {
 			yield logout();
+			console.log('after logout');
 		}
 	}
 }
@@ -25,8 +26,8 @@ export function* handleTokenExpired(err: any) {
 function* login({ email, password }: LoginAction) {
 	try {
 		const data: AuthResponse = yield call(authApi.login, email, password);
-		saveAuthData(data);
-		yield put(actions.loginSuccess(data.token, data.userId));
+		saveAuthData(data.data);
+		yield put(actions.loginSuccess(data.data.token, data.data.userId));
 	} catch (err) {
 		yield put(actions.loginFailure(getErrorMessage(err)));
 	}
@@ -35,13 +36,14 @@ function* login({ email, password }: LoginAction) {
 function* logout() {
 	removeAuthData();
 	yield put(actions.logoutSuccess());
+	console.log('before logout');
 }
 
 function* register({ email, name, password }: RegisterAction) {
 	try {
 		const data: AuthResponse = yield call(authApi.register, email, name, password);
-		saveAuthData(data);
-		yield put(actions.registerSuccess(data.token, data.userId));
+		saveAuthData(data.data);
+		yield put(actions.registerSuccess(data.data.token, data.data.userId));
 	} catch (err) {
 		yield put(actions.registerFailure(getErrorMessage(err)));
 	}
