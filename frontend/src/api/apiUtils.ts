@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 // const baseURL = window.location.origin + '/api/';
-const baseURL = 'http://localhost:3000/api/';
+const baseURL = 'http://localhost:3001/api/';
 
 export const axiosInstance = axios.create({ baseURL });
 
@@ -10,10 +10,10 @@ export const getData = <T>(promise: Promise<AxiosResponse<T>>) =>
 
 export const authHeader = (token: string) => ({ Authorization: `Bearer ${token}` });
 
-export const CODE = {
-	OK: 0,
-	ERROR: 1,
-	TOKEN_EXPIRED: 2,
-};
+export enum Code {
+	OK = 0,
+	ERROR = 1,
+	TOKEN_EXPIRED = 2,
+}
 
-export type Response = { message: string; code: 0 | 1 | 2 };
+export type Response<D = { [key: string]: any }> = { data: D; message: string; code: Code };

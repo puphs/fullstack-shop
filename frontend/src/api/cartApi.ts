@@ -1,9 +1,9 @@
 import { TCartItem } from '../types/types';
 import { authHeader, axiosInstance, getData, Response } from './apiUtils';
 
-export type CartItemsResponse = {
+export type CartItemsResponse = Response<{
 	shoppingCartItems: Array<TCartItem>;
-} & Response;
+}>;
 
 const loadCartItems = async (token: string) => {
 	const data = await getData<CartItemsResponse>(

@@ -8,8 +8,8 @@ export type LoadShopItemsParams = {
 	page?: string | number;
 };
 
-export type LoadShopItemsResponse = { shopItems: Array<TShopItem> } & Response;
-export type LoadShopItemResponse = { shopItem: TShopItem } & Response;
+export type LoadShopItemsResponse = Response<{ shopItems: Array<TShopItem> }>;
+export type LoadShopItemResponse = Response<{ shopItem: TShopItem }>;
 
 const loadShopItems = async (params: LoadShopItemsParams) => {
 	return await getData<LoadShopItemsResponse>(axiosInstance.get('shop/items', { params }));
