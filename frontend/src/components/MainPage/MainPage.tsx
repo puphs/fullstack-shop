@@ -7,16 +7,14 @@ import Sidebar from '../Sidebar/Sidebar';
 import styles from './MainPage.module.scss';
 
 const MainPage = () => {
-	const dispatch = useDispatch();
 	const shopItems = useSelector((state: AppState) => state.shop.shopItems);
 
-	// useEffect(() => {
-	// 	console.log('disp');
-	// 	dispatch(actions.loadShopItems({}));
-	// }, [dispatch]);
-
 	const shopItemsElements =
-		shopItems?.map((item) => <ShopItem key={item._id} shopItem={item} />) ?? [];
+		shopItems?.map((item) => (
+			<div className={styles.shopItem} key={item._id}>
+				<ShopItem shopItem={item} />
+			</div>
+		)) ?? [];
 
 	return (
 		<div className={styles.content}>
