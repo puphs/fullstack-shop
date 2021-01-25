@@ -1,8 +1,8 @@
 import { FilterQuery } from 'mongoose';
-import { getConfigFileParsingDiagnostics } from 'typescript';
 import ApiError from '../error/ApiError';
 import ShopItem, { IShopItemModel } from '../models/ShopItem.model';
 import { Middleware } from '../types/types';
+import { createResponse } from './controller-helper';
 
 const SHOP_ITEMS_PAGE_SIZE = 10;
 
@@ -41,7 +41,7 @@ const getShopItems: Middleware = async (req, res, next) => {
 			.sort({ createdAt: 'asc' })
 			.limit(SHOP_ITEMS_PAGE_SIZE);
 
-		res.status(200).json({ shopItems, message: 'Shop items loaded' });
+		res.status(200).json(createResponse({ data: { shopItems }, message: 'Shop items loaded' }));
 	} catch (err) {
 		return next(ApiError.internal());
 	}
@@ -53,10 +53,10 @@ const getShopItem: Middleware = async (req, res, next) => {
 
 		const shopItem = await ShopItem.find({ _id: itemId });
 		if (!shopItem) {
-			return next(ApiError.badRequest('Invalid item index'));
+			return next(ApiError.badRequest({ message: 'Invalid item index' }));
 		}
 
-		res.status(200).json({ shopItem, message: 'Shop item loaded' });
+		res.status(200).json(createResponse({ data: { shopItem }, message: 'Shop item loaded' }));
 	} catch (err) {
 		return next(ApiError.internal());
 	}

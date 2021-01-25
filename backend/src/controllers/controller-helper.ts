@@ -1,17 +1,18 @@
 export type Response = {
 	data?: { [key: string]: any };
 	message: string;
-	code: 0 | 1 | 2;
+	code?: Code;
 };
 
-export const CODE = {
-	OK: 0,
-	ERROR: 1,
-	TOKEN_EXPIRED: 2,
-};
+export const enum Code {
+	OK = 0,
+	ERROR = 1,
+	TOKEN_EXPIRED = 2,
+}
 
-export const createResponse = (res: Response) => ({
+// code is Code.OK by default
+export const createResponse = (res: Response): Response => ({
 	data: res.data ?? {},
 	message: res.message,
-	code: res.code,
+	code: res.code ?? Code.OK,
 });
