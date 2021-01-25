@@ -1,27 +1,35 @@
+import { Code, Response } from '../controllers/controller-helper';
 import ErrorBase from './ErrorBase';
 
+const getCode = (response?: Response) => response?.code ?? Code.ERROR;
+
+const getError = (httpCode: number, defaultMessage: string, response?: Response): ApiError => {
+	const code = getCode(response);
+	if (response) {
+		const { message, data } = response;
+		return new ApiError(httpCode, { message, data, code });
+	} else {
+		return new ApiError(httpCode, {
+			message: defaultMessage,
+			code,
+		});
+	}
+};
+
 export default class ApiError extends ErrorBase {
-	constructor(code: number, message: string) {
-		super('ApiError', message, code);
+	constructor(code: number, response: Response) {
+		super('ApiError', response, code);
 	}
 
-	static badRequest(message: string) {
-		return new ApiError(400, message);
+	static badRequest(response?: Response) {
+		return getError(400, 'Invalid data', response);
 	}
 
-	static internal(message?: string) {
-		if (message) {
-			return new ApiError(500, message);
-		} else {
-			return new ApiError(500, 'Server error. Please try again later.');
-		}
+	static internal(response?: Response) {
+		return getError(500, 'Server error. Please try again later', response);
 	}
 
-	static authError(message?: string) {
-		if (message) {
-			return new ApiError(401, message);
-		} else {
-			return new ApiError(401, 'Authorization error.');
-		}
+	static authError(response?: Response) {
+		return getError(401, 'Authorization error', response);
 	}
 }

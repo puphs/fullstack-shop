@@ -2,6 +2,7 @@ import { DecodedToken, Middleware } from '../types/types';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import config from '../config/config';
 import ApiError from '../error/ApiError';
+import { Code } from '../controllers/controller-helper';
 const auth: Middleware = (req, res, next) => {
 	if (req.method == 'OPTIONS') {
 		return next();
@@ -16,7 +17,12 @@ const auth: Middleware = (req, res, next) => {
 		next(ApiError.authError());
 	} catch (err) {
 		if (err instanceof TokenExpiredError) {
-			return next(ApiError.authError('Session token expired. Please login again.'));
+			return next(
+				ApiError.authError({
+					message: 'Session token expired. Please login again',
+					code: Code.TOKEN_EXPIRED,
+				})
+			);
 		}
 		return next(ApiError.authError());
 	}

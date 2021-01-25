@@ -13,7 +13,7 @@ export const handleValidationErrors: Middleware = (req, res, next) => {
 	const errors = getErrorMessages(req);
 	const firstError = errors[0];
 	if (firstError) {
-		next(ApiError.badRequest(firstError));
+		next(ApiError.badRequest({ message: firstError }));
 	} else {
 		next();
 	}

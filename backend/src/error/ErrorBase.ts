@@ -1,11 +1,13 @@
-export default class ErrorBase implements Error {
-	name: string;
-	message: string;
-	code: number;
+import { Response } from '../controllers/controller-helper';
 
-	constructor(name: string, message: string, code: number) {
+export default class ErrorBase {
+	name: string;
+	response: Response;
+	httpCode: number;
+
+	constructor(name: string, response: Response, httpCode: number) {
 		this.name = name;
-		this.message = message;
-		this.code = code;
+		this.response = response;
+		this.httpCode = httpCode;
 	}
 }
