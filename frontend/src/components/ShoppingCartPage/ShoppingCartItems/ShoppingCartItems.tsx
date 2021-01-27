@@ -6,23 +6,14 @@ import { AppState } from '../../../redux/store';
 import styles from './ShoppingCartItems.module.scss';
 import shoppingCartItemStyles from '../ShoppingCartItem/ShoppingCartItem.module.scss';
 import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
+import { TCartItem } from '../../../types/types';
 
-const ShoppingCartItems: React.FC = () => {
-	const dispatch = useDispatch();
-	const cartItems = useSelector((state: AppState) => state.cart.cartItems) ?? [];
-	const token = useSelector((state: AppState) => state.auth.token);
-	useEffect(() => {
-		if (token) {
-			dispatch(actions.loadCartItems(token));
-		}
-	}, [token, dispatch]);
+type Props = {
+	cartItems: Array<TCartItem>;
+	onRemoveItemBtnClick: (itemId: string) => void;
+};
 
-	const onRemoveItemBtnClick = (itemId: string) => {
-		if (token) {
-			dispatch(actions.removeItemFromCart(token, itemId));
-		}
-	};
-
+const ShoppingCartItems: React.FC<Props> = ({ cartItems, onRemoveItemBtnClick }) => {
 	const cartItemsElements = cartItems.map((item) => (
 		<CSSTransition
 			key={item._id}
