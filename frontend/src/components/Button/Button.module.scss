@@ -19,22 +19,16 @@
 	@extend %font-Baloo2-700;
 	padding: 2px 16px 0;
 	height: 44px;
-	min-width: 220px;
+	min-width: 216px;
 	font-size: 18px;
 	line-height: 28px;
 	text-transform: uppercase;
 	text-align: center;
-}
-
-.btnPrimary {
 	position: relative;
-	@extend %btn;
-	color: #fff;
 	overflow: hidden;
 	transition: 0.3s;
-	border: 2px solid $color-primary;
-	background-color: transparent;
 	z-index: 1;
+
 	&:after {
 		content: '';
 		display: block;
@@ -48,31 +42,48 @@
 		transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 		z-index: -1;
 	}
-	&:disabled {
-		color: rgba($color-primary, 0.5);
-		&:after {
-			top: 100%;
-		}
-	}
 	&:enabled:hover {
 		color: $color-primary;
 		&:after {
 			top: 100%;
 		}
 	}
+
+	&:disabled {
+		color: rgba($color-primary, 0.5);
+		&:after {
+			top: 100%;
+		}
+	}
+
 	&.loading {
 		animation: loading infinite 1s linear;
 	}
 }
 
+.btnPrimary {
+	@extend %btn;
+	color: #fff;
+	border: 2px solid $color-primary;
+	background-color: transparent;
+}
+
 .btnSecondary {
 	@extend %btn;
 
-	background-color: $color-secondary;
+	background-color: transparent;
 	color: $color-primary;
+
+	border: 2px solid $color-secondary;
+	&:after {
+		background-color: $color-secondary;
+	}
+	&:hover {
+		border-color: $color-primary;
+	}
 }
 
 .fullWidth {
-	width: 100%;
+	width: calc(100% - 4px);
 	padding: 2px 32px 0;
 }
