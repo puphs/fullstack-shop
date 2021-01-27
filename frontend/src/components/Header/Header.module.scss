@@ -20,8 +20,18 @@
 
 .header {
 	@extend %font-NotoSerif-400;
+	position: sticky;
+	height: 96px;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	z-index: 10;
+}
+.headerContent {
 	padding: 24px 0;
 	display: flex;
+	flex-grow: 1;
 }
 .logo {
 	color: $color-text-primary;

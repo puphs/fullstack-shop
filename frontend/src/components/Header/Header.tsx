@@ -12,8 +12,8 @@ const Header: React.FC<Props> = (props) => {
 	const cartItems = useSelector((state: AppState) => state.cart.cartItems);
 
 	return (
-		<>
-			<header className={styles.header}>
+		<header className={styles.header}>
+			<div className={styles.headerContent}>
 				<Link className={styles.logo} to="/">
 					REACT SHOP
 				</Link>
@@ -42,9 +42,9 @@ const Header: React.FC<Props> = (props) => {
 						<div className={cn(styles.accountImg, styles.navItemImg)}></div>
 					</NavLink>
 				</div>
-			</header>
+			</div>
 			<div className={styles.line}></div>
-		</>
+		</header>
 	);
 };
 
