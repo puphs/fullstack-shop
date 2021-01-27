@@ -13,9 +13,13 @@ const loadCartItems = async (token: string) => {
 	return data;
 };
 
-const addItemToCart = async (token: string, shopItemId: string) => {
+const addItemToCart = async (token: string, shopItemId: string, size: string) => {
 	const data = await getData<CartItemsResponse>(
-		axiosInstance.post('shopping-cart', { itemId: shopItemId }, { headers: authHeader(token) })
+		axiosInstance.post(
+			'shopping-cart',
+			{ itemId: shopItemId, size },
+			{ headers: authHeader(token) }
+		)
 	);
 	return data;
 };
