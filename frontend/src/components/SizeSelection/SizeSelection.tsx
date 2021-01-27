@@ -1,10 +1,18 @@
+import { useEffect } from 'react';
 import styles from './SizeSelection.module.scss';
 
 type Props = {
 	sizes: Array<string>;
+	onSizeSelected: (size: string) => void;
 };
 
-const SizeSelection: React.FC<Props> = ({ sizes }) => {
+const SizeSelection: React.FC<Props> = ({ sizes, onSizeSelected }) => {
+	useEffect(() => {
+		if (sizes.length) {
+			onSizeSelected(sizes[0]);
+		}
+	}, [sizes]);
+
 	const sizeElements = sizes.map((size, index) => (
 		<label key={index}>
 			<input
@@ -13,6 +21,7 @@ const SizeSelection: React.FC<Props> = ({ sizes }) => {
 				name={'sizeRadio'}
 				defaultChecked={index === 0}
 				hidden
+				onClick={() => onSizeSelected(size)}
 			/>
 			<div className={styles.sizeItem}>
 				<div className={styles.sizeValue}>{size}</div>
