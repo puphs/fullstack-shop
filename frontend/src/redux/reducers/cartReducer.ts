@@ -43,8 +43,8 @@ export const actions = {
 
 	loadCartItems: (token: string) => ({ type: LOAD_CART_ITEMS, token } as const),
 
-	addItemToCart: (token: string, shopItemId: string) =>
-		({ type: ADD_ITEM_TO_CART, token, shopItemId } as const),
+	addItemToCart: (token: string, shopItemId: string, size: string) =>
+		({ type: ADD_ITEM_TO_CART, token, shopItemId, size } as const),
 
 	removeItemFromCart: (token: string, itemId: string) =>
 		({ type: REMOVE_ITEM_FROM_CART, token, itemId } as const),

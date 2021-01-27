@@ -12,9 +12,10 @@ export const saveAuthData = (authData: AuthData): boolean => {
 	}
 };
 
-export const getAuthData = (): AuthData | null => {
+export const getAuthData = (): AuthData => {
 	const dataString = localStorage.getItem(AUTH_DATA);
-	return dataString ? JSON.parse(dataString) : null;
+	console.log('You are loggined in: ', dataString ? true : false);
+	return dataString ? JSON.parse(dataString) : { token: null, userId: null };
 };
 
 export const removeAuthData = () => {

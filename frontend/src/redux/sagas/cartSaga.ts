@@ -25,9 +25,9 @@ export function* loadCartItems({ token }: LoadCartItemsAction) {
 	}
 }
 
-function* addItemToCart({ token, shopItemId }: AddItemToCartAction) {
+function* addItemToCart({ token, shopItemId, size }: AddItemToCartAction) {
 	try {
-		const data: CartItemsResponse = yield call(cartApi.addItemToCart, token, shopItemId);
+		const data: CartItemsResponse = yield call(cartApi.addItemToCart, token, shopItemId, size);
 		yield put(actions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
 		yield handleTokenExpired(err);
