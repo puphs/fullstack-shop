@@ -1,9 +1,15 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import shopApi, { LoadShopItemResponse, LoadShopItemsResponse } from '../../api/shopApi';
+import shopApi, {
+	LoadCategoriesResponse,
+	LoadShopItemResponse,
+	LoadShopItemsResponse,
+} from '../../api/shopApi';
+import { TCategory } from '../../types/types';
 import {
 	actions,
 	LoadShopItemAction,
 	LoadShopItemsAction,
+	LOAD_CATEGORIES,
 	LOAD_SHOP_ITEM,
 	LOAD_SHOP_ITEMS,
 } from '../reducers/shopReducer';
@@ -27,7 +33,17 @@ function* loadShopItem({ itemId }: LoadShopItemAction) {
 	}
 }
 
+function* loadCategories() {
+	try {
+		const data: LoadCategoriesResponse = yield call(shopApi.loadCategories);
+		yield put(actions.setCategories(data.data.categories));
+	} catch (err) {
+		yield put(actions.loadCategoriesFailure(getErrorMessage(err)));
+	}
+}
+
 export function* shopSaga() {
 	yield takeEvery(LOAD_SHOP_ITEMS, loadShopItems);
 	yield takeEvery(LOAD_SHOP_ITEM, loadShopItem);
+	yield takeEvery(LOAD_CATEGORIES, loadCategories);
 }
