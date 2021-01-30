@@ -1,45 +1,37 @@
-import React, { useState } from 'react';
-import styles from './ShopItem.module.scss';
-import Prices from '../Prices/Prices';
-import Button from '../Button/Button';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { TShopItem } from '../../types/types';
+import Button from '../Button/Button';
 import Img from '../Img/Img';
-import { useDispatch } from 'react-redux';
-import { actions } from '../../redux/reducers/cartReducer';
-import AddToCartPopup, { PopupResult } from '../AddToCartPopup/AddToCartPopup';
+import Prices from '../Prices/Prices';
+import styles from './ShopItem.module.scss';
 
 type Props = {
 	shopItem: TShopItem;
 	token: string | null;
+	onAddToCartBtnClick: (shopItem: TShopItem) => void;
 };
 
-const ShopItem: React.FC<Props> = ({ shopItem, token }) => {
-	const [isAddToCartFetching, setIsAddToCartFetching] = useState(false);
-	const [isPopupShown, setIsPopupShown] = useState(false);
-	const dispatch = useDispatch();
+const ShopItem: React.FC<Props> = ({ shopItem, token, onAddToCartBtnClick }) => {
+	const history = useHistory();
 
-	const onAddToCartBtnClick = async () => {
-		setIsPopupShown(true);
-	};
-
-	const onPopupResult = (result: PopupResult) => {
-		if (result && token) {
-			dispatch(actions.addItemToCart(token, shopItem._id, result.size));
+	const onLoginOrAddToCartBtnClick = () => {
+		if (!token) {
+			history.push('/auth/login');
+		} else {
+			onAddToCartBtnClick(shopItem);
 		}
-		setIsPopupShown(false);
 	};
 
 	return (
 		<div className={styles.item}>
-			{isPopupShown && <AddToCartPopup shopItem={shopItem} onPopupResult={onPopupResult} />}
 			<Button
 				style={{ height: '38px' }}
 				fullWidth
-				disabled={token === null || isAddToCartFetching}
 				styleType={'secondary'}
-				onClick={onAddToCartBtnClick}
+				onClick={onLoginOrAddToCartBtnClick}
 			>
-				{'Add to cart'}
+				{token ? 'Add to cart' : 'Login to buy'}
 			</Button>
 			<div className={styles.content}>
 				<div className={styles.moreInfoBlackout}>
