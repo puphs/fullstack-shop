@@ -1,16 +1,10 @@
 @import '~/styles/fonts.scss';
 @import '~/styles/variables.scss';
 
-// .container {
-// 	padding: 24px 32px;
-// 	transition: 0.5s;
-// }
-
-.categoriesList {
+.subcategoriesGroups {
 	@extend %font-NotoSerif-400;
 	background-color: rgba($color-secondary, 0.3);
 	width: 100%;
-	max-height: 600px;
 	padding: 8px 16px 16px;
 	display: flex;
 	flex-direction: column;
@@ -20,14 +14,14 @@
 	text-transform: capitalize;
 }
 
-.categoryItem {
+.subcategoriesGroup {
 	font-size: 18px;
 	line-height: 22px;
 	& + & {
 		margin-top: 16px;
 	}
 }
-.categoryName {
+.groupName {
 	font-weight: 700;
 }
 
@@ -48,6 +42,7 @@
 		color: $color-primary;
 	}
 }
-.subcategoryItemLink:hover {
+.subcategoryItemLink:hover,
+.subcategoryItemLink__active {
 	color: $color-primary;
 }

@@ -1,6 +1,11 @@
 export type TCategory = {
 	name: string;
-	subcategories?: Array<TCategory>;
+	subcategoriesGroups?: Array<{
+		groupName: string;
+		subcategories?: Array<{
+			name: string;
+		}>;
+	}>;
 };
 
 export type TPrices = {
