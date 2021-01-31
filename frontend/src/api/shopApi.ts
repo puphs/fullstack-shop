@@ -1,19 +1,25 @@
 import { TCategory, TShopItem } from '../types/types';
 import { axiosInstance, getData, Response } from './apiUtils';
+import qs from 'query-string';
 
 export type LoadShopItemsParams = {
-	search?: string;
-	category?: string;
-	subcategory?: string;
-	page?: string | number;
+	search?: string | null;
+	category?: string | null;
+	subcategory?: string | null;
+	page?: string | number | null;
 };
 
 export type LoadShopItemsResponse = Response<{ shopItems: Array<TShopItem> }>;
 export type LoadShopItemResponse = Response<{ shopItem: TShopItem }>;
 export type LoadCategoriesResponse = Response<{ categories: Array<TCategory> }>;
 
-const loadShopItems = async (params: LoadShopItemsParams) => {
-	return await getData<LoadShopItemsResponse>(axiosInstance.get('shop/items', { params }));
+const loadShopItems = async ({ search, page, category, subcategory }: LoadShopItemsParams) => {
+	const queryString = qs.stringify(
+		{ search, page, category, subcategory },
+		{ skipNull: true, skipEmptyString: true }
+	);
+	console.log(queryString);
+	return await getData<LoadShopItemsResponse>(axiosInstance.get(`shop/items?${queryString}`));
 };
 
 const loadShopItem = async (itemId: string) => {
