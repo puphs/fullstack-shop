@@ -1,6 +1,6 @@
 import { FilterQuery } from 'mongoose';
 import ApiError from '../error/ApiError';
-import Categories from '../models/Categories.model';
+import Categories, { ICategoriesModel } from '../models/Categories.model';
 import ShopItem, { IShopItemModel } from '../models/ShopItem.model';
 import { Middleware } from '../types/types';
 import { createResponse } from './controller-helper';
@@ -65,8 +65,15 @@ const getShopItem: Middleware = async (req, res, next) => {
 
 const getCategories: Middleware = async (req, res, next) => {
 	try {
-		const categories = await Categories.find({});
-		res.status(200).json(createResponse({ data: { categories }, message: 'Categories loaded' }));
+		const categories: ICategoriesModel = await Categories.findOne({});
+		res
+			.status(200)
+			.json(
+				createResponse({
+					data: { categories: categories.categories },
+					message: 'Categories loaded',
+				})
+			);
 	} catch (err) {
 		next(ApiError.internal());
 	}

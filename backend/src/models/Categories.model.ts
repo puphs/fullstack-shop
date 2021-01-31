@@ -1,27 +1,36 @@
 import { Schema, model, Document, Model } from 'mongoose';
 
-export interface ICategory {
-	name: string;
-	subcategoriesGroups?: Array<{
-		groupName: string;
-		subcategories?: Array<{
-			name: string;
+export interface ICategories {
+	categories: Array<{
+		name: string;
+		subcategoriesGroups?: Array<{
+			groupName: string;
+			subcategories?: Array<{
+				name: string;
+			}>;
 		}>;
 	}>;
 }
 
-export interface ICategoryModel extends ICategory, Document {}
+export interface ICategoriesModel extends ICategories, Document {}
 
 const schema = new Schema({
-	name: { type: String, required: true },
-	subcategoriesGroups: [
-		{
-			groupName: { type: String, required: true },
-			subcategories: [{ name: { type: String, required: true } }],
-		},
-	],
+	categories: {
+		type: [
+			{
+				name: { type: String, required: true },
+				subcategoriesGroups: [
+					{
+						groupName: { type: String, required: true },
+						subcategories: [{ name: { type: String, required: true } }],
+					},
+				],
+			},
+		],
+		required: true,
+	},
 });
 
-const Categories = model('Categories', schema) as Model<ICategoryModel>;
+const Categories = model('Categories', schema) as Model<ICategoriesModel>;
 
 export default Categories;
