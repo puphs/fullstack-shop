@@ -1,35 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../redux/reducers/cartReducer';
+import { useLocation, useParams } from 'react-router-dom';
+import { LoadShopItemsParams } from '../../../api/shopApi';
+import { actions as cartActions } from '../../../redux/reducers/cartReducer';
+import { actions as shopActions } from '../../../redux/reducers/shopReducer';
 import { TShopItem } from '../../../types/types';
 import AddToCartPopup, { PopupResult } from '../../AddToCartPopup/AddToCartPopup';
 import ShopItem from '../../ShopItem/ShopItem';
 import styles from './ShopItems.module.scss';
+import qs from 'query-string';
 
 type Props = {
 	shopItems: Array<TShopItem> | null;
 	token: string | null;
 };
 
-const ShopItems: React.FC<Props> = ({ shopItems, token }) => {
-	const dispatch = useDispatch();
+type Params = {
+	category: string;
+	subcategory: string;
+};
 
+const ShopItems: React.FC<Props> = ({ shopItems, token }) => {
 	const [popupShopItem, setPopupShopItem] = useState<TShopItem | null>(null);
 	const [isPopupShown, setIsPopupShown] = useState(false);
+
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const { category, subcategory } = useParams<Params>();
+
+	useEffect(() => {
+		const { search, page } = qs.parse(location.search);
+		const loadItemsParams: LoadShopItemsParams = {
+			search: search?.toString(),
+			page: page?.toString(),
+			category,
+			subcategory,
+		};
+
+		dispatch(shopActions.loadShopItems(loadItemsParams));
+	}, [location.search, category, subcategory]);
 
 	const onAddToCartBtnClick = (shopItem: TShopItem) => {
 		setPopupShopItem(shopItem);
 		setIsPopupShown(true);
 	};
-	// useEffect(() => {
-	// 	if (!isCartActionFetching && isPopupShown) {
-	// 		setIsPopupShown(false);
-	// 	}
-	// }, [isCartActionFetching]);
 
 	const onPopupResult = (result: PopupResult) => {
 		if (result && token) {
-			dispatch(actions.addItemToCart(token, popupShopItem!._id, result.size));
+			dispatch(cartActions.addItemToCart(token, popupShopItem!._id, result.size));
 		} else {
 		}
 		setIsPopupShown(false);

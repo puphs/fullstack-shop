@@ -2,11 +2,3 @@
 	flex-grow: 1;
 	display: flex;
 }
-
-.shopItems {
-	flex-basis: 100%;
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	// grid-template-rows: 220px;
-	gap: 8px;
-}
