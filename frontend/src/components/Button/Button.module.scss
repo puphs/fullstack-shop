@@ -78,7 +78,7 @@
 	&:after {
 		background-color: $color-secondary;
 	}
-	&:hover {
+	&:enabled:hover {
 		border-color: $color-primary;
 	}
 }

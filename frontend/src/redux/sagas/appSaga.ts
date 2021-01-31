@@ -7,7 +7,9 @@ import {
 } from '../reducers/cartReducer';
 import {
 	actions as shopActions,
+	LOAD_CATEGORIES_FAILURE,
 	LOAD_SHOP_ITEMS_FAILURE,
+	SET_CATEGORIES,
 	SET_SHOP_ITEMS,
 } from '../reducers/shopReducer';
 import { getErrorMessage } from './sagaUtils';
@@ -18,6 +20,9 @@ function* initialize({ token }: InitializeAction) {
 			yield put(cartActions.loadCartItems(token as string));
 			yield take([SET_CART_ITEMS, CART_ACTION_FAILURE]);
 		}
+
+		yield put(shopActions.loadCategories());
+		yield take([SET_CATEGORIES, LOAD_CATEGORIES_FAILURE]);
 
 		yield put(shopActions.loadShopItems({}));
 		yield take([SET_SHOP_ITEMS, LOAD_SHOP_ITEMS_FAILURE]);

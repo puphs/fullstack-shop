@@ -16,7 +16,6 @@ import { handleTokenExpired } from './authSaga';
 
 export function* loadCartItems({ token }: LoadCartItemsAction) {
 	try {
-		console.log('before req');
 		const data: CartItemsResponse = yield call(cartApi.loadCartItems, token);
 		yield put(actions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {

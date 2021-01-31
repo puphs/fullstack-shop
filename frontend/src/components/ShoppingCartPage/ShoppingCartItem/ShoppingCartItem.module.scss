@@ -9,12 +9,9 @@
 	overflow: hidden;
 	cursor: pointer;
 	transition: 0.3s;
+	margin: 12px 0 0 0;
 	&:hover {
 		background-color: rgba($color-secondary, 0.7);
-	}
-
-	& + & {
-		margin: 12px 0 0 0;
 	}
 }
 
@@ -58,12 +55,6 @@
 	}
 }
 
-// .transitionEnter {
-// 	// opacity: 0;
-// 	height: 0;
-// 	overflow: hidden;
-// }
-// for priority
 .cartItem {
 	&.transitionEnterActive {
 		height: 154px;
@@ -77,6 +68,6 @@
 		margin: 0px;
 		padding: 0 12px;
 		height: 0;
-		transition: margin padding height 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+		transition: 0.3s;
 	}
 }

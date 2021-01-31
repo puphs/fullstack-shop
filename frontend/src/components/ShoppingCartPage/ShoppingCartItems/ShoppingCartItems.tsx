@@ -24,7 +24,7 @@ const ShoppingCartItems: React.FC<Props> = ({ cartItems, onRemoveItemBtnClick })
 				exitActive: shoppingCartItemStyles.transitionExitActive,
 			}}
 			in={true}
-			timeout={200}
+			timeout={300}
 		>
 			<ShoppingCartItem
 				cartItem={item}

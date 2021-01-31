@@ -107,7 +107,7 @@ const CartCalculator: React.FC<CartCalculatorProps> = ({ cartItems }) => {
 					</div>
 				</div>
 
-				<Button fullWidth>{`buy ${cartItems.length} item(s)`}</Button>
+				<Button fullWidth disabled={!cartItems.length}>{`buy ${cartItems.length} item(s)`}</Button>
 			</section>
 		</div>
 	);

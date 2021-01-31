@@ -4,7 +4,6 @@ import shopApi, {
 	LoadShopItemResponse,
 	LoadShopItemsResponse,
 } from '../../api/shopApi';
-import { TCategory } from '../../types/types';
 import {
 	actions,
 	LoadShopItemAction,

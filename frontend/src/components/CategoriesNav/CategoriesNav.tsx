@@ -5,7 +5,6 @@ import SubcategoriesGroups from './SubcategoriesGroups/SubcategoriesGroups';
 import styles from './CategoriesNav.module.scss';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
-import SubcategoriesGroup from './SubcategoriesGroups/SubcategoriesGroups';
 
 const CategoriesNav = () => {
 	const categories = useSelector((state: AppState) => state.shop.categories);

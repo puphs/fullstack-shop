@@ -18,7 +18,6 @@ export function* handleTokenExpired(err: any) {
 		const res = err.response.data as Response;
 		if (res.code === Code.TOKEN_EXPIRED) {
 			yield logout();
-			console.log('after logout');
 		}
 	}
 }
