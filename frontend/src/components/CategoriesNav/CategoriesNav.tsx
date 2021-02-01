@@ -1,13 +1,18 @@
 import cn from 'classnames';
 import { useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import SubcategoriesGroups from './SubcategoriesGroups/SubcategoriesGroups';
-import styles from './CategoriesNav.module.scss';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { AppState } from '../../redux/store';
+import styles from './CategoriesNav.module.scss';
+import SubcategoriesGroups from './SubcategoriesGroups/SubcategoriesGroups';
+
+const isPathContains = (path: string, part: string) => {
+	return path.split('/').some((pathPart) => pathPart === part);
+};
 
 const CategoriesNav = () => {
 	const categories = useSelector((state: AppState) => state.shop.categories);
+	const defaultCategoryName = useSelector((state: AppState) => state.shop.defaultCategoryName);
 
 	const categoriesRef = useRef<Array<HTMLAnchorElement>>([]);
 	const selectedCategoryRef = useRef<HTMLAnchorElement>(null);
@@ -31,10 +36,6 @@ const CategoriesNav = () => {
 		currentSubcategories?.setAttribute('style', `height: ${currentSubcategories.scrollHeight}px`);
 	};
 
-	const isPathContains = (path: string, part: string) => {
-		return path.split('/').some((pathPart) => pathPart === part);
-	};
-
 	const addCategoryRef = (categoryEl: HTMLAnchorElement) => {
 		if (!categoriesRef.current.includes(categoryEl) && categoryEl) {
 			categoriesRef.current.push(categoryEl);
@@ -43,22 +44,20 @@ const CategoriesNav = () => {
 
 	const categoriesElements =
 		categories?.map((category, index) => {
+			const isPathContainsCategory = isPathContains(location.pathname, category.name);
+			const isDefaultCategory = category.name === defaultCategoryName && location.pathname === '/';
+
+			const to = `/${category.name === defaultCategoryName ? '' : category.name}`;
+			const clickedClass =
+				(isPathContainsCategory || isDefaultCategory) && styles.categoryBtn__clicked;
+			const ref =
+				isPathContainsCategory || isDefaultCategory ? selectedCategoryRef : addCategoryRef;
+
 			return (
 				<div className={styles.categoryItem} key={index}>
-					<NavLink
-						to={`/${category.name}`}
-						className={cn(
-							styles.categoryBtn,
-							isPathContains(location.pathname, category.name) && styles.categoryBtn__clicked
-						)}
-						ref={
-							isPathContains(location.pathname, category.name)
-								? selectedCategoryRef
-								: addCategoryRef
-						}
-					>
+					<Link to={to} className={cn(styles.categoryBtn, clickedClass)} ref={ref}>
 						{category.name}
-					</NavLink>
+					</Link>
 					{category.subcategoriesGroups?.length ? (
 						<div className={styles.subcategoriesGroups}>
 							<SubcategoriesGroups
