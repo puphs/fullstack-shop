@@ -1,0 +1,39 @@
+@import '~/styles/fonts.scss';
+@import '~/styles/variables.scss';
+
+.shopItems {
+	flex-basis: 100%;
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 8px;
+}
+
+.noItemsFound {
+	width: 100%;
+	@extend %font-NotoSerif-400;
+	margin-top: 24px;
+	font-size: 32px;
+	text-align: center;
+	color: $color-text-secondary;
+}
+
+.transitionEnter {
+	opacity: 0;
+	left: -20px;
+}
+.transitionEnterActive {
+	opacity: 1;
+	left: 0;
+	transition: opacity 0.3s linear, left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+	// transition: left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.transitionExit {
+	opacity: 1;
+	left: 0px;
+}
+.transitionExitActive {
+	opacity: 0;
+	left: 20px;
+	transition: opacity 0.3s linear, left 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}

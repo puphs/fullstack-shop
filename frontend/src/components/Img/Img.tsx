@@ -1,13 +1,11 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ImgHTMLAttributes } from 'react';
 
 type Props = {
-	src: string;
-	alt: string;
 	fixedWidth?: number;
 	fixedHeight?: number;
-};
+} & ImgHTMLAttributes<HTMLImageElement>;
 
-const Img: React.FC<Props> = ({ src, alt, fixedWidth, fixedHeight }) => {
+const Img: React.FC<Props> = ({ fixedWidth, fixedHeight, ...imgAttrs }) => {
 	const containerStyle: CSSProperties = {};
 	const imgStyle: CSSProperties = {};
 
@@ -23,7 +21,7 @@ const Img: React.FC<Props> = ({ src, alt, fixedWidth, fixedHeight }) => {
 	}
 	return (
 		<div style={containerStyle}>
-			<img src={src} alt={alt} style={imgStyle} />
+			<img style={imgStyle} {...imgAttrs} />
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
 import { CSSTransition } from 'react-transition-group';
 import { TCartItem } from '../../../types/types';
-import Img from '../../Img/Img';
-import Prices from '../../Prices/Prices';
+import Img from '../../../components/Img/Img';
+import Prices from '../../../components/Prices/Prices';
 import styles from './ShoppingCartItem.module.scss';
 
 type Props = {

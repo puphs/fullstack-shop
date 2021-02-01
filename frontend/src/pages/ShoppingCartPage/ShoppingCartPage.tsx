@@ -5,7 +5,7 @@ import { formatPrice } from '../../helpers/pricesHelper';
 import { actions } from '../../redux/reducers/cartReducer';
 import { AppState } from '../../redux/store';
 import { TCartItem } from '../../types/types';
-import Button from '../Button/Button';
+import Button from '../../components/Button/Button';
 import ShoppingCartItems from './ShoppingCartItems/ShoppingCartItems';
 import styles from './ShoppingCartPage.module.scss';
 

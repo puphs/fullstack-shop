@@ -12,7 +12,6 @@ const debounce = (callback: (...args: any) => void, delay: number) => {
 	return (...args: any) => {
 		clearTimeout(timeout);
 		timeout = window.setTimeout(() => callback(...args), delay);
-		console.log(timeout);
 	};
 };
 
@@ -46,8 +45,6 @@ const SearchBar: React.FC<Props> = (props) => {
 
 	const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value);
-		// updateUrlSearch(e.target.value);
-		// console.log(e.target.value, e.currentTarget.value);
 	};
 	const onSearchInputFocus = () => {
 		setSearchMode(true);
