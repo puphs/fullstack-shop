@@ -18,7 +18,6 @@ const loadShopItems = async ({ search, page, category, subcategory }: LoadShopIt
 		{ search, page, category, subcategory },
 		{ skipNull: true, skipEmptyString: true }
 	);
-	console.log(queryString);
 	return await getData<LoadShopItemsResponse>(axiosInstance.get(`shop/items?${queryString}`));
 };
 

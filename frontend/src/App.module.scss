@@ -3,18 +3,32 @@
 	margin: 0 auto;
 }
 
+.app {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
 .main {
-	display: flex;
-	padding: 24px 0px;
+	padding-top: 24px;
 }
 
-.content {
-	position: relative;
-	flex-grow: 1;
+.transitionEnter {
+	opacity: 0;
+	left: -20px;
 }
-
-.shopItems {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+.transitionEnterActive {
+	opacity: 1;
+	left: 0;
+	transition: opacity 0.3s linear, left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+	// transition: left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.transitionExit {
+	opacity: 1;
+	left: 0px;
+}
+.transitionExitActive {
+	opacity: 0;
+	left: 20px;
+	transition: opacity 0.3s linear, left 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }

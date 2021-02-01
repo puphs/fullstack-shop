@@ -4,7 +4,9 @@ import { InferActionsTypes } from './reducerUtils';
 
 const initialState = {
 	shopItems: null as Array<TShopItem> | null,
+	shopItem: null as TShopItem | null,
 	categories: null as Array<TCategory> | null,
+	defaultCategoryName: 'new',
 };
 
 type State = typeof initialState;
@@ -14,6 +16,8 @@ const shopReducer = (state = initialState, action: Action): State => {
 	switch (action.type) {
 		case SET_SHOP_ITEMS:
 			return { ...state, shopItems: action.shopItems };
+		case SET_SHOP_ITEM:
+			return { ...state, shopItem: action.shopItem };
 		case SET_CATEGORIES:
 			return { ...state, categories: action.categories };
 		default:
@@ -44,7 +48,7 @@ export const actions = {
 		({ type: LOAD_SHOP_ITEMS_FAILURE, errorMessage } as const),
 
 	loadShopItem: (itemId: string) => ({ type: LOAD_SHOP_ITEM, itemId } as const),
-	setShopItem: (shopItem: TShopItem) => ({ type: LOAD_SHOP_ITEM, shopItem } as const),
+	setShopItem: (shopItem: TShopItem) => ({ type: SET_SHOP_ITEM, shopItem } as const),
 	loadShopItemFailure: (errorMessage: string) =>
 		({ type: LOAD_SHOP_ITEM_FAILURE, errorMessage } as const),
 

@@ -9,7 +9,6 @@ const loadCartItems = async (token: string) => {
 	const data = await getData<CartItemsResponse>(
 		axiosInstance.get('shopping-cart', { headers: authHeader(token) })
 	);
-	console.log(data);
 	return data;
 };
 
