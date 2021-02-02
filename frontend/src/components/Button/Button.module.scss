@@ -83,6 +83,22 @@
 	}
 }
 
+.btnSpecial {
+	@extend %btn;
+	color: #fff;
+	border: 2px solid $color-special;
+	background-color: transparent;
+	&:after {
+		background-color: $color-special;
+	}
+	&:enabled:hover {
+		color: $color-special;
+	}
+	&:disabled {
+		color: rgba($color-special, 0.5);
+	}
+}
+
 .fullWidth {
 	width: calc(100% - 4px);
 	padding: 2px 32px 0;

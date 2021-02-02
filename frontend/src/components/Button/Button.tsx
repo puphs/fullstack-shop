@@ -4,7 +4,7 @@ import styles from './Button.module.scss';
 
 type Props = {
 	fullWidth?: boolean;
-	styleType?: 'primary' | 'secondary';
+	styleType?: 'primary' | 'secondary' | 'special';
 	style?: CSSProperties;
 	loading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -20,7 +20,9 @@ const Button: React.FC<Props> = ({
 	return (
 		<button
 			className={cn(
-				styleType === 'secondary' ? styles.btnSecondary : styles.btnPrimary,
+				styleType === 'primary' || !styleType ? styles.btnPrimary : null,
+				styleType === 'secondary' ? styles.btnSecondary : null,
+				styleType === 'special' ? styles.btnSpecial : null,
 				fullWidth && styles.fullWidth,
 				loading && styles.loading
 			)}
