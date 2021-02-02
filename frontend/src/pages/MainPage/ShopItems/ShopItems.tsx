@@ -59,6 +59,8 @@ const ShopItems: React.FC = () => {
 			</div>
 		)) ?? [];
 
+	if (!shopItems) return <></>;
+
 	return (
 		<>
 			<AddToCartPopup shown={isPopupShown} onPopupResult={onPopupResult} shopItem={popupShopItem} />
@@ -73,7 +75,7 @@ const ShopItems: React.FC = () => {
 						exitActive: styles.transitionExitActive,
 					}}
 				>
-					{shopItems && shopItems.length ? (
+					{shopItems.length ? (
 						<div className={styles.shopItems}>{shopItemsElements}</div>
 					) : (
 						<div className={styles.noItemsFound}>No items found</div>

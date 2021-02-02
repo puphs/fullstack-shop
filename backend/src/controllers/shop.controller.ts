@@ -52,7 +52,7 @@ const getShopItem: Middleware = async (req, res, next) => {
 	try {
 		const itemId = req.params['itemId'];
 
-		const shopItem = await ShopItem.find({ _id: itemId });
+		const shopItem = await ShopItem.findOne({ _id: itemId });
 		if (!shopItem) {
 			return next(ApiError.badRequest({ message: 'Invalid item index' }));
 		}
@@ -66,14 +66,12 @@ const getShopItem: Middleware = async (req, res, next) => {
 const getCategories: Middleware = async (req, res, next) => {
 	try {
 		const categories: ICategoriesModel = await Categories.findOne({});
-		res
-			.status(200)
-			.json(
-				createResponse({
-					data: { categories: categories.categories },
-					message: 'Categories loaded',
-				})
-			);
+		res.status(200).json(
+			createResponse({
+				data: { categories: categories.categories },
+				message: 'Categories loaded',
+			})
+		);
 	} catch (err) {
 		next(ApiError.internal());
 	}
