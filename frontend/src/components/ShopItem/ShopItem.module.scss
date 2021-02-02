@@ -12,6 +12,8 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	text-decoration: none;
+
 	&:hover {
 		.moreInfoBlackout {
 			opacity: 1;
@@ -44,6 +46,7 @@
 	@extend %font-NotoSerif-400;
 	margin: 8px 0 0 0;
 	padding: 0;
+	color: $color-text-primary;
 	font-size: 18px;
 	line-height: 28px;
 }
