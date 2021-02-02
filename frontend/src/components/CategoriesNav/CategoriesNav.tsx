@@ -1,10 +1,12 @@
 import cn from 'classnames';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { AppState } from '../../redux/store';
 import styles from './CategoriesNav.module.scss';
 import SubcategoriesGroups from './SubcategoriesGroups/SubcategoriesGroups';
+
+const BASE_PATH = '/catalog';
 
 const isPathContains = (path: string, part: string) => {
 	return path.split('/').some((pathPart) => pathPart === part);
@@ -45,9 +47,13 @@ const CategoriesNav = () => {
 	const categoriesElements =
 		categories?.map((category, index) => {
 			const isPathContainsCategory = isPathContains(location.pathname, category.name);
-			const isDefaultCategory = category.name === defaultCategoryName && location.pathname === '/';
+			const isDefaultCategory =
+				category.name === defaultCategoryName &&
+				(location.pathname === `${BASE_PATH}/` || location.pathname === `${BASE_PATH}`);
 
-			const to = `/${category.name === defaultCategoryName ? '' : category.name}`;
+			const to = `${BASE_PATH}/${category.name === defaultCategoryName ? '' : category.name}${
+				location.search
+			}`;
 			const clickedClass =
 				(isPathContainsCategory || isDefaultCategory) && styles.categoryBtn__clicked;
 			const ref =
@@ -61,6 +67,8 @@ const CategoriesNav = () => {
 					{category.subcategoriesGroups?.length ? (
 						<div className={styles.subcategoriesGroups}>
 							<SubcategoriesGroups
+								queryString={location.search}
+								basePath={BASE_PATH}
 								subcategoriesGroups={category.subcategoriesGroups}
 								categoryName={category.name}
 							/>
