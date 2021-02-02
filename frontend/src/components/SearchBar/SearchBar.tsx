@@ -15,7 +15,7 @@ const debounce = (callback: (...args: any) => void, delay: number) => {
 	};
 };
 
-const SearchBar: React.FC<Props> = (props) => {
+const SearchBar: React.FC<Props> = () => {
 	const [searchValue, setSearchValue] = useState('');
 	const [searchMode, setSearchMode] = useState(false);
 	const searchInputRef = useRef<HTMLInputElement>(null);
@@ -24,23 +24,50 @@ const SearchBar: React.FC<Props> = (props) => {
 	const history = useHistory();
 
 	useEffect(() => {
-		updateUrlSearch(searchValue);
+		updateUrlSearchDebounced(searchValue);
 	}, [searchValue]);
 
-	const updateUrlSearch = useCallback(
+	useEffect(() => {
+		const handleClickOutsideSearchBar = (e: MouseEvent) => {
+			if (searchBarRef.current && !searchBarRef.current.contains(e.target as HTMLDivElement)) {
+				if (searchValue === '') {
+					setSearchMode(false);
+				}
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutsideSearchBar);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutsideSearchBar);
+		};
+	});
+
+	const updateUrlSearchDebounced = useCallback(
 		debounce((search: string) => {
 			history.push({ search: qs.stringify({ search }, { skipEmptyString: true }) });
 		}, 500),
 		[]
 	);
+	const updateUrlSearch = useCallback((search: string) => {
+		history.push({ search: qs.stringify({ search }, { skipEmptyString: true }) });
+	}, []);
 
 	const onSearchBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		searchInputRef.current?.focus();
 	};
 
+	const onInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			updateUrlSearch(e.currentTarget.value);
+		}
+	};
+
 	const onClearBtnClick = () => {
 		setSearchValue('');
+		if (searchValue === '') {
+			setSearchMode(false);
+		}
 	};
 
 	const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,22 +76,18 @@ const SearchBar: React.FC<Props> = (props) => {
 	const onSearchInputFocus = () => {
 		setSearchMode(true);
 	};
-	const onSearchBarBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-		if (!searchValue) setSearchMode(false);
-	};
 
 	return (
 		<>
 			<div
 				className={cn(styles.searchBar, !searchMode && styles.searchBar__collapsed)}
-				onBlur={onSearchBarBlur}
 				ref={searchBarRef}
 			>
 				<input
 					className={styles.searchInput}
 					ref={searchInputRef}
 					onFocus={onSearchInputFocus}
-					// onBlur={onSearchBarBlur}
+					onKeyPress={onInputKeyPress}
 					onChange={onSearchInputChange}
 					value={searchValue}
 				/>
