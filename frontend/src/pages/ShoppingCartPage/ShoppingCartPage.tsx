@@ -8,6 +8,7 @@ import { TCartItem } from '../../types/types';
 import Button from '../../components/Button/Button';
 import ShoppingCartItems from './ShoppingCartItems/ShoppingCartItems';
 import styles from './ShoppingCartPage.module.scss';
+import { useNotLoggedInRedirect } from '../../hooks/useNotLoggedInRedirect';
 
 const ShoppingCart: React.FC = () => {
 	const dispatch = useDispatch();
@@ -15,9 +16,7 @@ const ShoppingCart: React.FC = () => {
 
 	const token = useSelector((state: AppState) => state.auth.token);
 
-	if (!token) {
-		return <Redirect to={'/oops/not-logged-in'} />;
-	}
+	useNotLoggedInRedirect('/cart');
 
 	const onRemoveItemBtnClick = (itemId: string) => {
 		if (token) {
