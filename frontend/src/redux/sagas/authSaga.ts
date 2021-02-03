@@ -11,6 +11,7 @@ import {
 	REGISTER,
 	RegisterAction,
 } from '../reducers/authReducer';
+import { actions as cartActions } from '../reducers/cartReducer';
 import { getErrorMessage } from './sagaUtils';
 
 export function* handleTokenExpired(err: any) {
@@ -35,6 +36,7 @@ function* login({ email, password }: LoginAction) {
 function* logout() {
 	removeAuthData();
 	yield put(actions.logoutSuccess());
+	yield put(cartActions.setCartItems([]));
 	console.log('before logout');
 }
 

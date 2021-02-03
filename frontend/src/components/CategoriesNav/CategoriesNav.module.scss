@@ -47,7 +47,8 @@
 		position: absolute;
 		display: block;
 		top: 0;
-		left: -100%;
+		left: 0;
+		transform: translateX(-100%);
 		background-color: $color-secondary;
 		width: 100%;
 		height: 100%;
@@ -58,7 +59,7 @@
 	&:hover,
 	&__clicked {
 		&:after {
-			left: 0;
+			transform: translateX(0);
 			border-radius: 0;
 		}
 	}

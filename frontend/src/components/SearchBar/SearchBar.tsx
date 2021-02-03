@@ -22,6 +22,13 @@ const SearchBar: React.FC<Props> = () => {
 	const searchBarRef = useRef<HTMLDivElement>(null);
 
 	const history = useHistory();
+	const inCatalog = history.location.pathname.match('/catalog') !== null;
+
+	useEffect(() => {
+		if (!inCatalog && searchMode) {
+			setSearchMode(false);
+		}
+	}, [inCatalog]);
 
 	useEffect(() => {
 		updateUrlSearchDebounced(searchValue);
@@ -55,6 +62,9 @@ const SearchBar: React.FC<Props> = () => {
 	const onSearchBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		searchInputRef.current?.focus();
+		if (!inCatalog) {
+			history.push('/catelog');
+		}
 	};
 
 	const onInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

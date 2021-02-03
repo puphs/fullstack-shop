@@ -37,6 +37,7 @@
 		height: 100%;
 		top: 0;
 		left: 0;
+		transform: translateY(0);
 		background-color: $color-primary;
 		transform-origin: center;
 		transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -45,7 +46,7 @@
 	&:enabled:hover {
 		color: $color-primary;
 		&:after {
-			top: 100%;
+			transform: translateY(100%);
 		}
 	}
 
@@ -100,6 +101,6 @@
 }
 
 .fullWidth {
-	width: calc(100% - 4px);
+	width: 100%;
 	padding: 2px 32px 0;
 }
