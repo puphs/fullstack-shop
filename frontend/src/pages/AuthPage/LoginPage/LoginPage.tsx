@@ -1,5 +1,5 @@
 import LoginForm, { LoginFormValues } from './LoginForm';
-import Auth from '../Auth';
+import Form from '../../../components/FormsHelpers/Form';
 import { useDispatch } from 'react-redux';
 import { actions } from '../../../redux/reducers/authReducer';
 
@@ -12,7 +12,7 @@ const Login: React.FC = () => {
 	};
 
 	return (
-		<Auth
+		<Form
 			renderForm={() => <LoginForm onSubmit={onSubmit} />}
 			header={'Log in'}
 			formMessage={{

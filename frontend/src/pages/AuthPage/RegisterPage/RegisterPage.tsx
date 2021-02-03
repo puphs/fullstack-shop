@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { actions } from '../../../redux/reducers/authReducer';
-import Auth from '../Auth';
+import Form from '../../../components/FormsHelpers/Form';
 import RegisterForm, { RegisterFormValues } from './RegisterForm';
 
 const Register: React.FC = () => {
@@ -11,7 +11,7 @@ const Register: React.FC = () => {
 	};
 
 	return (
-		<Auth
+		<Form
 			renderForm={() => <RegisterForm onSubmit={onSubmit} />}
 			header={'Register'}
 			formMessage={{

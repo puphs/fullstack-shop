@@ -1,7 +1,5 @@
 import { ValidationErrors } from 'final-form';
-import { Form, Field } from 'react-final-form';
-import { useDispatch } from 'react-redux';
-import { Action, actions } from '../../../redux/reducers/authReducer';
+import { Field, Form } from 'react-final-form';
 import { TFormProps } from '../../../types/types';
 import {
 	composeValidators,
@@ -10,8 +8,8 @@ import {
 	createMinLengthValidator,
 	createRequireValidator,
 } from '../../../validators/validators';
-import Button from '../../Button/Button';
-import LoginFormInput from '../FormInput';
+import Button from '../../../components/Button/Button';
+import LoginFormInput from '../../../components/FormsHelpers/FormInput';
 
 export type RegisterFormValues = {
 	email: string;
