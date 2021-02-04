@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
+import { routes } from '../../routes';
 
 type Props = {};
 
@@ -14,7 +15,7 @@ const Header: React.FC<Props> = (props) => {
 	return (
 		<header className={styles.header}>
 			<div className={styles.headerContent}>
-				<Link className={styles.logo} to="/">
+				<Link className={styles.logo} to={routes.catalog}>
 					REACT SHOP
 				</Link>
 				<div className={styles.headerNav}>
@@ -24,7 +25,7 @@ const Header: React.FC<Props> = (props) => {
 					<NavLink
 						className={cn(styles.cart, styles.navItem)}
 						activeClassName={styles.navItem__active}
-						to={'/cart'}
+						to={routes.shoppingCart}
 					>
 						{cartItems && cartItems.length !== 0 && (
 							<div className={styles.cartItemsCount}>{cartItems.length}</div>
@@ -34,7 +35,7 @@ const Header: React.FC<Props> = (props) => {
 					</NavLink>
 
 					<NavLink
-						to={'/account'}
+						to={routes.account}
 						className={cn(styles.account, styles.navItem)}
 						activeClassName={styles.navItem__active}
 					>

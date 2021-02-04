@@ -1,12 +1,13 @@
 import cn from 'classnames';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppState } from '../../redux/store';
+import { routes } from '../../routes';
 import styles from './CategoriesNav.module.scss';
 import SubcategoriesGroups from './SubcategoriesGroups/SubcategoriesGroups';
 
-const BASE_PATH = '/catalog';
+const BASE_PATH = routes.catalog;
 
 const isPathContains = (path: string, part: string) => {
 	return path.split('/').some((pathPart) => pathPart === part);
