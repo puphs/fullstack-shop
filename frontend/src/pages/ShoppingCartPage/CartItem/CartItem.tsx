@@ -2,7 +2,9 @@ import { CSSTransition } from 'react-transition-group';
 import { TCartItem } from '../../../types/types';
 import Img from '../../../components/Img/Img';
 import Prices from '../../../components/Prices/Prices';
-import styles from './ShoppingCartItem.module.scss';
+import styles from './CartItem.module.scss';
+import { Link } from 'react-router-dom';
+import { routes } from '../../../routes';
 
 type Props = {
 	cartItem: TCartItem;
@@ -25,6 +27,10 @@ const ShoppingCartItem: React.FC<Props> = ({ cartItem, onRemoveItemBtnClick }) =
 			timeout={2000}
 		>
 			<div className={styles.cartItem}>
+				<Link
+					className={styles.cartItemLink}
+					to={`${routes.shopItem}/${cartItem.shopItem._id}`}
+				></Link>
 				<Img src={cartItem.shopItem.imgLink} alt={'product'} fixedWidth={130} fixedHeight={130} />
 				<div className={styles.cartItemInfo}>
 					<div className={styles.cartItemMainInfo}>

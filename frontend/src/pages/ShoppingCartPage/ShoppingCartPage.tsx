@@ -1,22 +1,20 @@
 import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 import { formatPrice } from '../../helpers/pricesHelper';
 import { actions } from '../../redux/reducers/cartReducer';
 import { AppState } from '../../redux/store';
+import { routes } from '../../routes';
 import { TCartItem } from '../../types/types';
-import Button from '../../components/Button/Button';
-import ShoppingCartItems from './ShoppingCartItems/ShoppingCartItems';
+import CartItemsList from './CartItemsList/CartItemsList';
 import styles from './ShoppingCartPage.module.scss';
-import { useNotLoggedInRedirect } from '../../hooks/useNotLoggedInRedirect';
 
 const ShoppingCart: React.FC = () => {
 	const dispatch = useDispatch();
+
 	const cartItems = useSelector((state: AppState) => state.cart.cartItems);
-
 	const token = useSelector((state: AppState) => state.auth.token);
-
-	useNotLoggedInRedirect('/cart');
 
 	const onRemoveItemBtnClick = (itemId: string) => {
 		if (token) {
@@ -28,10 +26,10 @@ const ShoppingCart: React.FC = () => {
 		if (token) dispatch(actions.removeAllItemsFromCart(token));
 	};
 
+	if (!token) return <Redirect to={routes.login} />;
 	if (!cartItems) {
 		return <></>;
 	}
-
 	return (
 		<div className={styles.cart}>
 			<div className={styles.cartInfoAndItems}>
@@ -48,10 +46,7 @@ const ShoppingCart: React.FC = () => {
 						</div>
 
 						<div className={styles.cartItems}>
-							<ShoppingCartItems
-								cartItems={cartItems}
-								onRemoveItemBtnClick={onRemoveItemBtnClick}
-							/>
+							<CartItemsList cartItems={cartItems} onRemoveItemBtnClick={onRemoveItemBtnClick} />
 						</div>
 					</>
 				) : (

@@ -17,7 +17,7 @@
 .cart {
 	display: flex;
 	width: 100%;
-	animation: appear 0.5s;
+	// animation: appear 0.5s;
 }
 
 .cartInfoAndItems {
@@ -87,17 +87,17 @@
 	padding: 16px 0 12px;
 }
 
-.transitionEnter {
-	opacity: 0;
-}
-.transitionEnterActive {
-	opacity: 1;
-	transition: opacity 0.2s linear;
-}
-.transitionExit {
-	opacity: 1;
-}
-.transitionExitActive {
-	opacity: 0;
-	transition: opacity 0.2s linear;
-}
+// .transitionEnter {
+// 	opacity: 0;
+// }
+// .transitionEnterActive {
+// 	opacity: 1;
+// 	transition: opacity 0.2s linear;
+// }
+// .transitionExit {
+// 	opacity: 1;
+// }
+// .transitionExitActive {
+// 	opacity: 0;
+// 	transition: opacity 0.2s linear;
+// }
