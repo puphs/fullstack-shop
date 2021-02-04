@@ -1,19 +1,17 @@
+import { Link, useLocation } from 'react-router-dom';
+import { useRedirectTo } from '../../hooks/useRedirectTo';
+import { routes, routeWithRedirectTo } from '../../routes';
 import styles from './OopsPage.module.scss';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import qs from 'query-string';
-
-export const NOT_LOGGED_IN = 'not-logged-in';
-export const PAGE_NOT_FOUND = 'page-not-found';
 
 const OopsPage: React.FC = () => {
-	const { oopsReason } = useParams<{ oopsReason: string }>();
-	const { redirectTo } = qs.parse(useLocation().search);
+	const location = useLocation();
+	const redirectTo = useRedirectTo();
 
 	let ReasonElement = <PageNotFound />;
 
-	switch (oopsReason) {
-		case NOT_LOGGED_IN:
-			ReasonElement = <NotLoggedIn redirectTo={redirectTo?.toString() ?? '/'} />;
+	switch (location.pathname) {
+		case routes.notLoggedIn:
+			ReasonElement = <NotLoggedIn redirectTo={redirectTo} />;
 			break;
 	}
 
@@ -30,7 +28,7 @@ const PageNotFound = () => {
 		<div className={styles.notFound}>
 			<p className={styles.p}>
 				Page is not found!{' '}
-				<Link className={styles.reasonLink} to={'/'}>
+				<Link className={styles.reasonLink} to={routes.catalog}>
 					Let's get out of here!
 				</Link>
 			</p>
@@ -43,14 +41,14 @@ const NotLoggedIn: React.FC<{ redirectTo: string }> = ({ redirectTo }) => {
 		<div className={styles.notLoggedIn}>
 			<p className={styles.p}>
 				You are not logged in!{' '}
-				<Link className={styles.reasonLink} to={`/auth/login?redirectTo=${redirectTo}`}>
+				<Link className={styles.reasonLink} to={routeWithRedirectTo(routes.login, redirectTo)}>
 					Login!
 				</Link>
 			</p>
 			<p className={styles.p}>or</p>
 			<p className={styles.p}>
 				If you don’t have an account,{' '}
-				<Link className={styles.reasonLink} to={`/auth/register?redirectTo=${redirectTo}`}>
+				<Link className={styles.reasonLink} to={routeWithRedirectTo(routes.register, redirectTo)}>
 					Register!
 				</Link>
 			</p>

@@ -4,6 +4,7 @@ import styles from './SearchBar.module.scss';
 import headerStyles from '../Header/Header.module.scss';
 import { useHistory } from 'react-router-dom';
 import qs from 'query-string';
+import { routes } from '../../routes';
 
 type Props = {};
 
@@ -22,7 +23,7 @@ const SearchBar: React.FC<Props> = () => {
 	const searchBarRef = useRef<HTMLDivElement>(null);
 
 	const history = useHistory();
-	const inCatalog = history.location.pathname.match('/catalog') !== null;
+	const inCatalog = history.location.pathname.match(routes.catalog) !== null;
 
 	useEffect(() => {
 		if (!inCatalog && searchMode) {
@@ -63,7 +64,7 @@ const SearchBar: React.FC<Props> = () => {
 		e.preventDefault();
 		searchInputRef.current?.focus();
 		if (!inCatalog) {
-			history.push('/catelog');
+			history.push(routes.catalog);
 		}
 	};
 
@@ -107,8 +108,6 @@ const SearchBar: React.FC<Props> = () => {
 				<button className={styles.searchBtn} onClick={onSearchBtnClick}>
 					<div className={cn(styles.searchImg, headerStyles.navItemImg)}></div>
 				</button>
-
-				{/* </div> */}
 			</div>
 		</>
 	);

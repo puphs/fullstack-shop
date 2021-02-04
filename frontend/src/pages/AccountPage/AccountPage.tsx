@@ -1,33 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../../redux/store';
-import styles from './AccountPage.module.scss';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import { actions } from '../../redux/reducers/authReducer';
+import { Link, Redirect } from 'react-router-dom';
 import Form from '../../components/FormsHelpers/Form';
+import { actions } from '../../redux/reducers/authReducer';
+import { AppState } from '../../redux/store';
+import { routes, routeWithRedirectTo } from '../../routes';
+import styles from './AccountPage.module.scss';
 import ChangeNameForm from './ChangeNameForm';
 import ChangePasswordForm from './ChangePasswordForm';
-import { useNotLoggedInRedirect } from '../../hooks/useNotLoggedInRedirect';
-import { useEffect } from 'react';
 
 const AccountPage = () => {
 	const token = useSelector((state: AppState) => state.auth.token);
 
 	const dispatch = useDispatch();
-	const history = useHistory();
-
-	// useNotLoggedInRedirect('/account');
-	// useEffect(() => {
-	// 	if (!token) {
-	// 		history.push('/auth/login?redirectTo=/account');
-	// 	}
-	// }, [token]);
 
 	const onLogoutBtnClick = () => {
-		// history.push('/');
 		dispatch(actions.logout());
 	};
+
 	if (!token) {
-		return <Redirect to={'/auth/login?redirectTo=/account'} />;
+		return <Redirect to={routeWithRedirectTo(routes.login, routes.account)} />;
 	}
 
 	return (
@@ -41,7 +32,7 @@ const AccountPage = () => {
 						logout
 					</button>
 				) : (
-					<Link className={styles.login} to={'/auth/login?redirectTo=/account'}>
+					<Link className={styles.login} to={routeWithRedirectTo(routes.login, routes.account)}>
 						login
 					</Link>
 				)}

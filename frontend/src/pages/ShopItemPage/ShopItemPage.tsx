@@ -11,6 +11,7 @@ import { AppState } from '../../redux/store';
 import styles from './ShopItemPage.module.scss';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import { routes, routeWithRedirectTo } from '../../routes';
 
 type Params = { shopItemId: string };
 
@@ -33,16 +34,11 @@ const ShopItemPage = () => {
 
 	const onLoginOrAddToCartBtnClick = () => {
 		if (!token) {
-			history.push(`/auth/login?redirectTo=/item/${shopItemId}`);
+			history.push(routeWithRedirectTo(routes.login, `${routes.shopItem}/${shopItemId}`));
 		} else {
 			if (shopItem) {
 				dispatch(cartActions.addItemToCart(token, shopItem._id, itemSize));
 			}
-		}
-	};
-	const onAddToCartBtnClick = () => {
-		if (token && shopItem) {
-			dispatch(cartActions.addItemToCart(token, shopItem._id, itemSize));
 		}
 	};
 

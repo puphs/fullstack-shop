@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { routes } from '../../routes';
 import { TShopItem } from '../../types/types';
 import Button from '../Button/Button';
 import Img from '../Img/Img';
@@ -17,7 +18,7 @@ const ShopItem: React.FC<Props> = ({ shopItem, token, onAddToCartBtnClick }) => 
 
 	const onLoginOrAddToCartBtnClick = () => {
 		if (!token) {
-			history.push('/auth/login');
+			history.push(`${routes.login}?redirectTo=${history.location.pathname}`);
 		} else {
 			onAddToCartBtnClick(shopItem);
 		}
