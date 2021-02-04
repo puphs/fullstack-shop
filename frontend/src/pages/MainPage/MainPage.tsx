@@ -5,7 +5,9 @@ import ShopItems from './ShopItems/ShopItems';
 const MainPage = () => {
 	return (
 		<div className={styles.content}>
-			<Sidebar />
+			<div className={styles.sidebar}>
+				<Sidebar />
+			</div>
 			<ShopItems />
 		</div>
 	);
