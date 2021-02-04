@@ -1,56 +1,80 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
-import AddToCartPopup from './components/AddToCartPopup/AddToCartPopup';
+import AuthPage from './pages/AuthPage/AuthPage';
 import Header from './components/Header/Header';
-import ShopItem from './components/ShopItem/ShopItem';
-import ShoppingCart from './components/ShoppingCart/ShoppingCart';
-import Sidebar from './components/Sidebar/Sidebar';
-import store from './redux/store';
-import { TShopItem } from './types/types';
+import MainPage from './pages/MainPage/MainPage';
+import OopsPage from './pages/OopsPage/OopsPage';
+import ShoppingCartPage from './pages/ShoppingCartPage/ShoppingCartPage';
+import { actions } from './redux/reducers/appReducer';
+import store, { AppState } from './redux/store';
+import { Toaster } from 'react-hot-toast';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import ShopItemPage from './pages/ShopItemPage/ShopItemPage';
+import AccountPage from './pages/AccountPage/AccountPage';
+import { routes } from './routes';
 
 const App = () => {
-	const shopItem: TShopItem = {
-		id: 0,
-		name: 'name',
-		description: 'descr',
-		imgLink:
-			'http://ae01.alicdn.com/kf/HTB1gZ22RXXXXXa_aVXXq6xXFXXXW.jpg?size=70946&height=832&width=790&hash=5fb45556337dbbc6af7c7229e424e83f',
-		prices: {
-			discountPrice: 330.2,
-			standardPrice: 390,
-		},
-	};
+	const dispatch = useDispatch();
+	const token = useSelector((state: AppState) => state.auth.token);
+	const initialized = useSelector((state: AppState) => state.app.initialized);
+	const location = useLocation();
 
+	useEffect(() => {
+		dispatch(actions.initialize(token));
+	}, [dispatch, token]);
+
+	if (!initialized) return <></>;
+
+	const transitionKey = location.pathname.match(routes.catalog)
+		? routes.catalog
+		: location.pathname;
+
+	return (
+		<div className={styles.container}>
+			<Toaster />
+			<Header />
+
+			<main className={styles.main}>
+				<SwitchTransition mode={`out-in`}>
+					<CSSTransition
+						key={transitionKey}
+						timeout={250}
+						classNames={{
+							enter: styles.transitionEnter,
+							enterActive: styles.transitionEnterActive,
+							exit: styles.transitionExit,
+							exitActive: styles.transitionExitActive,
+						}}
+					>
+						<Switch location={location}>
+							<Route path={routes.auth} render={() => <AuthPage />} />
+							<Route path={routes.shoppingCart} render={() => <ShoppingCartPage />} />
+							<Route path={routes.account} render={() => <AccountPage />} />
+							<Route path={`${routes.oops}/:oopsReason?`} render={() => <OopsPage />} />
+							<Route path={`${routes.shopItem}/:shopItemId?`} render={() => <ShopItemPage />} />
+							<Route
+								path={`${routes.catalog}/:category?/:subcategory?`}
+								render={() => <MainPage />}
+							/>
+							<Redirect to={routes.catalog} />
+						</Switch>
+					</CSSTransition>
+				</SwitchTransition>
+			</main>
+		</div>
+	);
+};
+
+const AppWithProvider = () => {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				<div className={styles.container}>
-					<Header />
-					{/* <ShopItem shopItem={shopItem} /> */}
-
-					{/* <AddToCartPopup /> */}
-					<main className={styles.main}>
-						{/* <div className={styles.sidebar}>
-							<Sidebar />
-						</div> */}
-						{/* <div className={styles.content}> */}
-						{/* <div className={styles.shopItems}>
-								<ShopItem shopItem={shopItem} />
-								<ShopItem shopItem={shopItem} />
-								<ShopItem shopItem={shopItem} />
-							</div> */}
-						{/* </div> */}
-						<ShoppingCart />
-					</main>
-					{/* <SizeSelection /> */}
-					{/* <AddToCartPopup /> */}
-					{/* <Button text="hello" /> */}
-				</div>
+				<App />
 			</BrowserRouter>
 		</Provider>
 	);
 };
 
-export default App;
+export default AppWithProvider;
