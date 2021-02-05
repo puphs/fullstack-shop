@@ -7,12 +7,14 @@ import { rootSaga } from './sagas/rootSaga';
 import authReducer from './reducers/authReducer';
 import shopReducer from './reducers/shopReducer';
 import appReducer from './reducers/appReducer';
+import accountReducer from './reducers/accountReducer';
 
 const reducers = combineReducers({
 	sidebar: sidebarReducer,
 	cart: cartReducer,
 	auth: authReducer,
 	shop: shopReducer,
+	account: accountReducer,
 	app: appReducer,
 });
 export type AppState = ReturnType<typeof reducers>;
