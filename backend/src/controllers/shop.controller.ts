@@ -77,4 +77,4 @@ const getCategories: Middleware = async (req, res, next) => {
 	}
 };
 
-export default { getShopItems, getShopItem, getCategories };
+export const shopController = { getShopItems, getShopItem, getCategories };

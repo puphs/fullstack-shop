@@ -109,4 +109,4 @@ const removeAllItems: Middleware = async (req, res, next) => {
 	}
 };
 
-export default { getItems, addItem, removeItem, removeAllItems };
+export const shoppingCartController = { getItems, addItem, removeItem, removeAllItems };
