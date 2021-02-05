@@ -1,4 +1,4 @@
-type AuthData = { token: string; userId: string };
+export type AuthData = { token: string };
 
 const AUTH_DATA = 'AUTH_DATA';
 

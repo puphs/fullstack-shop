@@ -1,8 +1,9 @@
+import { TAccountType } from '../types/types';
 import { axiosInstance, getData, Response } from './apiUtils';
 
 export type AuthResponse = Response<{
 	token: string;
-	userId: string;
+	account: TAccountType;
 }>;
 
 const register = async (email: string, name: string, password: string) => {
