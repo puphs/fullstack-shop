@@ -10,6 +10,6 @@ const addItem: Array<Middleware> = [
 	handleValidationErrors,
 ];
 
-export default {
+export const shoppingCartValidators = {
 	addItem,
 };
