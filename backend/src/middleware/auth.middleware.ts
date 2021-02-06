@@ -3,7 +3,8 @@ import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import config from '../config/config';
 import ApiError from '../error/ApiError';
 import { Code } from '../controllers/controller-helper';
-const auth: Middleware = (req, res, next) => {
+
+export const authMiddleware: Middleware = (req, res, next) => {
 	if (req.method == 'OPTIONS') {
 		return next();
 	}
@@ -27,5 +28,3 @@ const auth: Middleware = (req, res, next) => {
 		return next(ApiError.authError());
 	}
 };
-
-export default auth;
