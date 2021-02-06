@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Img from '../../components/Img/Img';
 import Prices from '../../components/Prices/Prices';
@@ -12,14 +12,16 @@ import styles from './ShopItemPage.module.scss';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { routes, routeWithRedirectTo } from '../../routes';
+import { CSSTransition } from 'react-transition-group';
 
 type Params = { shopItemId: string };
 
 const ShopItemPage = () => {
 	const [itemSize, setItemSize] = useState('');
 	const token = useSelector((state: AppState) => state.auth.token);
-	const { shopItemId } = useParams<Params>();
 	const shopItem = useSelector((state: AppState) => state.shop.shopItem);
+	const isShopItemIsFetching = useSelector((state: AppState) => state.shop.isShopItemIsFetching);
+	const { shopItemId } = useParams<Params>();
 
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -42,7 +44,9 @@ const ShopItemPage = () => {
 		}
 	};
 
-	if (!shopItem) return <></>;
+	if (isShopItemIsFetching) return <></>;
+
+	if (!shopItem) return <Redirect to={routes.pageNotFound} />;
 
 	return (
 		<div className={styles.shopItem}>
