@@ -1,16 +1,16 @@
+import qs from 'query-string';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { LoadShopItemsParams } from '../../../api/shopApi';
-import { actions as cartActions } from '../../../redux/reducers/cartReducer';
-import { actions as shopActions } from '../../../redux/reducers/shopReducer';
-import { TShopItem } from '../../../types/types';
 import AddToCartPopup, { PopupResult } from '../../../components/AddToCartPopup/AddToCartPopup';
 import ShopItem from '../../../components/ShopItem/ShopItem';
-import styles from './ShopItems.module.scss';
-import qs from 'query-string';
+import { actions as cartActions } from '../../../redux/reducers/cartReducer';
+import { actions as shopActions } from '../../../redux/reducers/shopReducer';
 import { AppState } from '../../../redux/store';
-import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
+import { TShopItem } from '../../../types/types';
+import styles from './ShopItems.module.scss';
 
 type Params = {
 	category: string;
@@ -59,8 +59,6 @@ const ShopItems: React.FC = () => {
 			</div>
 		)) ?? [];
 
-	if (!shopItems) return <></>;
-
 	return (
 		<>
 			<AddToCartPopup shown={isPopupShown} onPopupResult={onPopupResult} shopItem={popupShopItem} />
@@ -75,7 +73,9 @@ const ShopItems: React.FC = () => {
 						exitActive: styles.transitionExitActive,
 					}}
 				>
-					{shopItems.length ? (
+					{!shopItems ? (
+						<div></div>
+					) : shopItems.length ? (
 						<div className={styles.shopItems}>{shopItemsElements}</div>
 					) : (
 						<div className={styles.noItemsFound}>No items found</div>
