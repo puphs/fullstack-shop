@@ -4,7 +4,7 @@ import { createRequireValidator } from '../../validators/validators';
 import FormInput from '../../components/FormsHelpers/FormInput';
 import Button from '../../components/Button/Button';
 
-type ChangeNameFormValues = {
+export type ChangeNameFormValues = {
 	name: string;
 };
 const ChangeNameForm: React.FC<TFormProps<ChangeNameFormValues>> = ({ onSubmit }) => {

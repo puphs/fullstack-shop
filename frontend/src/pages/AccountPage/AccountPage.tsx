@@ -1,20 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Form from '../../components/FormsHelpers/Form';
-import { actions } from '../../redux/reducers/authReducer';
+import { authActions } from '../../redux/reducers/authReducer';
+import { accountActions } from '../../redux/reducers/accountReducer';
 import { AppState } from '../../redux/store';
 import { routes, routeWithRedirectTo } from '../../routes';
 import styles from './AccountPage.module.scss';
-import ChangeNameForm from './ChangeNameForm';
-import ChangePasswordForm from './ChangePasswordForm';
+import ChangeNameForm, { ChangeNameFormValues } from './ChangeNameForm';
+import ChangePasswordForm, { ChangePasswordFormValues } from './ChangePasswordForm';
 
 const AccountPage = () => {
 	const token = useSelector((state: AppState) => state.auth.token);
+	const account = useSelector((state: AppState) => state.account.account);
 
 	const dispatch = useDispatch();
 
 	const onLogoutBtnClick = () => {
-		dispatch(actions.logout());
+		dispatch(authActions.logout());
 	};
 
 	if (!token) {
@@ -24,7 +26,7 @@ const AccountPage = () => {
 	return (
 		<div className={styles.accountContainer}>
 			<h3 className={styles.greeting}>
-				Hello, <span className={styles.userName}>anonymous</span>
+				Hello, <span className={styles.userName}>{account?.name}</span>
 			</h3>
 			<div className={styles.loginLogout}>
 				{token ? (
@@ -47,7 +49,18 @@ const AccountPage = () => {
 };
 
 const Forms = () => {
-	const onChangeNameSubmit = () => {};
+	const dispatch = useDispatch();
+	const token = useSelector((state: AppState) => state.auth.token);
+	const onChangeNameSubmit = (values: ChangeNameFormValues) => {
+		if (token) {
+			dispatch(accountActions.changeName(token, values.name));
+		}
+	};
+	const onChangePasswordSubmit = (values: ChangePasswordFormValues) => {
+		if (token) {
+			dispatch(accountActions.changePassword(token, values.currentPassword, values.newPassword));
+		}
+	};
 
 	return (
 		<>
@@ -58,7 +71,7 @@ const Forms = () => {
 			<Form
 				style={{ marginLeft: 32 }}
 				header={'Change password'}
-				renderForm={() => <ChangePasswordForm onSubmit={onChangeNameSubmit} />}
+				renderForm={() => <ChangePasswordForm onSubmit={onChangePasswordSubmit} />}
 			/>
 		</>
 	);

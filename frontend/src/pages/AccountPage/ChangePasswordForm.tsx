@@ -10,7 +10,7 @@ import FormInput from '../../components/FormsHelpers/FormInput';
 import Button from '../../components/Button/Button';
 import { ValidationErrors } from 'final-form';
 
-type ChangePasswordFormValues = {
+export type ChangePasswordFormValues = {
 	currentPassword: string;
 	newPassword: string;
 	confirmPassword: string;
