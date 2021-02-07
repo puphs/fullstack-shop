@@ -12,6 +12,7 @@ export interface IUserModel extends IUser, Document {}
 
 const schema = new Schema({
 	name: { type: String, required: true },
+	credentials: { type: Schema.Types.ObjectId, ref: 'UserCredentials' },
 	shoppingCart: { type: Schema.Types.ObjectId, ref: 'ShoppingCart' },
 });
 

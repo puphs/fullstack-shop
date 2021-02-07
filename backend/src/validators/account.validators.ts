@@ -3,13 +3,15 @@ import { Middleware } from '../types/types';
 import { handleValidationErrors, stringValidation } from './utils';
 
 const changeName: Array<Middleware> = [
-	stringValidation(check('name'), 'Name').notEmpty().withMessage('Name should be not empty'),
+	stringValidation(check('name'), 'Name')
+		.isLength({ min: 3, max: 16 })
+		.withMessage('Name length should be more than 3 and less than 16'),
 
 	handleValidationErrors,
 ];
 
 const changePassword: Array<Middleware> = [
-	stringValidation(check('password'), 'Password'),
+	stringValidation(check('currentPassword'), 'Current password'),
 
 	stringValidation(check('newPassword'), 'New password')
 		.withMessage('New password should be a string')
