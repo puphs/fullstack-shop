@@ -1,6 +1,6 @@
-@import '~/styles/global.scss';
-@import '~/styles/variables.scss';
-@import '~/styles/fonts.scss';
+@import '../../styles/global.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/fonts.scss';
 
 %headerNavImgBase {
 	width: 32px;
@@ -84,7 +84,7 @@
 	line-height: 22px;
 }
 .cartImg {
-	@include headerNavImg('~/assets/icons/shopping-cart.svg');
+	@include headerNavImg('../../assets/icons/shopping-cart.svg');
 }
 
 .account {
@@ -99,7 +99,7 @@
 	margin-right: 10px;
 }
 .accountImg {
-	@include headerNavImg('~/assets/icons/account.svg');
+	@include headerNavImg('../../assets/icons/account.svg');
 }
 
 .line {

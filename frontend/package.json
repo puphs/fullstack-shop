@@ -29,6 +29,7 @@
 		"react-dom": "^17.0.1",
 		"react-final-form": "^6.5.2",
 		"react-hot-toast": "^1.0.2",
+		"react-medium-image-zoom": "^4.3.1",
 		"react-redux": "^7.2.2",
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "4.0.1",
@@ -40,10 +41,10 @@
 		"web-vitals": "^0.2.4"
 	},
 	"scripts": {
-		"start": "craco start",
-		"build": "craco build && mv ./build/* ../build/frontend",
-		"test": "craco test",
-		"eject": "craco eject"
+		"start": "react-scripts start",
+		"build": "rm -rf ../build/frontend/* && react-scripts build && mv ./build/* ../build/frontend",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
 		"extends": [

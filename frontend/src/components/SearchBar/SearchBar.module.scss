@@ -1,8 +1,8 @@
 @import '../Header/Header.module.scss';
 
-@import '~/styles/fonts.scss';
-@import '~/styles/variables.scss';
-@import '~/styles/global.scss';
+@import '../../styles/fonts.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/global.scss';
 
 .searchBar {
 	position: relative;
@@ -62,7 +62,7 @@
 
 .searchImg {
 	background-color: #fff;
-	@include headerNavImg('~/assets/icons/search.svg');
+	@include headerNavImg('../../assets/icons/search.svg');
 }
 
 .clearBtn {
@@ -75,7 +75,7 @@
 
 .clearImg {
 	background-color: #fff;
-	@include headerNavImg('~/assets/icons/close.svg');
+	@include headerNavImg('../../assets/icons/close.svg');
 }
 .searchImg,
 .clearImg {
