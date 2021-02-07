@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-// const baseURL = window.location.origin + '/api/';
-const baseURL = 'http://localhost:3001/api/';
+const baseURL = process.env.REACT_APP_API_URL ?? window.location.origin + '/api/';
 
 export const axiosInstance = axios.create({ baseURL });
 

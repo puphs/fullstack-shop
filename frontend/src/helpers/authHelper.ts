@@ -14,7 +14,6 @@ export const saveAuthData = (authData: AuthData): boolean => {
 
 export const getAuthData = (): AuthData => {
 	const dataString = localStorage.getItem(AUTH_DATA);
-	console.log('You are loggined in: ', dataString ? true : false);
 	return dataString ? JSON.parse(dataString) : { token: null, userId: null };
 };
 

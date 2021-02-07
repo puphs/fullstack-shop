@@ -1,11 +1,11 @@
-import React, { Fragment, MouseEvent, useRef, useState } from 'react';
 import cn from 'classnames';
-import styles from './Header.module.scss';
-import SearchBar from '../SearchBar/SearchBar';
-import { Link, NavLink } from 'react-router-dom';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link, NavLink } from 'react-router-dom';
 import { AppState } from '../../redux/store';
 import { routes } from '../../routes';
+import SearchBar from '../SearchBar/SearchBar';
+import styles from './Header.module.scss';
 
 type Props = {};
 

@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useMessageHandler } from '../../hooks/useMessageHandler';
-import { actions } from '../../redux/reducers/authReducer';
+import { useRedirectTo } from '../../hooks/useRedirectTo';
+import { authActions } from '../../redux/reducers/authReducer';
 import { AppState } from '../../redux/store';
 import { routes } from '../../routes';
 import styles from './AuthPage.module.scss';
@@ -11,15 +12,15 @@ import RegisterPage from './RegisterPage/RegisterPage';
 
 const AuthPage: React.FC = () => {
 	const token = useSelector((state: AppState) => state.auth.token);
+	const redirectTo = useRedirectTo();
 
 	const history = useHistory();
 
 	useEffect(() => {
-		const redirectTo = new URLSearchParams(history.location.search).get('redirectTo') ?? '/';
-		if (token && redirectTo) history.push(redirectTo);
-	}, [history.location.search, token]);
-
-	useMessageHandler((state) => state.auth, actions.handleMessage);
+		if (token) {
+			history.push(redirectTo);
+		}
+	}, [token]);
 
 	return (
 		<div className={styles.container}>
