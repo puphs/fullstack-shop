@@ -16,7 +16,7 @@ const getAccount: Middleware = async (req, res, next) => {
 				createResponse({ data: { account: getAccountFromUser(user) }, message: 'User data loaded' })
 			);
 	} catch (err) {
-		next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -32,7 +32,7 @@ const changeName: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -68,7 +68,7 @@ const changePassword: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 

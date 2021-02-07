@@ -27,7 +27,7 @@ const getItems: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		return next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -59,7 +59,7 @@ const addItem: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		return next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -88,7 +88,7 @@ const removeItem: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		return next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -105,7 +105,7 @@ const removeAllItems: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		return next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 

@@ -38,7 +38,7 @@ const register: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -47,23 +47,25 @@ const login: Middleware = async (req, res, next) => {
 		const { email, password } = req.body;
 		const userCredentials: IUserCredentialsModel = await UserCredentials.findOne({ email });
 		if (!userCredentials) {
-			return next(ApiError.badRequest({ message: 'Incorrect password or email' }));
+			return next(ApiError.badRequest({ message: 'Incorrect email or password' }));
 		}
 
 		const isPasswordCorrect = await bcrypt.compare(password, userCredentials.passwordHash);
-		if (isPasswordCorrect) {
-			await userCredentials.populate({ path: 'user' }).execPopulate();
-			const user: IUserModel = userCredentials.user;
-			const token = await createToken(user._id);
-			res.status(200).json(
-				createResponse({
-					data: { token, account: getAccountFromUser(user) },
-					message: 'Successful login',
-				})
-			);
+		if (!isPasswordCorrect) {
+			return next(ApiError.badRequest({ message: 'Incorrect email or password' }));
 		}
+
+		await userCredentials.populate({ path: 'user' }).execPopulate();
+		const user: IUserModel = userCredentials.user;
+		const token = await createToken(user._id);
+		res.status(200).json(
+			createResponse({
+				data: { token, account: getAccountFromUser(user) },
+				message: 'Successful login',
+			})
+		);
 	} catch (err) {
-		next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 

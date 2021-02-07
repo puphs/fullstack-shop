@@ -44,22 +44,24 @@ const getShopItems: Middleware = async (req, res, next) => {
 
 		res.status(200).json(createResponse({ data: { shopItems }, message: 'Shop items loaded' }));
 	} catch (err) {
-		return next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
 const getShopItem: Middleware = async (req, res, next) => {
 	try {
 		const itemId = req.params['itemId'];
-
+		if (itemId.length !== 24) {
+			return next(ApiError.badRequest({ message: 'Invalid item id' }));
+		}
 		const shopItem = await ShopItem.findOne({ _id: itemId });
 		if (!shopItem) {
-			return next(ApiError.badRequest({ message: 'Invalid item index' }));
+			return next(ApiError.badRequest({ message: 'Invalid item id' }));
 		}
 
 		res.status(200).json(createResponse({ data: { shopItem }, message: 'Shop item loaded' }));
 	} catch (err) {
-		return next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
@@ -73,7 +75,7 @@ const getCategories: Middleware = async (req, res, next) => {
 			})
 		);
 	} catch (err) {
-		next(ApiError.internal());
+		next(ApiError.internal(err));
 	}
 };
 
