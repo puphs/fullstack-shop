@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../redux/reducers/authReducer';
+import { authActions } from '../../../redux/reducers/authReducer';
 import Form from '../../../components/FormsHelpers/Form';
 import RegisterForm, { RegisterFormValues } from './RegisterForm';
 import { routes, routeWithRedirectTo } from '../../../routes';
@@ -11,7 +11,7 @@ const Register: React.FC = () => {
 
 	const onSubmit = (values: RegisterFormValues) => {
 		const { email, name, password } = values;
-		dispatch(actions.register(email, name, password));
+		dispatch(authActions.register(email, name, password));
 	};
 
 	return (

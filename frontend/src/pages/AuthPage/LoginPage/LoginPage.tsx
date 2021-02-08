@@ -1,7 +1,7 @@
 import LoginForm, { LoginFormValues } from './LoginForm';
 import Form from '../../../components/FormsHelpers/Form';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../redux/reducers/authReducer';
+import { authActions } from '../../../redux/reducers/authReducer';
 import { useRedirectTo } from '../../../hooks/useRedirectTo';
 import { routes, routeWithRedirectTo } from '../../../routes';
 
@@ -11,7 +11,7 @@ const Login: React.FC = () => {
 	const onSubmit = (values: LoginFormValues) => {
 		const { email, password } = values;
 
-		dispatch(actions.login(email, password));
+		dispatch(authActions.login(email, password));
 	};
 
 	return (

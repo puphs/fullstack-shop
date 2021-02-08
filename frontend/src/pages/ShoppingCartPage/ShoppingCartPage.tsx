@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import { formatPrice } from '../../helpers/pricesHelper';
-import { actions } from '../../redux/reducers/cartReducer';
+import { cartActions } from '../../redux/reducers/cartReducer';
 import { AppState } from '../../redux/store';
-import { routes } from '../../routes';
+import { routes, routeWithRedirectTo } from '../../routes';
 import { TCartItem } from '../../types/types';
+import OopsPage from '../OopsPage/OopsPage';
 import CartItemsList from './CartItemsList/CartItemsList';
 import styles from './ShoppingCartPage.module.scss';
 
@@ -18,15 +19,17 @@ const ShoppingCart: React.FC = () => {
 
 	const onRemoveItemBtnClick = (itemId: string) => {
 		if (token) {
-			dispatch(actions.removeItemFromCart(token, itemId));
+			dispatch(cartActions.removeItemFromCart(token, itemId));
 		}
 	};
 
 	const onRemoveAllItemsBtnClick = () => {
-		if (token) dispatch(actions.removeAllItemsFromCart(token));
+		if (token) dispatch(cartActions.removeAllItemsFromCart(token));
 	};
 
-	if (!token) return <Redirect to={routes.login} />;
+	if (!token) {
+		return <Redirect to={routeWithRedirectTo(routes.notLoggedIn, routes.shoppingCart)} />;
+	}
 	if (!cartItems) {
 		return <></>;
 	}

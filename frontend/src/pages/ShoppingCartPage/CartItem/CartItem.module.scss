@@ -1,6 +1,6 @@
-@import '~/styles/variables.scss';
-@import '~/styles/fonts.scss';
-@import '~/styles/global.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/fonts.scss';
+@import '../../../styles/global.scss';
 
 .cartItem {
 	text-decoration: none;
@@ -57,7 +57,7 @@
 	@extend %btnBase;
 	width: 32px;
 	height: 32px;
-	mask-image: url('~/assets/icons/close.svg');
+	mask-image: url('../../../assets/icons/close.svg');
 	mask-size: cover;
 	mask-repeat: no-repeat;
 	background-color: rgba($color-text-secondary, 0.3);

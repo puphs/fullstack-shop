@@ -5,14 +5,13 @@ import Button from '../../components/Button/Button';
 import Img from '../../components/Img/Img';
 import Prices from '../../components/Prices/Prices';
 import SizeSelection from '../../components/SizeSelection/SizeSelection';
-import { actions as shopActions } from '../../redux/reducers/shopReducer';
-import { actions as cartActions } from '../../redux/reducers/cartReducer';
+import { shopActions } from '../../redux/reducers/shopReducer';
+import { cartActions } from '../../redux/reducers/cartReducer';
 import { AppState } from '../../redux/store';
 import styles from './ShopItemPage.module.scss';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { routes, routeWithRedirectTo } from '../../routes';
-import { CSSTransition } from 'react-transition-group';
 
 type Params = { shopItemId: string };
 
@@ -44,9 +43,12 @@ const ShopItemPage = () => {
 		}
 	};
 
-	if (isShopItemIsFetching) return <></>;
-
-	if (!shopItem) return <Redirect to={routes.pageNotFound} />;
+	if (isShopItemIsFetching || !shopItem) {
+		return <h4 className={styles.invalidItemId}>Invalid item id</h4>;
+	}
+	if (!shopItem && !isShopItemIsFetching) {
+		return <Redirect to={routes.pageNotFound} />;
+	}
 
 	return (
 		<div className={styles.shopItem}>
