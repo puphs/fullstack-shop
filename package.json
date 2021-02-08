@@ -7,9 +7,10 @@
 		"i:frontend": "cd frontend; npm i",
 		"i:backend": "cd backend; npm i",
 		"i": "npm run i:frontend; npm run i:backend",
-		"start:backend": "npm --prefix backend run start",
-		"start:frontend": "npm --prefix frontend run start",
-		"start": "npm-run-all -p start:backend start:frontend"
+		"start:dev:backend": "npm --prefix backend run start:dev",
+		"start:dev:frontend": "npm --prefix frontend run start:dev",
+		"build": "npm --prefix backend run build; npm --prefix frontend run build",
+		"start": "npm --prefix backend run start"
 	},
 	"repository": {
 		"type": "git",
