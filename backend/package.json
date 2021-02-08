@@ -22,7 +22,7 @@
 	"scripts": {
 		"start:dev": "ts-node src/index.ts",
 		"start": "node ../build/backend/index.js",
-		"build": "npm install && tsc",
+		"build": "npm install && rm -rf ../build/backend && tsc && mv build ../build/backend",
 		"postbuild": "cp -R node_modules ../build/backend/node_modules"
 	},
 	"keywords": [],
