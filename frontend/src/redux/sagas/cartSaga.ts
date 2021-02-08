@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import {
-	actions,
+	cartActions,
 	LoadCartItemsAction,
 	LOAD_CART_ITEMS,
 	ADD_ITEM_TO_CART,
@@ -11,45 +11,48 @@ import {
 	REMOVE_ALL_ITEMS_FROM_CART,
 } from '../reducers/cartReducer';
 import { cartApi, CartItemsResponse } from '../../api/cartApi';
-import { getErrorMessage } from './sagaUtils';
+import { getErrorMessage, setErrorMessage, setOkMessage } from './sagaUtils';
 import { handleTokenExpired } from './authSaga';
 
 export function* loadCartItems({ token }: LoadCartItemsAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.loadCartItems, token);
-		yield put(actions.setCartItems(data.data.shoppingCartItems));
+		yield put(cartActions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
 		yield handleTokenExpired(err);
-		yield put(actions.cartActionFailure(getErrorMessage(err)));
+		yield put(cartActions.cartActionFailure(getErrorMessage(err)));
+		yield setErrorMessage(getErrorMessage(err));
 	}
 }
 
 function* addItemToCart({ token, shopItemId, size }: AddItemToCartAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.addItemToCart, token, shopItemId, size);
-		yield put(actions.setCartItems(data.data.shoppingCartItems));
+		yield put(cartActions.setCartItems(data.data.shoppingCartItems));
+		yield setOkMessage(data.message);
 	} catch (err) {
 		yield handleTokenExpired(err);
-		yield put(actions.cartActionFailure(getErrorMessage(err)));
+		yield put(cartActions.cartActionFailure(getErrorMessage(err)));
+		yield setErrorMessage(getErrorMessage(err));
 	}
 }
 
 function* removeItemFromCart({ token, itemId }: RemoveItemFromCartAction) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.removeItemFromCart, token, itemId);
-		yield put(actions.setCartItems(data.data.shoppingCartItems));
+		yield put(cartActions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
 		yield handleTokenExpired(err);
-		yield put(actions.cartActionFailure(getErrorMessage(err)));
+		yield put(cartActions.cartActionFailure(getErrorMessage(err)));
 	}
 }
 function* removeAllItemsFromCart({ token }: RemoveAllItemsFromCart) {
 	try {
 		const data: CartItemsResponse = yield call(cartApi.removeAllItemsFromCart, token);
-		yield put(actions.setCartItems(data.data.shoppingCartItems));
+		yield put(cartActions.setCartItems(data.data.shoppingCartItems));
 	} catch (err) {
 		yield handleTokenExpired(err);
-		yield put(actions.cartActionFailure(getErrorMessage(err)));
+		yield put(cartActions.cartActionFailure(getErrorMessage(err)));
 	}
 }
 

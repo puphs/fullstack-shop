@@ -7,7 +7,7 @@ export const routes = {
 
 	oops: '/oops',
 	notLoggedIn: '/oops/not-logged-in',
-	notFound: '/oops/page-not-found',
+	pageNotFound: '/oops/page-not-found',
 
 	shopItem: '/item',
 

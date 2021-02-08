@@ -1,23 +1,23 @@
 import { put, take, takeEvery } from 'redux-saga/effects';
-import { actions as appActions, INITIALIZE, InitializeAction } from '../reducers/appReducer';
+import { appActions, INITIALIZE, InitializeAction } from '../reducers/appReducer';
+import { cartActions, CART_ACTION_FAILURE, SET_CART_ITEMS } from '../reducers/cartReducer';
 import {
-	actions as cartActions,
-	CART_ACTION_FAILURE,
-	SET_CART_ITEMS,
-} from '../reducers/cartReducer';
-import {
-	actions as shopActions,
+	shopActions,
 	LOAD_CATEGORIES_FAILURE,
 	LOAD_SHOP_ITEMS_FAILURE,
 	SET_CATEGORIES,
 	SET_SHOP_ITEMS,
 } from '../reducers/shopReducer';
+import { accountActions, SET_ACCOUNT, LOAD_ACCOUNT_FAILURE } from '../reducers/accountReducer';
 import { getErrorMessage } from './sagaUtils';
 
 function* initialize({ token }: InitializeAction) {
 	try {
 		if (token) {
-			yield put(cartActions.loadCartItems(token as string));
+			yield put(accountActions.loadAccount(token));
+			yield take([SET_ACCOUNT, LOAD_ACCOUNT_FAILURE]);
+
+			yield put(cartActions.loadCartItems(token));
 			yield take([SET_CART_ITEMS, CART_ACTION_FAILURE]);
 		}
 

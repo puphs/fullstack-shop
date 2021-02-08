@@ -3,16 +3,18 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import { Code, Response } from '../../api/apiUtils';
 import { authApi, AuthResponse } from '../../api/authApi';
 import { removeAuthData, saveAuthData } from '../../helpers/authHelper';
+import { accountActions } from '../reducers/accountReducer';
+import { appActions } from '../reducers/appReducer';
 import {
-	actions,
+	authActions,
 	LOGIN,
 	LoginAction,
 	LOGOUT,
 	REGISTER,
 	RegisterAction,
 } from '../reducers/authReducer';
-import { actions as cartActions } from '../reducers/cartReducer';
-import { getErrorMessage } from './sagaUtils';
+import { cartActions } from '../reducers/cartReducer';
+import { getErrorMessage, setErrorMessage, setOkMessage } from './sagaUtils';
 
 export function* handleTokenExpired(err: any) {
 	if (axios.isAxiosError(err) && err.response) {
@@ -26,27 +28,36 @@ export function* handleTokenExpired(err: any) {
 function* login({ email, password }: LoginAction) {
 	try {
 		const data: AuthResponse = yield call(authApi.login, email, password);
-		saveAuthData(data.data);
-		yield put(actions.loginSuccess(data.data.token, data.data.userId));
+		const token = data.data.token;
+		saveAuthData({ token });
+
+		yield put(authActions.loginSuccess(token));
+		yield put(accountActions.setAccount(data.data.account));
+		yield setOkMessage(data.message);
 	} catch (err) {
-		yield put(actions.loginFailure(getErrorMessage(err)));
+		yield put(authActions.loginFailure(getErrorMessage(err)));
+		yield setErrorMessage(getErrorMessage(err));
 	}
 }
 
 function* logout() {
 	removeAuthData();
-	yield put(actions.logoutSuccess());
+	yield put(authActions.logoutSuccess());
 	yield put(cartActions.setCartItems([]));
-	console.log('before logout');
 }
 
 function* register({ email, name, password }: RegisterAction) {
 	try {
 		const data: AuthResponse = yield call(authApi.register, email, name, password);
-		saveAuthData(data.data);
-		yield put(actions.registerSuccess(data.data.token, data.data.userId));
+		const token = data.data.token;
+		saveAuthData({ token });
+
+		yield put(authActions.registerSuccess(token));
+		yield put(accountActions.setAccount(data.data.account));
+		yield setOkMessage(data.message);
 	} catch (err) {
-		yield put(actions.registerFailure(getErrorMessage(err)));
+		yield put(authActions.registerFailure(getErrorMessage(err)));
+		yield setErrorMessage(getErrorMessage(err));
 	}
 }
 

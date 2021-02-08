@@ -1,13 +1,13 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import cartReducer from './reducers/cartReducer';
+import { cartReducer } from './reducers/cartReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './sagas/rootSaga';
-import authReducer from './reducers/authReducer';
-import shopReducer from './reducers/shopReducer';
-import appReducer from './reducers/appReducer';
-import accountReducer from './reducers/accountReducer';
+import { authReducer } from './reducers/authReducer';
+import { shopReducer } from './reducers/shopReducer';
+import { appReducer } from './reducers/appReducer';
+import { accountReducer } from './reducers/accountReducer';
 
 const reducers = combineReducers({
 	sidebar: sidebarReducer,

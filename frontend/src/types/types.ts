@@ -28,6 +28,20 @@ export type TCartItem = {
 	size: string;
 };
 
+export type TAccountType = {
+	name: string;
+	_id: string;
+};
+
 export type TFormProps<FormValues> = {
 	onSubmit: (values: FormValues) => void;
+};
+
+export enum MessageStatus {
+	ERROR = 0,
+	OK = 1,
+}
+export type Message = {
+	text: string;
+	status: MessageStatus;
 };

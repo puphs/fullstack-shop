@@ -7,13 +7,14 @@ import Header from './components/Header/Header';
 import MainPage from './pages/MainPage/MainPage';
 import OopsPage from './pages/OopsPage/OopsPage';
 import ShoppingCartPage from './pages/ShoppingCartPage/ShoppingCartPage';
-import { actions } from './redux/reducers/appReducer';
+import { appActions } from './redux/reducers/appReducer';
 import store, { AppState } from './redux/store';
 import { Toaster } from 'react-hot-toast';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import ShopItemPage from './pages/ShopItemPage/ShopItemPage';
 import AccountPage from './pages/AccountPage/AccountPage';
 import { routes } from './routes';
+import { useMessageHandler } from './hooks/useMessageHandler';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -21,8 +22,10 @@ const App = () => {
 	const initialized = useSelector((state: AppState) => state.app.initialized);
 	const location = useLocation();
 
+	useMessageHandler();
+
 	useEffect(() => {
-		dispatch(actions.initialize(token));
+		dispatch(appActions.initialize(token));
 	}, [dispatch, token]);
 
 	if (!initialized) return <></>;

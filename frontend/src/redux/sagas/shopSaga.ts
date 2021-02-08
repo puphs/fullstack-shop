@@ -5,39 +5,44 @@ import shopApi, {
 	LoadShopItemsResponse,
 } from '../../api/shopApi';
 import {
-	actions,
+	shopActions,
 	LoadShopItemAction,
 	LoadShopItemsAction,
 	LOAD_CATEGORIES,
 	LOAD_SHOP_ITEM,
 	LOAD_SHOP_ITEMS,
 } from '../reducers/shopReducer';
-import { getErrorMessage } from './sagaUtils';
+import { getErrorMessage, setErrorMessage } from './sagaUtils';
 
 function* loadShopItems({ params }: LoadShopItemsAction) {
 	try {
 		const data: LoadShopItemsResponse = yield call(shopApi.loadShopItems, params);
-		yield put(actions.setShopItems(data.data.shopItems));
+		yield put(shopActions.setShopItems(data.data.shopItems));
 	} catch (err) {
-		yield put(actions.loadShopItemsFailure(getErrorMessage(err)));
+		yield put(shopActions.loadShopItemsFailure(getErrorMessage(err)));
+		yield setErrorMessage(getErrorMessage(err));
 	}
 }
 
 function* loadShopItem({ itemId }: LoadShopItemAction) {
 	try {
+		yield put(shopActions.setShopItem(null));
+		yield put(shopActions.setIsShopItemIsFetching(true));
 		const data: LoadShopItemResponse = yield call(shopApi.loadShopItem, itemId);
-		yield put(actions.setShopItem(data.data.shopItem));
+		yield put(shopActions.setShopItem(data.data.shopItem));
+		yield put(shopActions.setIsShopItemIsFetching(false));
 	} catch (err) {
-		yield put(actions.loadShopItemFailure(getErrorMessage(err)));
+		yield put(shopActions.loadShopItemFailure(getErrorMessage(err)));
 	}
 }
 
 function* loadCategories() {
 	try {
 		const data: LoadCategoriesResponse = yield call(shopApi.loadCategories);
-		yield put(actions.setCategories(data.data.categories));
+		yield put(shopActions.setCategories(data.data.categories));
 	} catch (err) {
-		yield put(actions.loadCategoriesFailure(getErrorMessage(err)));
+		yield put(shopActions.loadCategoriesFailure(getErrorMessage(err)));
+		yield setErrorMessage(getErrorMessage(err));
 	}
 }
 
