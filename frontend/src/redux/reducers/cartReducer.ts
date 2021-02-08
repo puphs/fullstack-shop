@@ -3,19 +3,20 @@ import { InferActionsTypes } from './reducerUtils';
 
 const initialState = {
 	cartItems: null as Array<TCartItem> | null,
+	isCartActionFetching: false as boolean,
 };
 
 type State = typeof initialState;
-type Action = InferActionsTypes<typeof actions>;
+type Action = InferActionsTypes<typeof cartActions>;
 
-const cartReducer = (state = initialState, action: Action): State => {
+export const cartReducer = (state = initialState, action: Action): State => {
 	switch (action.type) {
 		case CART_ACTION_FAILURE:
-			return state;
+			return { ...state, isCartActionFetching: false };
 		case SET_CART_ITEMS:
-			return { ...state, cartItems: action.cartItems };
+			return { ...state, cartItems: action.cartItems, isCartActionFetching: false };
 		default:
-			return state;
+			return { ...state, isCartActionFetching: true };
 	}
 };
 
@@ -30,12 +31,12 @@ export const REMOVE_ITEM_FROM_CART = 'cart/REMOVE_ITEM_FROM_CART';
 
 export const REMOVE_ALL_ITEMS_FROM_CART = 'cart/REMOVE_ALL_ITEMS_FROM_CART';
 
-export type LoadCartItemsAction = ReturnType<typeof actions.loadCartItems>;
-export type AddItemToCartAction = ReturnType<typeof actions.addItemToCart>;
-export type RemoveItemFromCartAction = ReturnType<typeof actions.removeItemFromCart>;
-export type RemoveAllItemsFromCart = ReturnType<typeof actions.removeAllItemsFromCart>;
+export type LoadCartItemsAction = ReturnType<typeof cartActions.loadCartItems>;
+export type AddItemToCartAction = ReturnType<typeof cartActions.addItemToCart>;
+export type RemoveItemFromCartAction = ReturnType<typeof cartActions.removeItemFromCart>;
+export type RemoveAllItemsFromCart = ReturnType<typeof cartActions.removeAllItemsFromCart>;
 
-export const actions = {
+export const cartActions = {
 	cartActionFailure: (errorMessage: string) =>
 		({ type: CART_ACTION_FAILURE, errorMessage } as const),
 
@@ -51,5 +52,3 @@ export const actions = {
 
 	removeAllItemsFromCart: (token: string) => ({ type: REMOVE_ALL_ITEMS_FROM_CART, token } as const),
 };
-
-export default cartReducer;

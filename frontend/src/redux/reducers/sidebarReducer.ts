@@ -4,9 +4,9 @@ import { InferActionsTypes } from './reducerUtils';
 const categories: Array<TCategory> = [
 	{
 		name: 'men',
-		subcategories: [
+		subcategoriesGroups: [
 			{
-				name: 'Shoes',
+				groupName: 'Shoes',
 				subcategories: [
 					{ name: 'Sneakers' },
 					{ name: 'Boots' },
@@ -15,7 +15,7 @@ const categories: Array<TCategory> = [
 				],
 			},
 			{
-				name: 'Clothing',
+				groupName: 'Clothing',
 				subcategories: [
 					{ name: 'Shirts' },
 					{ name: 'Pants' },
@@ -28,9 +28,9 @@ const categories: Array<TCategory> = [
 	},
 	{
 		name: 'women',
-		subcategories: [
+		subcategoriesGroups: [
 			{
-				name: 'shoes',
+				groupName: 'shoes',
 				subcategories: [
 					{ name: 'sneakers' },
 					{ name: 'boots' },
@@ -43,9 +43,9 @@ const categories: Array<TCategory> = [
 	},
 	{
 		name: 'boys',
-		subcategories: [
+		subcategoriesGroups: [
 			{
-				name: 'shoes',
+				groupName: 'shoes',
 				subcategories: [
 					{ name: 'sneakers' },
 					{ name: 'boots' },
@@ -55,7 +55,7 @@ const categories: Array<TCategory> = [
 				],
 			},
 			{
-				name: 'Clothing',
+				groupName: 'Clothing',
 				subcategories: [
 					{ name: 'Shirts' },
 					{ name: 'Pants' },
@@ -68,9 +68,9 @@ const categories: Array<TCategory> = [
 	},
 	{
 		name: 'girls',
-		subcategories: [
+		subcategoriesGroups: [
 			{
-				name: 'shoes',
+				groupName: 'shoes',
 				subcategories: [
 					{ name: 'sneakers' },
 					{ name: 'boots' },
