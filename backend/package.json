@@ -22,8 +22,8 @@
 	"scripts": {
 		"start:dev": "ts-node src/index.ts",
 		"start": "node ../build/backend/index.js",
-		"build": "rm -rf ../build/backend && tsc && mv build ../build/backend",
-		"postbuild": "cp -R node_modules ../build/backend/node_modules"
+		"build": "npm i && mkdir -p ../build/backend && rm -rf ../build/backend/* && tsc && mv -f build/* ../build/backend",
+		"postbuild": "cp -R node_modules ../build/backend/node_modules && cp package.json ../build/backend/package.json && cp package-lock.json ../build/backend/package-lock.json"
 	},
 	"keywords": [],
 	"author": "",
