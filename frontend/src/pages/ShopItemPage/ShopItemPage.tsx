@@ -43,11 +43,12 @@ const ShopItemPage = () => {
 		}
 	};
 
-	if (isShopItemIsFetching || !shopItem) {
-		return <h4 className={styles.invalidItemId}>Invalid item id</h4>;
-	}
-	if (!shopItem && !isShopItemIsFetching) {
-		return <Redirect to={routes.pageNotFound} />;
+	if (!shopItem) {
+		if (isShopItemIsFetching) {
+			return <></>;
+		} else {
+			return <h4 className={styles.invalidItemId}>Invalid item id</h4>;
+		}
 	}
 
 	return (
