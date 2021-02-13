@@ -18,7 +18,7 @@ const ShopItem: React.FC<Props> = ({ shopItem, token, onAddToCartBtnClick }) => 
 
 	const onLoginOrAddToCartBtnClick = () => {
 		if (!token) {
-			history.push(`${routes.login}?redirectTo=${history.location.pathname}`);
+			history.push(`${routes.login}?redirectTo=${routes.shopItem}/${shopItem._id}`);
 		} else {
 			onAddToCartBtnClick(shopItem);
 		}
