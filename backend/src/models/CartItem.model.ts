@@ -2,6 +2,7 @@ import { Schema, model, Document, Model } from 'mongoose';
 import { IShopItemModel } from './ShopItem.model';
 
 export interface ICartItem {
+	size: string;
 	shopItem?: IShopItemModel['id'];
 }
 
