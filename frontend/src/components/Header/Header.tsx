@@ -39,7 +39,6 @@ const Header: React.FC<Props> = (props) => {
 						className={cn(styles.account, styles.navItem)}
 						activeClassName={styles.navItem__active}
 					>
-						<span className={styles.accountName}></span>
 						<div className={cn(styles.accountImg, styles.navItemImg)}></div>
 					</NavLink>
 				</div>
