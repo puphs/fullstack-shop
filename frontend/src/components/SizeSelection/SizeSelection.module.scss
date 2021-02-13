@@ -31,7 +31,6 @@
 		border-color: $color-primary;
 		.sizeValue {
 			color: $color-primary;
-			font-weight: bold;
 		}
 	}
 }
@@ -39,7 +38,6 @@
 .sizeValue {
 	color: $color-text-primary;
 	@extend %font-NotoSerif-400;
-	font-size: 18px;
+	font-size: 17px;
 	line-height: 28px;
-	// transition: 0.2s color;
 }
