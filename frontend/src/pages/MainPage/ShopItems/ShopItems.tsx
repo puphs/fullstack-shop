@@ -1,10 +1,11 @@
 import qs from 'query-string';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { LoadShopItemsParams } from '../../../api/shopApi';
 import AddToCartPopup, { PopupResult } from '../../../components/AddToCartPopup/AddToCartPopup';
+import Button from '../../../components/Button/Button';
 import ShopItem from '../../../components/ShopItem/ShopItem';
 import { cartActions } from '../../../redux/reducers/cartReducer';
 import { shopActions } from '../../../redux/reducers/shopReducer';
@@ -20,6 +21,10 @@ type Params = {
 const ShopItems: React.FC = () => {
 	const [popupShopItem, setPopupShopItem] = useState<TShopItem | null>(null);
 	const [isPopupShown, setIsPopupShown] = useState(false);
+
+	const page = useSelector((state: AppState) => state.shop.shopItemsPage);
+	const areShopItemsFetching = useSelector((state: AppState) => state.shop.areShopItemsFetching);
+	const isShopItemsEndReached = useSelector((state: AppState) => state.shop.isShopItemsEndReached);
 	const shopItems = useSelector((state: AppState) => state.shop.shopItems);
 	const token = useSelector((state: AppState) => state.auth.token);
 
@@ -28,16 +33,19 @@ const ShopItems: React.FC = () => {
 	const { category, subcategory } = useParams<Params>();
 
 	useEffect(() => {
-		const { search, page } = qs.parse(location.search);
+		dispatch(shopActions.setShopItemsPage(1));
+	}, [location.search, category, subcategory]);
+
+	useEffect(() => {
+		const { search } = qs.parse(location.search);
 		const loadItemsParams: LoadShopItemsParams = {
 			search: search?.toString(),
-			page: page?.toString(),
+			page,
 			category,
 			subcategory,
 		};
-
 		dispatch(shopActions.loadShopItems(loadItemsParams));
-	}, [location.search, category, subcategory]);
+	}, [location.search, category, subcategory, page]);
 
 	const onAddToCartBtnClick = (shopItem: TShopItem) => {
 		setPopupShopItem(shopItem);
@@ -47,24 +55,28 @@ const ShopItems: React.FC = () => {
 	const onPopupResult = (result: PopupResult) => {
 		if (result && token) {
 			dispatch(cartActions.addItemToCart(token, popupShopItem!._id, result.size));
-		} else {
 		}
 		setIsPopupShown(false);
 	};
 
+	const onLoadMoreBtnClick = () => {
+		dispatch(shopActions.setShopItemsPage(page + 1));
+	};
+
 	const shopItemsElements =
 		shopItems?.map((item) => (
-			<div className={styles.shopItem} key={item._id}>
+			<Fragment key={item._id}>
 				<ShopItem shopItem={item} onAddToCartBtnClick={onAddToCartBtnClick} token={token} />
-			</div>
+			</Fragment>
 		)) ?? [];
 
+	const transitionKey = category + subcategory + location.search + page;
 	return (
 		<>
 			<AddToCartPopup shown={isPopupShown} onPopupResult={onPopupResult} shopItem={popupShopItem} />
 			<SwitchTransition>
 				<CSSTransition
-					key={JSON.stringify(shopItems)}
+					key={transitionKey}
 					timeout={300}
 					classNames={{
 						enter: styles.transitionEnter,
@@ -73,13 +85,23 @@ const ShopItems: React.FC = () => {
 						exitActive: styles.transitionExitActive,
 					}}
 				>
-					{!shopItems ? (
-						<div></div>
-					) : shopItems.length ? (
-						<div className={styles.shopItems}>{shopItemsElements}</div>
-					) : (
-						<div className={styles.noItemsFound}>No items found</div>
-					)}
+					<div className={styles.shopItemsContainer}>
+						{!areShopItemsFetching && shopItems && shopItems.length && (
+							<>
+								<div className={styles.shopItems}>{shopItemsElements}</div>
+								{!isShopItemsEndReached && (
+									<div className={styles.loadMoreBtn}>
+										<Button styleType={'secondary'} onClick={onLoadMoreBtnClick}>
+											Load more
+										</Button>
+									</div>
+								)}
+							</>
+						)}
+						{!areShopItemsFetching && !shopItems && (
+							<div className={styles.noItemsFound}>No items found</div>
+						)}
+					</div>
 				</CSSTransition>
 			</SwitchTransition>
 		</>
