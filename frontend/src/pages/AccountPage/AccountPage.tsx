@@ -64,15 +64,18 @@ const Forms = () => {
 
 	return (
 		<>
-			<Form
-				header={'Change name'}
-				renderForm={() => <ChangeNameForm onSubmit={onChangeNameSubmit} />}
-			/>
-			<Form
-				style={{ marginLeft: 32 }}
-				header={'Change password'}
-				renderForm={() => <ChangePasswordForm onSubmit={onChangePasswordSubmit} />}
-			/>
+			<div className={styles.changeNameForm}>
+				<Form
+					header={'Change name'}
+					renderForm={() => <ChangeNameForm onSubmit={onChangeNameSubmit} />}
+				/>
+			</div>
+			<div className={styles.changePasswordForm}>
+				<Form
+					header={'Change password'}
+					renderForm={() => <ChangePasswordForm onSubmit={onChangePasswordSubmit} />}
+				/>
+			</div>
 		</>
 	);
 };
