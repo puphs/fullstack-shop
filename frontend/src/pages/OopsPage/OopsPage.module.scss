@@ -38,3 +38,18 @@
 		margin-top: 8px;
 	}
 }
+
+@media (max-width: 784px) {
+	.oopsContainer {
+		width: auto;
+	}
+	.oops {
+		font-size: 64px;
+		line-height: 87px;
+	}
+	.reason {
+		font-size: 18px;
+		line-height: 25px;
+		color: $color-text-primary;
+	}
+}
