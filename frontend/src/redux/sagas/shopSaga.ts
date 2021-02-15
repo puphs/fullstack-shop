@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import shopApi, {
 	LoadCategoriesResponse,
 	LoadShopItemResponse,
@@ -12,12 +12,17 @@ import {
 	LOAD_SHOP_ITEM,
 	LOAD_SHOP_ITEMS,
 } from '../reducers/shopReducer';
+import { AppState } from '../store';
 import { getErrorMessage, setErrorMessage } from './sagaUtils';
 
 function* loadShopItems({ params }: LoadShopItemsAction) {
 	try {
-		const data: LoadShopItemsResponse = yield call(shopApi.loadShopItems, params);
+		yield put(shopActions.setAreShopItemsFetching(true));
+		const pageSize = yield select((state: AppState) => state.shop.shopItemsPageSize);
+		const newParams = params.pageSize ? params : { ...params, pageSize };
+		const data: LoadShopItemsResponse = yield call(shopApi.loadShopItems, newParams);
 		yield put(shopActions.setShopItems(data.data.shopItems));
+		yield put(shopActions.setAreShopItemsFetching(false));
 	} catch (err) {
 		yield put(shopActions.loadShopItemsFailure(getErrorMessage(err)));
 		yield setErrorMessage(getErrorMessage(err));

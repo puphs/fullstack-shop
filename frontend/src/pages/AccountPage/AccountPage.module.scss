@@ -44,3 +44,18 @@
 	margin-top: 64px;
 	display: flex;
 }
+
+.changePasswordForm {
+	margin-left: 32px;
+}
+
+@media (max-width: 640px) {
+	.forms {
+		margin-top: 32px;
+		flex-direction: column;
+	}
+	.changePasswordForm {
+		margin-left: 0;
+		margin-top: 32px;
+	}
+}

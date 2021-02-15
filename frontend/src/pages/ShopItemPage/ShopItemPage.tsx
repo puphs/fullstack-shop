@@ -19,7 +19,7 @@ const ShopItemPage = () => {
 	const [itemSize, setItemSize] = useState('');
 	const token = useSelector((state: AppState) => state.auth.token);
 	const shopItem = useSelector((state: AppState) => state.shop.shopItem);
-	const isShopItemIsFetching = useSelector((state: AppState) => state.shop.isShopItemIsFetching);
+	const isShopItemFetching = useSelector((state: AppState) => state.shop.isShopItemFetching);
 	const { shopItemId } = useParams<Params>();
 
 	const history = useHistory();
@@ -44,7 +44,7 @@ const ShopItemPage = () => {
 	};
 
 	if (!shopItem) {
-		if (isShopItemIsFetching) {
+		if (isShopItemFetching) {
 			return <></>;
 		} else {
 			return <h4 className={styles.invalidItemId}>Invalid item id</h4>;

@@ -5,7 +5,7 @@ import ShopItem, { IShopItemModel } from '../models/ShopItem.model';
 import { Middleware } from '../types/types';
 import { createResponse } from './controller-helper';
 
-const SHOP_ITEMS_PAGE_SIZE = 10;
+const SHOP_ITEMS_PAGE_SIZE = 3;
 
 const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -29,6 +29,7 @@ const getShopItems: Middleware = async (req, res, next) => {
 	try {
 		const { search, category, subcategory } = req.query;
 		let page = parseInt(req.query.page?.toString() || '1');
+		let pageSize = parseInt(req.query.pageSize?.toString() || SHOP_ITEMS_PAGE_SIZE.toString());
 		if (isNaN(page)) page = 1;
 
 		const find = createFilterQuery(
@@ -38,9 +39,9 @@ const getShopItems: Middleware = async (req, res, next) => {
 		);
 
 		const shopItems: Array<IShopItemModel> = await ShopItem.find(find)
-			.skip((page - 1) * SHOP_ITEMS_PAGE_SIZE)
+			.skip((page - 1) * pageSize)
 			.sort({ createdAt: 'asc' })
-			.limit(SHOP_ITEMS_PAGE_SIZE);
+			.limit(pageSize);
 
 		res.status(200).json(createResponse({ data: { shopItems }, message: 'Shop items loaded' }));
 	} catch (err) {

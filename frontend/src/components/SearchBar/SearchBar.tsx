@@ -5,6 +5,7 @@ import headerStyles from '../Header/Header.module.scss';
 import { useHistory } from 'react-router-dom';
 import qs from 'query-string';
 import { routes } from '../../routes';
+import { useSkipFirstRenderEffect } from '../../hooks/useSkipFirstRenderEffect';
 
 type Props = {};
 
@@ -26,13 +27,25 @@ const SearchBar: React.FC<Props> = () => {
 	const inCatalog = history.location.pathname.match(routes.catalog) !== null;
 
 	useEffect(() => {
+		const { search } = qs.parse(history.location.search);
+		if (search) {
+			setSearchValue(search.toString());
+			setSearchMode(true);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (!inCatalog && searchMode) {
 			setSearchMode(false);
 		}
 	}, [inCatalog]);
 
-	useEffect(() => {
-		updateUrlSearchDebounced(searchValue);
+	useSkipFirstRenderEffect(() => {
+		if (searchValue === '') {
+			updateUrlSearch(searchValue);
+		} else {
+			updateUrlSearchDebounced(searchValue);
+		}
 	}, [searchValue]);
 
 	useEffect(() => {
